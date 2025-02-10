@@ -7,19 +7,24 @@ public class Game {
     void startGame() {
         number = new Number(symbolsPool, lettersNum);
         //number.printNumber();
+        processGame();
+    }
+    private void processGame() {
+        GameInterface gameInterface = new GameInterface();
+        gameInterface.printHelp(lettersNum);
         while (true) {
-            System.out.println("Guess: ");
+            gameInterface.printGuess();
             Reader reader = new Reader();
             String inputString = reader.getInputString();
             if (inputString.length() != 4) {
-                System.out.println("Wrong length!");
+                gameInterface.printWrongLength();
                 continue;
             }
             if (inputString.equals(number.getNumberString())) {
-                System.out.println("Correct!");
+                gameInterface.printSuccess();
                 break;
             }
-            System.out.println(countCows(inputString) + " Коров " + countBulls(inputString) + " Быков");
+            gameInterface.printCowsAndBulls(countCows(inputString), countBulls(inputString));
         }
     }
     private int countCows(String string) {
