@@ -24,8 +24,9 @@ public class Calculator {
         Scanner scanner = chooseScanner(strings);
         CommandParser commandParser;
         while (scanner.hasNext()) {
-
             System.out.println(scanner.next());
         }
+
+
     }
 }

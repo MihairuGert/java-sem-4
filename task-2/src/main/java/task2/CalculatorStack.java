@@ -2,14 +2,14 @@ package task2;
 import java.util.Stack;
 
 public class CalculatorStack {
-    Stack<Double> stack;
-    CalculatorStack() {
-        stack = new Stack<Double>();
-    }
-    void push(double element) {
+    private final Stack<Double> stack = new Stack<>();
+    public void push(double element) {
         stack.push(element);
     }
-    double pop() {
+    public double pop() throws Exception{
+        if (stack.empty()) {
+            throw new Exception();
+        }
         return stack.pop();
     }
 }
