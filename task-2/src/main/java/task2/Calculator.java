@@ -21,7 +21,6 @@ public class Calculator {
         }
     }
     public void runCalculator(String[] strings) {
-        System.out.print("hello!!");
         Scanner scanner = chooseScanner(strings);
         while (scanner.hasNext()) {
             System.out.println(scanner.next());
