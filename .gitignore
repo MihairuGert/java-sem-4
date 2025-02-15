@@ -3,6 +3,6 @@
 
 .out/
 
-.task-1/target
+.task-1/target/
 
-.task-2/target
+.task-2/target/
