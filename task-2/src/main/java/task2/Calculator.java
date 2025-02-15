@@ -22,10 +22,10 @@ public class Calculator {
     }
     public void runCalculator(String[] strings) {
         Scanner scanner = chooseScanner(strings);
+        CommandParser commandParser;
         while (scanner.hasNext()) {
+
             System.out.println(scanner.next());
         }
-    }
-    Calculator() {
     }
 }
