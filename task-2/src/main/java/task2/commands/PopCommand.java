@@ -1,4 +1,28 @@
 package task2.commands;
 
-public class PopCommand {
+import task2.Command;
+import task2.Context;
+
+import java.util.Objects;
+
+public class PopCommand implements Command {
+
+    @Override
+    public void execute(Context context, String[] arguments) {
+        double element;
+        try {
+            element = context.popFromStack();
+        } catch (Exception e) {
+            System.out.println("Stack is empty. Nothing to pop.");
+            return;
+        }
+        if (arguments[0].isEmpty()) {
+            return;
+        }
+        if (!arguments[0].matches("[A-Za-zА-Яа-я][A-Za-z0-9А-Яа-я]*")) {
+            System.out.println("Parameter must not start with a number, or use any special characters.");
+            return;
+        }
+        context.addNewParameter(arguments[0], element);
+    }
 }

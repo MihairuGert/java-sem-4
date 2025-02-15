@@ -1,5 +1,9 @@
 package task2;
 
+import task2.commands.PopCommand;
+import task2.commands.PrintCommand;
+import task2.commands.PushCommand;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -22,11 +26,33 @@ public class Calculator {
     }
     public void runCalculator(String[] strings) {
         Scanner scanner = chooseScanner(strings);
-        CommandParser commandParser;
+        InputParser inputParser = new InputParser();
+        Context context = new Context();
         while (scanner.hasNext()) {
-            System.out.println(scanner.next());
+            String string = scanner.next();
+            Command command = null;
+            String commandName = inputParser.getCommandName(string);
+            switch (commandName) {
+                case "PUSH":
+                    command = new PushCommand();
+                    break;
+                case "POP":
+                    command = new PopCommand();
+                    break;
+                case "PRINT":
+                    command = new PrintCommand();
+                    break;
+                default:
+                    continue;
+            }
+            command.execute(context, inputParser.getAttributes(string));
         }
-
-
     }
 }
+/*
+* if (attributes[0].equals("PUSH")) {
+            return new PushCommand();
+        }
+        else if (attributes[0].equals("POP")) {
+            return new PopCommand();
+        }*/

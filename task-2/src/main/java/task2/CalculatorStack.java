@@ -12,4 +12,10 @@ public class CalculatorStack {
         }
         return stack.pop();
     }
+    public double peek() {
+        if (stack.empty()) {
+            return Double.POSITIVE_INFINITY;
+        }
+        return stack.peek();
+    }
 }

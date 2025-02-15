@@ -10,6 +10,9 @@ public class Context {
     public double popFromStack() throws Exception {
         return calculatorStack.pop();
     }
+    public double peekStack() {
+        return calculatorStack.peek();
+    }
 
     public void addNewParameter(String name, double value) {
         variableTable.put(name, value);
