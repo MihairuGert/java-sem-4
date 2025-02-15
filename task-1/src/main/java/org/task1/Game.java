@@ -4,7 +4,7 @@ public class Game {
     private Number number;
     private int lettersNum = 4;
     private String symbolsPool = "0123456789";
-    void startGame() {
+    public void startGame() {
         number = new Number(symbolsPool, lettersNum);
         //number.printNumber();
         processGame();
