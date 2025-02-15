@@ -3,7 +3,7 @@ package task2;
 import task2.commands.PopCommand;
 import task2.commands.PrintCommand;
 import task2.commands.PushCommand;
-import task2.commands.SumCommand;
+import task2.commands.binaryOps.SumCommand;
 
 import java.io.File;
 import java.io.FileNotFoundException;

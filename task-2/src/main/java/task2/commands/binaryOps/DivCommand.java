@@ -1,8 +1,8 @@
-package task2.commands;
+package task2.commands.binaryOps;
 
 import task2.Context;
 
-public class DivCommand extends BinaryOpCommand{
+public class DivCommand extends BinaryOpCommand {
     @Override
     public void execute(Context context, String[] arguments) {
         try {

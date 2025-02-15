@@ -1,4 +1,4 @@
-package task2.commands;
+package task2.commands.binaryOps;
 
 import task2.Command;
 import task2.Context;

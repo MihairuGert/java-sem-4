@@ -1,16 +1,16 @@
-package task2.commands;
+package task2.commands.binaryOps;
 
 import task2.Context;
 
-public class SubCommand extends BinaryOpCommand{
+public class MulCommand extends BinaryOpCommand {
     @Override
     public void execute(Context context, String[] arguments) {
         try {
             super.execute(context, arguments);
         } catch (Exception e) {
-            System.out.println("Not enough elements to perform subtraction.");
+            System.out.println("Not enough elements to perform multiplication.");
             return;
         }
-        context.pushOnStack(element1 - element2);
+        context.pushOnStack(element1 * element2);
     }
 }
