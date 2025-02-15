@@ -9,7 +9,7 @@ public class VariableTable {
     }
     public double get(String name) throws Exception {
         if (!hashMap.containsKey(name)) {
-            throw new Exception();
+            throw new Exception(name);
         }
         return hashMap.get(name);
     }

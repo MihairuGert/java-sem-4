@@ -1,10 +1,5 @@
 package task2;
 
-import task2.commands.PopCommand;
-import task2.commands.PrintCommand;
-import task2.commands.PushCommand;
-import task2.commands.binaryOps.SumCommand;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -30,26 +25,19 @@ public class Calculator {
         InputParser inputParser = new InputParser();
         Context context = new Context();
         while (scanner.hasNext()) {
-            String string = scanner.next();
-            Command command = null;
-            String commandName = inputParser.getCommandName(string);
-            switch (commandName) {
-                case "PUSH":
-                    command = new PushCommand();
-                    break;
-                case "POP":
-                    command = new PopCommand();
-                    break;
-                case "PRINT":
-                    command = new PrintCommand();
-                    break;
-                case "SUM":
-                    command = new SumCommand();
-                    break;
-                default:
-                    continue;
+            String inputString = scanner.next();
+            Command command;
+            CommandFactory commandFactory = new CommandFactory();
+            String commandName = inputParser.getCommandName(inputString);
+            if (commandName == null) {
+                continue;
             }
-            command.execute(context, inputParser.getAttributes(string));
+            try {
+                command = commandFactory.newCommand(commandName);
+                command.execute(context, inputParser.getAttributes(inputString));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }
