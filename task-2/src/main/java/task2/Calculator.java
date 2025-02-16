@@ -41,10 +41,3 @@ public class Calculator {
         }
     }
 }
-/*
-* if (attributes[0].equals("PUSH")) {
-            return new PushCommand();
-        }
-        else if (attributes[0].equals("POP")) {
-            return new PopCommand();
-        }*/

@@ -1,8 +1,5 @@
 package task2;
 
-import task2.commands.PopCommand;
-import task2.commands.PushCommand;
-
 import java.util.Arrays;
 
 public class InputParser {
