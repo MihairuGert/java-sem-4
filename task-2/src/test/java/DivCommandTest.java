@@ -32,7 +32,7 @@ public class DivCommandTest {
                 return;
             }
             Assert.assertEquals(0.0, context.peekStack(), 0);
-            Assert.assertEquals("Division by zero is not defined.", e.getMessage());
+            Assert.assertEquals("Division by zero 1.0 / 0.0 is not defined.", e.getMessage());
         }
     }
 }

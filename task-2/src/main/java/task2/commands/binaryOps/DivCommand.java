@@ -13,7 +13,7 @@ public class DivCommand extends BinaryOpCommand {
         if (element2 == 0) {
             context.pushOnStack(element2);
             context.pushOnStack(element1);
-            throw new RuntimeException("Division by zero is not defined.");
+            throw new RuntimeException("Division by zero " + element1 + " / " + element2 + " is not defined.");
         }
         context.pushOnStack(element1 / element2);
     }

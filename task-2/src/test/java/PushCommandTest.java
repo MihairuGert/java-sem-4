@@ -16,7 +16,7 @@ public class PushCommandTest {
         try {
             pushCommand.execute(context, new String[] {"@#%$@#$"});
         } catch (Exception e) {
-            Assert.assertEquals("It is possible to push only a number on the stack.", e.getMessage());
+            Assert.assertEquals("It is possible to push only a number on the stack, not @#%$@#$.", e.getMessage());
         }
     }
 }
