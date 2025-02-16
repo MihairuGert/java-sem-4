@@ -1,9 +1,9 @@
-package org.task1;
+package task1;
 
 import java.util.*;
 
 public class Number {
-    private String number;
+    private final String number;
     private String generateNumber(String symbolsPool, int lettersNum) {
         List<Character> symbolsPoolList = new ArrayList<>();
         for (char c : symbolsPool.toCharArray()) {
@@ -19,16 +19,12 @@ public class Number {
                 break;
             }
         }
-        String shuffledNumber = shuffledString.toString();
-        return shuffledNumber;
+        return shuffledString.toString();
     }
-    Number(String symbolsPool, int lettersNum) {
+    public Number(String symbolsPool, int lettersNum) {
         number = generateNumber(symbolsPool, lettersNum);
     }
-    void printNumber() {
-        System.out.println(number);
-    }
-    String getNumberString() {
+    public String getNumberString() {
         return number;
     }
 }

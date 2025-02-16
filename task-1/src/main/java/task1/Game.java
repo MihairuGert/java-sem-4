@@ -1,20 +1,25 @@
-package org.task1;
+package task1;
 
 public class Game {
     private Number number;
-    private int lettersNum = 4;
-    private String symbolsPool = "0123456789";
+    private final int lettersNum = 4;
+    private final String symbolsPool = "0123456789";
+    public String getRightAnswer() {
+        if (number == null)
+            number = new Number(symbolsPool, lettersNum);
+        return number.getNumberString();
+    }
     public void startGame() {
-        number = new Number(symbolsPool, lettersNum);
-        //number.printNumber();
+        if (number == null)
+            number = new Number(symbolsPool, lettersNum);
         processGame();
     }
     private void processGame() {
         GameInterface gameInterface = new GameInterface();
         gameInterface.printHelp(lettersNum);
+        Reader reader = new Reader();
         while (true) {
             gameInterface.printGuess();
-            Reader reader = new Reader();
             String inputString = reader.getInputString();
             if (inputString.length() != 4) {
                 gameInterface.printWrongLength();

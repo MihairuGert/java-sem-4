@@ -1,4 +1,4 @@
-package org.task1;
+package task1;
 
 public class GameInterface {
     void printGuess() {
@@ -14,6 +14,6 @@ public class GameInterface {
         System.out.println(cowsCount + " Коров " + bullsCount + " Быков");
     }
     void printHelp(int lettersCount) {
-        System.out.printf("Добрый день! Эта игра Быки и Коровы. Компьютер загадал число из %d неповторяющихся символов. Успехов! ", lettersCount);
+        System.out.printf("Эта игра Быки и Коровы. Компьютер загадал число из %d неповторяющихся цифер. Успехов! ", lettersCount);
     }
 }
