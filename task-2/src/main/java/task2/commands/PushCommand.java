@@ -16,7 +16,7 @@ public class PushCommand implements Command {
                 throw new RuntimeException("Undefined parameter " + e.getMessage() + ".");
             }
             if (!arguments[0].matches("^[+-]?[0-9]+([,.][0-9]?)?$")) {
-                throw new RuntimeException("It is possible to push only a number on the stack.");
+                throw new RuntimeException("It is possible to push only a number on the stack, not "+ arguments[0] + ".");
             }
             context.pushOnStack(Double.parseDouble(arguments[0]));
         }

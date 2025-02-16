@@ -14,7 +14,7 @@ public class SqrtCommand implements Command {
         }
         if (element < 0) {
             context.pushOnStack(element);
-            throw new RuntimeException("Square root of negative number is not defined.");
+            throw new RuntimeException("Square root of negative number " + element +  " is not defined.");
         }
         context.pushOnStack(Math.sqrt(element));
     }
