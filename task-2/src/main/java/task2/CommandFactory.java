@@ -21,20 +21,19 @@ public class CommandFactory {
             System.out.println("Unable to load commands.properties");
         }
     }
-    public Command newCommand(String string) {
+    public Command newCommand(String string) throws RuntimeException {
         String className = commandMap.get(string);
         if (className == null) {
-            System.out.println("Command with such name does not exist.");
-            throw new RuntimeException();
+            throw new RuntimeException("Command with such name does not exist.");
         }
         try {
             return (Command) Class.forName(className).getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException |
                  ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
-    CommandFactory() {
+    public CommandFactory() {
         createCommandMap();
     }
 }

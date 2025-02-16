@@ -3,8 +3,6 @@ package task2.commands;
 import task2.Command;
 import task2.Context;
 
-import java.util.Objects;
-
 public class PopCommand implements Command {
 
     @Override
@@ -14,6 +12,9 @@ public class PopCommand implements Command {
             element = context.popFromStack();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return;
+        }
+        if (arguments.length == 0) {
             return;
         }
         if (arguments[0].isEmpty()) {
