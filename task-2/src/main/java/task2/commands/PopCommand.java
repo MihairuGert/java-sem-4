@@ -13,7 +13,7 @@ public class PopCommand implements Command {
         try {
             element = context.popFromStack();
         } catch (Exception e) {
-            System.out.println("Stack is empty. Nothing to pop.");
+            System.out.println(e.getMessage());
             return;
         }
         if (arguments[0].isEmpty()) {

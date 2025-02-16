@@ -1,7 +1,4 @@
 DEFINE a 4
 PUSH a
-PUSH a
-*
 SQRT
 PRINT
-

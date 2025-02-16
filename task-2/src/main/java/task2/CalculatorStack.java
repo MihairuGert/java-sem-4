@@ -8,7 +8,7 @@ public class CalculatorStack {
     }
     public double pop() throws Exception{
         if (stack.empty()) {
-            throw new Exception();
+            throw new Exception("Stack is empty. Nothing to pop.");
         }
         return stack.pop();
     }
