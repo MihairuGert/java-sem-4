@@ -5,11 +5,10 @@ import task2.Context;
 
 public class PrintCommand implements Command {
     @Override
-    public void execute(Context context, String[] arguments) {
+    public void execute(Context context, String[] arguments) throws Exception {
         double value = context.peekStack();
         if (value == Double.POSITIVE_INFINITY) {
-            System.out.println("Stack is empty. Nothing to print.");
-            return;
+            throw new RuntimeException("Stack is empty. Nothing to print.");
         }
         System.out.println(value);
     }

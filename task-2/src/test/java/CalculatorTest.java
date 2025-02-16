@@ -41,8 +41,8 @@ public class CalculatorTest {
                 "PUSH a\n" +
                 "PUSH a\n" +
                 "PUSH a\n" +
-                "PUSH a\n" +
-                "POP\n" +
+                "PUSH 123\n" +
+                "POP b\n" +
                 "*\n" +
                 "/\n" +
                 "+\n" +
@@ -50,6 +50,10 @@ public class CalculatorTest {
                 "DEFINE var 4\n" +
                 "PUSH var\n" +
                 "-\n" +
+                "PRINT\n" +
+                "PUSH b\n" +
+                "PRINT\n" +
+                "POP\n" +
                 "PRINT");
         scanner.useDelimiter("\n");
 
@@ -57,7 +61,7 @@ public class CalculatorTest {
         calculator.runCalculator(scanner);
 
         String output = outputStream.toString().trim();
-        Assert.assertEquals("2.0", output);
+        Assert.assertEquals("2.0\r\n123.0\r\n2.0", output);
 
         System.setOut(originalOut);
     }

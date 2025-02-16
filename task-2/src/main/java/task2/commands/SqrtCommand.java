@@ -5,17 +5,16 @@ import task2.Context;
 
 public class SqrtCommand implements Command {
     @Override
-    public void execute(Context context, String[] arguments) {
+    public void execute(Context context, String[] arguments) throws Exception {
         double element;
         try {
             element = context.popFromStack();
         } catch (Exception e) {
-            System.out.println("Not enough elements to perform sqrt.");
-            return;
+            throw new RuntimeException("Not enough elements to perform sqrt.");
         }
         if (element < 0) {
-            System.out.println("Sqrt of negative number is not defined.");
-            return;
+            context.pushOnStack(element);
+            throw new RuntimeException("Square root of negative number is not defined.");
         }
         context.pushOnStack(Math.sqrt(element));
     }

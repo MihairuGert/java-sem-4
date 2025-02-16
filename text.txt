@@ -1,11 +1,8 @@
-DEFINE a 4
-PUSH a
-PUSH a
-PUSH a
-PUSH a
-PUSH a
-*
+#ФЫВФЦВ
+PUSH 0
+PUSH 1
 /
-+
-/
+PRINT
+PUSH -1
+SQRT
 PRINT
