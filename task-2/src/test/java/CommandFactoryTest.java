@@ -28,7 +28,7 @@ public class CommandFactoryTest {
         try {
             Command command = commandFactory.newCommand("DOES_NOT_EXIST");
         } catch (Exception e) {
-            Assert.assertEquals("Command with such name does not exist.", e.getMessage());
+            Assert.assertEquals("Command with name \"DOES_NOT_EXIST\" does not exist.", e.getMessage());
         }
     }
 

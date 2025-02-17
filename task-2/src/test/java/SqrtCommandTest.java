@@ -13,7 +13,7 @@ public class SqrtCommandTest {
         try {
             sqrtCommand.execute(context, new String[] {});
         } catch (Exception e) {
-            Assert.assertEquals("Square root of negative number is not defined.", e.getMessage());
+            Assert.assertEquals("Square root of negative number -1.0 is not defined.", e.getMessage());
         }
     }
 }
