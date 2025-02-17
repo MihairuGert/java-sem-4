@@ -1,19 +1,26 @@
 package task1;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class GameInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(GameInterface.class);
+
     void printGuess() {
-        System.out.println("Отгадывайте: ");
+        logger.info("Отгадывайте: ");
     }
     void printWrongLength() {
-        System.out.println("Не правильная длина!");
+        logger.warn("Не правильная длина!");
     }
     void printSuccess() {
-        System.out.println("Успех!");
+        logger.info("Успех!");
     }
     void printCowsAndBulls(int cowsCount, int bullsCount) {
-        System.out.println(cowsCount + " Коров " + bullsCount + " Быков");
+        logger.info(cowsCount + " Коров " + bullsCount + " Быков");
     }
     void printHelp(int lettersCount) {
-        System.out.printf("Эта игра Быки и Коровы. Компьютер загадал число из %d неповторяющихся цифер. Успехов! ", lettersCount);
+        logger.info("Эта игра Быки и Коровы. Компьютер загадал число из " +  " lettersCount неповторяющихся цифер. Успехов!");
     }
 }
