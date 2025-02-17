@@ -1,6 +1,6 @@
 <configuration>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>logs/application.log</file>
         <append>false</append>
         <encoder>
@@ -9,6 +9,6 @@
     </appender>
 
     <root level="debug">
-        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
     </root>
 </configuration>
