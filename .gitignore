@@ -1,4 +1,7 @@
 # Idea
 .idea/
+lib/
 task-1/target/
 out/
+task-1.iml
+task-2.iml
