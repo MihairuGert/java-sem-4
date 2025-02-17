@@ -1,4 +1,4 @@
-2025-02-16 17:04:48:448 INFO  task2.Calculator - Calculator has successfully ran.
-2025-02-16 17:04:48:448 WARN  task2.Calculator - Square root of negative number -1.0 is not defined.
-2025-02-16 17:04:48:448 WARN  task2.Calculator - Command with name "ifodheu" does not exist.
-2025-02-16 17:04:48:448 INFO  task2.Calculator - Calculator has successfully finished its work.
+2025-02-17 11:49:04:494 INFO  task2.Calculator - Calculator has successfully ran.
+2025-02-17 11:49:05:495 WARN  task2.Calculator - Square root of negative number -1.0 is not defined.
+2025-02-17 11:49:05:495 WARN  task2.Calculator - Command with name "ifodheu" does not exist.
+2025-02-17 11:49:05:495 INFO  task2.Calculator - Calculator has successfully finished its work.
