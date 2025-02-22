@@ -7,18 +7,19 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Scene extends JComponent implements MouseListener {
+public class Scene extends JPanel implements MouseListener {
 
     // TODO player here is temporary decision.
     private Player player;
 
-    Scene() {
+    public Scene(Dimension screenSize) {
+        this.setPreferredSize(screenSize);
         player = new Player();
     }
 
     public void paint(Graphics graphics) {
         Graphics2D graphics2D = (Graphics2D) graphics;
-        graphics2D.drawOval(100,100,100,100);
+        graphics2D.drawOval(player.getX(), player.getY(), 50,50);
     }
 
     void printMousePosition() {
