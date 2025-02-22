@@ -7,6 +7,9 @@ import java.net.URL;
 public class MainWindow extends JFrame {
     private int width;
     private int height;
+
+    Scene scene;
+
     public MainWindow() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = (int) screenSize.getWidth();
@@ -14,6 +17,7 @@ public class MainWindow extends JFrame {
         this.frameInit();
         this.setSize(width, height);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         this.setTitle("Shooter the game");
 
         URL iconURL = getClass().getResource("/icon.jpg");
@@ -24,8 +28,16 @@ public class MainWindow extends JFrame {
         ImageIcon icon = new ImageIcon(iconURL);
 
         this.setIconImage(icon.getImage());
+
+        scene = new Scene();
+
         this.setVisible(true);
     }
+
+    public void paint(Graphics graphics) {
+        scene.paint(graphics);
+    }
+
     public int getWidth() {
         return width;
     }
