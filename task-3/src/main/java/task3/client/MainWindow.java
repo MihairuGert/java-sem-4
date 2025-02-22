@@ -1,4 +1,4 @@
-package task3;
+package task3.client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +7,7 @@ import java.net.URL;
 public class MainWindow extends JFrame {
     private int width;
     private int height;
-    MainWindow() {
+    public MainWindow() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = (int) screenSize.getWidth();
         height = (int) screenSize.getHeight();
