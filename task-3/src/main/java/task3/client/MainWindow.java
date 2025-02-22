@@ -1,7 +1,8 @@
 package task3.client;
 
+import task3.Scene;
+
 import javax.swing.*;
-import java.awt.*;
 import java.net.URL;
 
 public class MainWindow extends JFrame {
