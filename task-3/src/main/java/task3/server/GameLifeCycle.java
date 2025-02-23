@@ -13,11 +13,13 @@ public class GameLifeCycle implements ActionListener {
     ArrayList<Entity> entities = new ArrayList<>();
 
     GameLifeCycle() {
-        timer = new Timer(100, null);
+        timer = new Timer(100, this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
+
+
 }

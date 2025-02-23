@@ -1,5 +1,6 @@
 package task3.view;
 
+import task3.controller.Controller;
 import task3.entity.Player;
 
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
 
     public Scene(Dimension screenSize) {
         this.setPreferredSize(screenSize);
-        player = new Player();
+        player = new Player(new Controller());
         timer = new Timer(1, this);
         this.addMouseListener(this);
         timer.start();
@@ -32,7 +33,7 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Point point = MouseInfo.getPointerInfo().getLocation();
-        System.out.println(point.x + " " + point.y);
+        //System.out.println(point.x + " " + point.y);
         player.move(point.x, point.y);
         repaint();
     }

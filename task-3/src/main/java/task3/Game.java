@@ -12,6 +12,7 @@ public class Game {
 
         MainWindow mainWindow = new MainWindow();
         mainWindow.setScene(scene);
+        User user = new User();
     }
 
 }
