@@ -12,29 +12,21 @@ import java.awt.event.MouseListener;
 
 public class Scene extends JPanel implements MouseListener, ActionListener {
 
-    // TODO player here is temporary decision.
-    private Player player;
-    Timer timer;
-
     public Scene(Dimension screenSize) {
         this.setPreferredSize(screenSize);
-        player = new Player(new Controller());
-        timer = new Timer(1, this);
-        this.addMouseListener(this);
-        timer.start();
     }
 
     public void paint(Graphics graphics) {
         super.paint(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
-        graphics2D.drawOval(player.getX() - 30, player.getY() - 50, 50, 50);
+        //graphics2D.drawOval(player.getX() - 30, player.getY() - 50, 50, 50);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Point point = MouseInfo.getPointerInfo().getLocation();
+        //Point point = MouseInfo.getPointerInfo().getLocation();
         //System.out.println(point.x + " " + point.y);
-        player.move(point.x, point.y);
+        //player.move(point.x, point.y);
         repaint();
     }
 

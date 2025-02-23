@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class Player extends Entity{
     private final Controller controller;
-    private final int velocity = 10;
+    private final int velocity = 1;
 
     public Player(Controller controller) {
         this.controller = controller;

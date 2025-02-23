@@ -1,5 +1,7 @@
 package task3.view;
 
+import task3.controller.Controller;
+
 import javax.swing.*;
 import java.net.URL;
 
@@ -25,6 +27,10 @@ public class MainWindow extends JFrame {
         if (!isVisible) {
             this.setVisible(true);
         }
+    }
+
+    public void setController(Controller controller) {
+        this.add(controller);
     }
 //
 //    public void paint(Graphics graphics) {

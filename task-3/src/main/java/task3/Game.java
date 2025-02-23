@@ -13,7 +13,8 @@ public class Game {
         Scene scene = new Scene(systemConfig.getScreenSize());
         MainWindow mainWindow = new MainWindow();
         mainWindow.setScene(scene);
-        Controller controller = new Controller();
+        Controller controller = new Controller(systemConfig.getScreenSize());
+        mainWindow.setController(controller);
         Player player = new Player(controller);
         GameLifeCycle gameLifeCycle = new GameLifeCycle();
         gameLifeCycle.addPlayer(player);

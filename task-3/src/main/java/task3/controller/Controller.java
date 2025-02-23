@@ -3,6 +3,7 @@ package task3.controller;
 import task3.server.commands.player.ControllerCommand;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -14,7 +15,7 @@ import java.util.*;
 public class Controller extends JPanel implements KeyListener, MouseListener {
     HashMap<String, Key> activeKeys = new HashMap<>();
 
-    public Controller() {
+    public Controller(Dimension screenSize) {
         InputStream inputStream = Controller.class.getResourceAsStream("/keybindings.properties");
         Properties properties = new Properties();
         try {
@@ -28,6 +29,8 @@ public class Controller extends JPanel implements KeyListener, MouseListener {
         }
         this.addMouseListener(this);
         this.addKeyListener(this);
+        this.setFocusable(true);
+        this.setPreferredSize(screenSize);
     }
 
     public void print() {
