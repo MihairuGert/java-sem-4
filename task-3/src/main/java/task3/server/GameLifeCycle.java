@@ -4,6 +4,7 @@ import task3.entity.Entity;
 import task3.entity.Player;
 import task3.server.commands.player.ControllerCommand;
 import task3.server.commands.player.Movement;
+import task3.view.Scene;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,10 +15,12 @@ import java.util.ArrayList;
 public class GameLifeCycle implements ActionListener {
     Timer timer;
     ArrayList<Player> players = new ArrayList<>();
+    Scene scene;
 
-    public GameLifeCycle() {
+    public GameLifeCycle(Scene scene) {
         timer = new Timer(1, this);
         timer.start();
+        this.scene = scene;
     }
 
     @Override
@@ -26,6 +29,8 @@ public class GameLifeCycle implements ActionListener {
             Movement.execute(p, p.getInput());
             System.out.println(p.getX() + " " + p.getY());
         }
+        scene.getPlayers(players);
+        scene.repaint();
     }
 
     public void addPlayer(Player player) {

@@ -9,10 +9,10 @@ public class Movement {
         for (ControllerCommand command : commands) {
             switch (command) {
                 case UP:
-                    player.move(0, player.getVelocity());
+                    player.move(0, -player.getVelocity());
                     break;
                 case DOWN:
-                    player.move(0, -player.getVelocity());
+                    player.move(0, player.getVelocity());
                     break;
                 case RIGHT:
                     player.move(player.getVelocity(), 0);
