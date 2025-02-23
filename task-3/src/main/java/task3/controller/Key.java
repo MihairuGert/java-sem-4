@@ -1,13 +1,13 @@
-package task3.controller.commands;
+package task3.controller;
 
 import task3.server.ControllerCommand;
 
-public class Command {
+public class Key {
     protected char keyChar;
     protected boolean isKeyActive;
     protected ControllerCommand controllerCommand;
 
-    public Command(ControllerCommand controllerCommand) {
+    public Key(ControllerCommand controllerCommand) {
         this.controllerCommand = controllerCommand;
     }
 

@@ -1,11 +1,16 @@
 package task3;
 
 import task3.controller.Controller;
+import task3.server.ControllerCommand;
+
+import java.util.LinkedList;
 
 public class User {
-    Controller controller;
+    private final Controller controller;
     User() {
         controller = new Controller();
-        controller.print();
+    }
+    public LinkedList<ControllerCommand> getInput() {
+        return controller.getActiveCommands();
     }
 }

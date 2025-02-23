@@ -1,6 +1,5 @@
 package task3.controller;
 
-import task3.controller.commands.Command;
 import task3.server.ControllerCommand;
 
 import java.awt.event.KeyEvent;
@@ -12,7 +11,7 @@ import java.io.InputStream;
 import java.util.*;
 
 public class Controller implements KeyListener, MouseListener {
-    HashMap<String, Command> keyBindings = new HashMap<>();
+    HashMap<String, Key> activeKeys = new HashMap<>();
 
     public Controller() {
         InputStream inputStream = Controller.class.getResourceAsStream("/keybindings.properties");
@@ -21,7 +20,7 @@ public class Controller implements KeyListener, MouseListener {
             properties.load(inputStream);
             for (String keyChar : properties.stringPropertyNames()) {
                 String commandName = properties.getProperty(keyChar);
-                keyBindings.put(keyChar, new Command(ControllerCommand.valueOf(commandName)));
+                activeKeys.put(keyChar, new Key(ControllerCommand.valueOf(commandName)));
             }
         } catch (IOException e) {
             System.out.println("Unable to load keybindings.");
@@ -29,12 +28,12 @@ public class Controller implements KeyListener, MouseListener {
     }
 
     public void print() {
-        keyBindings.forEach((key, value) -> System.out.println(key + " " + value.getName()));
+        activeKeys.forEach((key, value) -> System.out.println(key + " " + value.getName()));
     }
 
     public LinkedList<ControllerCommand> getActiveCommands() {
         LinkedList<ControllerCommand> commands = new LinkedList<>();
-        keyBindings.forEach((key, value) -> { if (value.isKeyActive()) commands.push(value.getName());});
+        activeKeys.forEach((key, value) -> { if (value.isKeyActive()) commands.push(value.getName());});
         return commands;
     }
 
@@ -45,15 +44,15 @@ public class Controller implements KeyListener, MouseListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (keyBindings.containsKey(Character.toString(e.getKeyChar()))) {
-            keyBindings.get(Character.toString(e.getKeyChar())).setKeyActive();
+        if (activeKeys.containsKey(Character.toString(e.getKeyChar()))) {
+            activeKeys.get(Character.toString(e.getKeyChar())).setKeyActive();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (keyBindings.containsKey(Character.toString(e.getKeyChar()))) {
-            keyBindings.get(Character.toString(e.getKeyChar())).setKeyNotActive();
+        if (activeKeys.containsKey(Character.toString(e.getKeyChar()))) {
+            activeKeys.get(Character.toString(e.getKeyChar())).setKeyNotActive();
         }
     }
 
