@@ -2,6 +2,7 @@ package task3.controller;
 
 import task3.server.commands.player.ControllerCommand;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class Controller implements KeyListener, MouseListener {
+public class Controller extends JPanel implements KeyListener, MouseListener {
     HashMap<String, Key> activeKeys = new HashMap<>();
 
     public Controller() {
@@ -25,6 +26,8 @@ public class Controller implements KeyListener, MouseListener {
         } catch (IOException e) {
             System.out.println("Unable to load keybindings.");
         }
+        this.addMouseListener(this);
+        this.addKeyListener(this);
     }
 
     public void print() {

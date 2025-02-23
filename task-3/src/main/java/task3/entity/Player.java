@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 public class Player extends Entity{
     private final Controller controller;
+    private final int velocity = 10;
 
     public Player(Controller controller) {
         this.controller = controller;
@@ -14,5 +15,9 @@ public class Player extends Entity{
 
     public LinkedList<ControllerCommand> getInput() {
         return controller.getActiveCommands();
+    }
+
+    public int getVelocity() {
+        return velocity;
     }
 }
