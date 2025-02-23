@@ -1,4 +1,4 @@
-package task3.server;
+package task3.server.commands.player;
 
 public enum ControllerCommand {
     UP,

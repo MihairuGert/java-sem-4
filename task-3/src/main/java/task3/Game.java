@@ -1,5 +1,7 @@
 package task3;
 
+import task3.controller.Controller;
+import task3.entity.Player;
 import task3.view.MainWindow;
 import task3.controller.SystemConfig;
 import task3.view.Scene;
@@ -12,7 +14,8 @@ public class Game {
 
         MainWindow mainWindow = new MainWindow();
         mainWindow.setScene(scene);
-        User user = new User();
+        Controller controller = new Controller();
+        Player player = new Player(controller);
     }
 
 }

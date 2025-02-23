@@ -1,11 +1,11 @@
 package task3.controller;
 
-import task3.server.ControllerCommand;
+import task3.server.commands.player.ControllerCommand;
 
 public class Key {
-    protected char keyChar;
-    protected boolean isKeyActive;
-    protected ControllerCommand controllerCommand;
+    private char keyChar;
+    private boolean isKeyActive;
+    private ControllerCommand controllerCommand;
 
     public Key(ControllerCommand controllerCommand) {
         this.controllerCommand = controllerCommand;

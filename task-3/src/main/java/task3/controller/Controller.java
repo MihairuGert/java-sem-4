@@ -1,6 +1,6 @@
 package task3.controller;
 
-import task3.server.ControllerCommand;
+import task3.server.commands.player.ControllerCommand;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
