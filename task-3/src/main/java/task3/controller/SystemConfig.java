@@ -1,4 +1,4 @@
-package task3.client;
+package task3.controller;
 
 import java.awt.*;
 

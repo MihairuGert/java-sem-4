@@ -1,7 +1,8 @@
 package task3;
 
-import task3.client.MainWindow;
-import task3.client.SystemConfig;
+import task3.view.MainWindow;
+import task3.controller.SystemConfig;
+import task3.view.Scene;
 
 public class Game {
     public void runGame() {

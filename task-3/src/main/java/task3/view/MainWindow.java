@@ -1,6 +1,4 @@
-package task3.client;
-
-import task3.Scene;
+package task3.view;
 
 import javax.swing.*;
 import java.net.URL;

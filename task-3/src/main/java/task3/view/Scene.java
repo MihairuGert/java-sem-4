@@ -1,4 +1,4 @@
-package task3;
+package task3.view;
 
 import task3.entity.Player;
 
