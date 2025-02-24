@@ -7,6 +7,7 @@ import task3.server.commands.player.Movement;
 import task3.view.Scene;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -24,22 +25,20 @@ public class GameLifeCycle implements ActionListener {
         timer.start();
         // TODO: REMOVE OR MAKE AN ARRAY LIST
         this.scene = scene;
-        obstacles.add(new Obstacle(300,0,100,500));
+        obstacles.add(new Obstacle(100,100,100,100));
+        obstacles.add(new Obstacle(100,240,100,100));
+        obstacles.add(new Obstacle(220,330/2,100,100));
         obstacles.add(new Obstacle(300,600,100,500));
-
+        addBoundaries();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Player p : players) {
-            LinkedList<ControllerCommand> playerInput = new LinkedList<>();
-            for (Obstacle obstacle : obstacles) {
-                // change the player input deleting what you don't need
-                // TODO
-                if ()
-            }
             Movement.execute(p, p.getInput());
-            // DEBUG
+            for (Obstacle o : obstacles) {
+                Collision.handleCollision(p, o);
+            }
             System.out.println(p.getX() + " " + p.getY());
         }
         scene.setPlayers(players);
@@ -49,6 +48,14 @@ public class GameLifeCycle implements ActionListener {
 
     public void addPlayer(Player player) {
         players.add(player);
+    }
+
+    private void addBoundaries() {
+        Dimension dim = scene.getDimension();
+        obstacles.add(new Obstacle(0,0,dim.width,10));
+        obstacles.add(new Obstacle(dim.width - 20,0, 10, dim.height));
+        obstacles.add(new Obstacle(0, dim.height - 100, dim.width, 10));
+        obstacles.add(new Obstacle(0,0,10, dim.height));
     }
 
 }

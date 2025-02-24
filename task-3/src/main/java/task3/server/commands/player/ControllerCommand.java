@@ -5,5 +5,6 @@ public enum ControllerCommand {
     DOWN,
     RIGHT,
     LEFT,
-    NO_COMMAND
+    NO_COMMAND,
+    CROUCH
 }

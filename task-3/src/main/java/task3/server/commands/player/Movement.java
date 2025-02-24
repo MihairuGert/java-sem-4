@@ -9,20 +9,26 @@ public class Movement {
         for (ControllerCommand command : commands) {
             switch (command) {
                 case UP:
-                    player.move(0, -player.getVelocity());
+                    player.move(player.getX(), player.getNegativeYNextPosition());
                     break;
                 case DOWN:
-                    player.move(0, player.getVelocity());
+                    player.move(player.getX(), player.getPositiveYNextPosition());
                     break;
                 case RIGHT:
-                    player.move(player.getVelocity(), 0);
+                    player.move(player.getPositiveXNextPosition(), player.getY());
                     break;
                 case LEFT:
-                    player.move(-player.getVelocity(), 0);
+                    player.move(player.getNegativeXNextPosition(), player.getY());
+                    break;
+                case CROUCH:
+                    player.setSize(20,20);
                     break;
                 default:
                     break;
             }
+        }
+        if (!commands.contains(ControllerCommand.CROUCH)) {
+            player.setSize(30, 30);
         }
     }
 }

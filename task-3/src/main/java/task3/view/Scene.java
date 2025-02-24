@@ -11,12 +11,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class Scene extends JPanel implements MouseListener, ActionListener {
+public class Scene extends JPanel {
     private ArrayList<Player> players;
     private ArrayList<Obstacle> obstacles;
+    private final Dimension dimension;
 
     public Scene(Dimension screenSize) {
         this.setPreferredSize(screenSize);
+        dimension = screenSize;
     }
 
     public void setPlayers(ArrayList<Player> players) {
@@ -31,40 +33,14 @@ public class Scene extends JPanel implements MouseListener, ActionListener {
         Graphics2D graphics2D = (Graphics2D) graphics;
 
         for (Player player : players) {
-            graphics2D.drawOval(player.getX() - 30, player.getY() - 50, 50, 50);
+            graphics2D.drawRect(player.getX(), player.getY(), player.getxSize(), player.getySize());
         }
         for (Obstacle obstacle : obstacles) {
             graphics2D.drawRect(obstacle.getX(), obstacle.getY(), obstacle.getxSize(), obstacle.getySize());
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        repaint();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
+    public Dimension getDimension() {
+        return dimension;
     }
 }
