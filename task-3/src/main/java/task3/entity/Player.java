@@ -7,8 +7,8 @@ import task3.server.commands.player.ControllerCommand;
 import java.util.LinkedList;
 
 public class Player extends Entity{
-    protected final Controller playerController;
-    protected final int velocity = 5;
+    protected Controller playerController;
+    protected int velocity = 5;
     public Player(Controller playerController) {
         this.playerController = playerController;
         xSize = 30;

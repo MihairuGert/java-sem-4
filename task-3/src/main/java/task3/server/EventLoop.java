@@ -16,13 +16,13 @@ import java.util.ArrayList;
 // TODO: Rename
 public class EventLoop implements ActionListener {
     Timer timer;
+    ArrayList<Undead> undeads = new ArrayList<>();
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<Obstacle> obstacles = new ArrayList<>();
     Scene scene;
 
     public EventLoop(Scene scene) {
         timer = new Timer(1, this);
-        timer.start();
         // TODO: REMOVE OR MAKE AN ARRAY LIST
         this.scene = scene;
         obstacles.add(new Obstacle(100,100,100,100));
@@ -30,9 +30,16 @@ public class EventLoop implements ActionListener {
         obstacles.add(new Obstacle(220,330/2,100,100));
         obstacles.add(new Obstacle(300,600,100,500));
         addBoundaries();
+
         Undead boba = new Undead(new AIController());
+        Undead biba = new Undead(new AIController());
+        undeads.add(boba);
+        undeads.add(biba);
         players.add(boba);
-        boba.move(500,500);
+        players.add(biba);
+        boba.move(600,500);
+        biba.move(500,500);
+        timer.start();
     }
 
     @Override
@@ -47,8 +54,8 @@ public class EventLoop implements ActionListener {
                     Collision.handleCollision(p, player);
                 }
             }
-            System.out.println(p.getX() + " " + p.getY());
         }
+        // TODO ADD HERE VISION
         scene.setPlayers(players);
         scene.setObstacles(obstacles);
         scene.repaint();
@@ -56,6 +63,9 @@ public class EventLoop implements ActionListener {
 
     public void addPlayer(Player player) {
         players.add(player);
+        for (Undead undead : undeads) {
+            undead.setEntityToChase(player);
+        }
     }
 
     private void addBoundaries() {

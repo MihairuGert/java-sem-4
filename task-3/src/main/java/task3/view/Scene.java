@@ -31,12 +31,15 @@ public class Scene extends JPanel {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
-
-        for (Player player : players) {
-            graphics2D.drawRect(player.getX(), player.getY(), player.getxSize(), player.getySize());
+        if (players != null) {
+            for (Player player : players) {
+                graphics2D.drawRect(player.getX(), player.getY(), player.getxSize(), player.getySize());
+            }
         }
-        for (Obstacle obstacle : obstacles) {
-            graphics2D.drawRect(obstacle.getX(), obstacle.getY(), obstacle.getxSize(), obstacle.getySize());
+        if (obstacles != null) {
+            for (Obstacle obstacle : obstacles) {
+                graphics2D.drawRect(obstacle.getX(), obstacle.getY(), obstacle.getxSize(), obstacle.getySize());
+            }
         }
     }
 
