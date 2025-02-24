@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 public class Player extends Entity{
     protected Controller playerController;
-    protected int velocity = 5;
+    protected int velocity = 8;
     public Player(Controller playerController) {
         this.playerController = playerController;
         xSize = 30;

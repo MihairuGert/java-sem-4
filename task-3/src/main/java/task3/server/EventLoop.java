@@ -31,14 +31,12 @@ public class EventLoop implements ActionListener {
         obstacles.add(new Obstacle(300,600,100,500));
         addBoundaries();
 
-        Undead boba = new Undead(new AIController());
-        Undead biba = new Undead(new AIController());
-        undeads.add(boba);
-        undeads.add(biba);
-        players.add(boba);
-        players.add(biba);
-        boba.move(600,500);
-        biba.move(500,500);
+        for (int i = 0; i < 5; i++) {
+            Undead boba = new Undead(new AIController());
+            players.add(boba);
+            undeads.add(boba);
+            boba.move(500+(int)(Math.random()*1000)%500, 500+(int)(Math.random()*1000)%500);
+        }
         timer.start();
     }
 

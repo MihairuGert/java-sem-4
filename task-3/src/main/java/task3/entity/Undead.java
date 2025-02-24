@@ -12,7 +12,7 @@ public class Undead extends Player {
 
     public Undead(Controller AIController) {
         super(AIController);
-        velocity = 2;
+        velocity = 1+(int)(Math.random()*100)%2;
     }
 
     public int getVisionRangeX() {
@@ -27,21 +27,15 @@ public class Undead extends Player {
         LinkedList<ControllerCommand> trace = new LinkedList<>();
         if (entity.getX() > x) {
             trace.add(ControllerCommand.RIGHT);
-            if (entity.getY() < y) {
-                trace.add(ControllerCommand.UP);
-            }
-            else if (entity.getY() > y) {
-                trace.add(ControllerCommand.DOWN);
-            }
         }
         else if (entity.getX() < x) {
             trace.add(ControllerCommand.LEFT);
-            if (entity.getY() < y) {
-                trace.add(ControllerCommand.UP);
-            }
-            else if (entity.getY() > y) {
-                trace.add(ControllerCommand.DOWN);
-            }
+        }
+        if (entity.getY() < y) {
+            trace.add(ControllerCommand.UP);
+        }
+        else if (entity.getY() > y) {
+            trace.add(ControllerCommand.DOWN);
         }
         return trace;
     }
