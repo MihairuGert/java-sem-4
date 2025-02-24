@@ -1,6 +1,6 @@
 package task3.view;
 
-import task3.controller.Controller;
+import task3.controller.PlayerController;
 
 import javax.swing.*;
 import java.net.URL;
@@ -29,8 +29,8 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public void setController(Controller controller) {
-        this.add(controller);
+    public void setController(PlayerController playerController) {
+        this.add(playerController);
     }
 //
 //    public void paint(Graphics graphics) {

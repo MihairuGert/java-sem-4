@@ -1,8 +1,8 @@
 package task3;
 
-import task3.controller.Controller;
+import task3.controller.PlayerController;
 import task3.entity.Player;
-import task3.server.GameLifeCycle;
+import task3.server.EventLoop;
 import task3.view.MainWindow;
 import task3.controller.SystemConfig;
 import task3.view.Scene;
@@ -13,11 +13,11 @@ public class Game {
         Scene scene = new Scene(systemConfig.getScreenSize());
         MainWindow mainWindow = new MainWindow();
         mainWindow.setScene(scene);
-        Controller controller = new Controller(systemConfig.getScreenSize());
-        mainWindow.setController(controller);
-        Player player = new Player(controller);
-        GameLifeCycle gameLifeCycle = new GameLifeCycle(scene);
-        gameLifeCycle.addPlayer(player);
+        PlayerController playerController = new PlayerController(systemConfig.getScreenSize());
+        mainWindow.setController(playerController);
+        Player player = new Player(playerController);
+        EventLoop eventLoop = new EventLoop(scene);
+        eventLoop.addPlayer(player);
     }
 
 }

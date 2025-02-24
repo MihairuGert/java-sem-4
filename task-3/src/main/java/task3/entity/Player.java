@@ -1,20 +1,21 @@
 package task3.entity;
 
 import task3.controller.Controller;
+import task3.controller.PlayerController;
 import task3.server.commands.player.ControllerCommand;
 
 import java.util.LinkedList;
 
 public class Player extends Entity{
-    private final Controller controller;
-    private final int velocity = 10;
-    public Player(Controller controller) {
-        this.controller = controller;
+    protected final Controller playerController;
+    protected final int velocity = 5;
+    public Player(Controller playerController) {
+        this.playerController = playerController;
         xSize = 30;
         ySize = 30;
     }
     public LinkedList<ControllerCommand> getInput() {
-        return controller.getActiveCommands();
+        return playerController.getActiveCommands();
     }
     public int getPositiveXNextPosition() {
         return x + velocity;

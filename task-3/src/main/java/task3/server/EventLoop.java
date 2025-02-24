@@ -1,8 +1,9 @@
 package task3.server;
 
+import task3.controller.AIController;
 import task3.entity.Obstacle;
 import task3.entity.Player;
-import task3.server.commands.player.ControllerCommand;
+import task3.entity.Undead;
 import task3.server.commands.player.Movement;
 import task3.view.Scene;
 
@@ -11,16 +12,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 // TODO: Rename
-public class GameLifeCycle implements ActionListener {
+public class EventLoop implements ActionListener {
     Timer timer;
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<Obstacle> obstacles = new ArrayList<>();
     Scene scene;
 
-    public GameLifeCycle(Scene scene) {
+    public EventLoop(Scene scene) {
         timer = new Timer(1, this);
         timer.start();
         // TODO: REMOVE OR MAKE AN ARRAY LIST
@@ -30,6 +30,9 @@ public class GameLifeCycle implements ActionListener {
         obstacles.add(new Obstacle(220,330/2,100,100));
         obstacles.add(new Obstacle(300,600,100,500));
         addBoundaries();
+        Undead boba = new Undead(new AIController());
+        players.add(boba);
+        boba.move(500,500);
     }
 
     @Override
@@ -38,6 +41,11 @@ public class GameLifeCycle implements ActionListener {
             Movement.execute(p, p.getInput());
             for (Obstacle o : obstacles) {
                 Collision.handleCollision(p, o);
+            }
+            for (Player player : players) {
+                if (p != player) {
+                    Collision.handleCollision(p, player);
+                }
             }
             System.out.println(p.getX() + " " + p.getY());
         }
