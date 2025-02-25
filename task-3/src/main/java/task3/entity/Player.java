@@ -4,6 +4,7 @@ import task3.controller.Controller;
 import task3.controller.PlayerController;
 import task3.server.commands.player.ControllerCommand;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 public class Player extends Entity{
@@ -16,6 +17,9 @@ public class Player extends Entity{
     }
     public LinkedList<ControllerCommand> getInput() {
         return playerController.getActiveCommands();
+    }
+    public Point getMousePoint() {
+        return playerController.getPoint();
     }
     public int getPositiveXNextPosition() {
         return x + velocity;

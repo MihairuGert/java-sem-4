@@ -46,6 +46,10 @@ public class EventLoop implements ActionListener {
             Movement.execute(p, p.getInput());
             for (Obstacle o : obstacles) {
                 Collision.handleCollision(p, o);
+                if (p.getMousePoint() != null) {
+                    if (Bullet.isHit(new Point(p.getX(), p.getY()), p.getMousePoint(), o))
+                        System.out.println("ЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕ");
+                }
             }
             for (Player player : players) {
                 if (p != player) {

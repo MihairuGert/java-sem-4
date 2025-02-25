@@ -13,11 +13,14 @@ import java.io.InputStream;
 import java.util.*;
 
 public class PlayerController extends JPanel implements KeyListener, MouseListener, Controller {
-    HashMap<String, Key> activeKeys = new HashMap<>();
+    HashMap<String, Key> activeKeys;
+    Point activePoint;
 
     public PlayerController(Dimension screenSize) {
         InputStream inputStream = PlayerController.class.getResourceAsStream("/keybindings.properties");
         Properties properties = new Properties();
+        activeKeys = new HashMap<>();
+        activePoint = new Point();
         try {
             properties.load(inputStream);
             for (String keyChar : properties.stringPropertyNames()) {
@@ -42,6 +45,9 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
         LinkedList<ControllerCommand> commands = new LinkedList<>();
         activeKeys.forEach((key, value) -> { if (value.isKeyActive()) commands.push(value.getName());});
         return commands;
+    }
+    public Point getPoint() {
+        return activePoint;
     }
 
     @Override
@@ -70,12 +76,12 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        activePoint = MouseInfo.getPointerInfo().getLocation();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        activePoint = null;
     }
 
     @Override
