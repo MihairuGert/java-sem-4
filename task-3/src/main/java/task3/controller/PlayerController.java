@@ -76,7 +76,7 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
 
     @Override
     public void mousePressed(MouseEvent e) {
-        activePoint = MouseInfo.getPointerInfo().getLocation();
+        activePoint = e.getPoint();
     }
 
     @Override

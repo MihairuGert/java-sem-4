@@ -5,6 +5,7 @@ import task3.entity.Obstacle;
 import task3.entity.Player;
 import task3.entity.Undead;
 import task3.server.commands.player.Movement;
+import task3.server.commands.player.Fire;
 import task3.view.Scene;
 
 import javax.swing.*;
@@ -31,7 +32,7 @@ public class EventLoop implements ActionListener {
         obstacles.add(new Obstacle(300,600,100,500));
         addBoundaries();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 0; i++) {
             Undead boba = new Undead(new AIController());
             players.add(boba);
             undeads.add(boba);
@@ -46,15 +47,15 @@ public class EventLoop implements ActionListener {
             Movement.execute(p, p.getInput());
             for (Obstacle o : obstacles) {
                 Collision.handleCollision(p, o);
-                if (p.getMousePoint() != null) {
-                    if (Bullet.isHit(new Point(p.getX(), p.getY()), p.getMousePoint(), o))
-                        System.out.println("ЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕ");
-                }
             }
             for (Player player : players) {
                 if (p != player) {
                     Collision.handleCollision(p, player);
                 }
+            }
+            if (p.getMousePoint() != null) {
+                Fire.isHit(new Point(p.getX(), p.getY()), p.getMousePoint(), obstacles.get(0));
+                    //System.out.println("ЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕ");
             }
         }
         // TODO ADD HERE VISION
