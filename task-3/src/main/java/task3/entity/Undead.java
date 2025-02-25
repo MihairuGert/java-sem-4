@@ -3,6 +3,7 @@ package task3.entity;
 import task3.controller.Controller;
 import task3.server.commands.player.ControllerCommand;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 public class Undead extends Player {
@@ -46,6 +47,14 @@ public class Undead extends Player {
 
     @Override
     public LinkedList<ControllerCommand> getInput() {
+        if (entityToChase == null) {
+            return new LinkedList<>();
+        }
         return getTrace(entityToChase);
+    }
+
+    @Override
+    public Point getMousePoint() {
+        return null;
     }
 }

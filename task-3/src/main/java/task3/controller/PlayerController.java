@@ -14,13 +14,12 @@ import java.util.*;
 
 public class PlayerController extends JPanel implements KeyListener, MouseListener, Controller {
     HashMap<String, Key> activeKeys;
-    Point activePoint;
+    Point activePoint = null;
 
     public PlayerController(Dimension screenSize) {
         InputStream inputStream = PlayerController.class.getResourceAsStream("/keybindings.properties");
         Properties properties = new Properties();
         activeKeys = new HashMap<>();
-        activePoint = new Point();
         try {
             properties.load(inputStream);
             for (String keyChar : properties.stringPropertyNames()) {

@@ -17,14 +17,16 @@ import java.util.ArrayList;
 // TODO: Rename
 public class EventLoop implements ActionListener {
     Timer timer;
-    ArrayList<Undead> undeads = new ArrayList<>();
+
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<Obstacle> obstacles = new ArrayList<>();
+
     Scene scene;
 
     public EventLoop(Scene scene) {
         timer = new Timer(1, this);
         // TODO: REMOVE OR MAKE AN ARRAY LIST
+        // TODO: SEPARATE PLAYERS AND UNDEAD
         this.scene = scene;
         obstacles.add(new Obstacle(100,100,100,100));
         obstacles.add(new Obstacle(100,240,100,100));
@@ -32,10 +34,9 @@ public class EventLoop implements ActionListener {
         obstacles.add(new Obstacle(300,600,100,500));
         addBoundaries();
 
-        for (int i = 0; i < 0; i++) {
+        for (int i = 0; i < 5; i++) {
             Undead boba = new Undead(new AIController());
             players.add(boba);
-            undeads.add(boba);
             boba.move(100+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
         }
         timer.start();
@@ -51,13 +52,16 @@ public class EventLoop implements ActionListener {
             for (Player player : players) {
                 if (p != player) {
                     Collision.handleCollision(p, player);
+                    Point point = p.getMousePoint();
+                    if (point != null) {
+                        if (Fire.isHit(new Point(p.getX(), p.getY()), point, player)) {
+                            player.kill();
+                        }
+                    }
                 }
             }
-            if (p.getMousePoint() != null) {
-                Fire.isHit(new Point(p.getX(), p.getY()), p.getMousePoint(), obstacles.get(0));
-                    //System.out.println("ЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕЕСТЬ ПРОБИТИЕ");
-            }
         }
+        players.removeIf(Player::isDead);
         // TODO ADD HERE VISION
         scene.setPlayers(players);
         scene.setObstacles(obstacles);
@@ -66,8 +70,10 @@ public class EventLoop implements ActionListener {
 
     public void addPlayer(Player player) {
         players.add(player);
-        for (Undead undead : undeads) {
-            undead.setEntityToChase(player);
+        for (Player undead : players) {
+            if (undead.getClass().getName().equals("task3.entity.Undead")) {
+                ((Undead) undead).setEntityToChase(player);
+            }
         }
     }
 

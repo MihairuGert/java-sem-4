@@ -5,6 +5,7 @@ public class Entity {
     protected int y = 0;
     protected int xSize = 0;
     protected int ySize = 0;
+
     public int getxSize() {
         return xSize;
     }
