@@ -35,7 +35,7 @@ public class EventLoop implements ActionListener {
             Undead boba = new Undead(new AIController());
             players.add(boba);
             undeads.add(boba);
-            boba.move(500+(int)(Math.random()*1000)%500, 500+(int)(Math.random()*1000)%500);
+            boba.move(100+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
         }
         timer.start();
     }

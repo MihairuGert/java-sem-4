@@ -22,13 +22,17 @@ public class Movement {
                     break;
                 case CROUCH:
                     player.setSize(20,20);
+                    player.setVelocity(4);
                     break;
                 default:
                     break;
             }
         }
         if (!commands.contains(ControllerCommand.CROUCH)) {
-            player.setSize(30, 30);
+            if (!player.getClass().getName().equals("task3.entity.Undead")) {
+                player.setSize(30, 30);
+                player.setVelocity(8);
+            }
         }
     }
 }

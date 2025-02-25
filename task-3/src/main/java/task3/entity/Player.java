@@ -29,5 +29,8 @@ public class Player extends Entity{
     public int getNegativeYNextPosition() {
         return y - velocity;
     }
+    public void setVelocity(int velocity) {
+        this.velocity = velocity;
+    }
 
 }
