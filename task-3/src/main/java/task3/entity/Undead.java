@@ -2,6 +2,8 @@ package task3.entity;
 
 import task3.controller.Controller;
 import task3.server.commands.player.ControllerCommand;
+import task3.weapon.Weapon;
+import task3.weapon.ZombieClaw;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -14,6 +16,7 @@ public class Undead extends Player {
     public Undead(Controller AIController) {
         super(AIController);
         velocity = 1+(int)(Math.random()*100)%2;
+        weapon = new ZombieClaw();
     }
 
     public int getVisionRangeX() {
@@ -55,6 +58,6 @@ public class Undead extends Player {
 
     @Override
     public Point getMousePoint() {
-        return null;
+        return new Point(x, y);
     }
 }

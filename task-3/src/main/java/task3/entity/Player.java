@@ -1,8 +1,8 @@
 package task3.entity;
 
 import task3.controller.Controller;
-import task3.controller.PlayerController;
 import task3.server.commands.player.ControllerCommand;
+import task3.weapon.Melee;
 import task3.weapon.Weapon;
 
 import java.awt.*;
@@ -10,6 +10,11 @@ import java.util.LinkedList;
 
 public class Player extends Entity{
     protected Controller playerController;
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = new Melee();
+    }
+
     protected Weapon weapon;
     protected int velocity = 8;
 

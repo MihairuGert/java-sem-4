@@ -6,7 +6,6 @@ import task3.entity.Obstacle;
 import task3.entity.Player;
 import task3.entity.Undead;
 import task3.server.commands.player.Movement;
-import task3.server.commands.world.Shoot;
 import task3.view.Scene;
 
 import javax.swing.*;
@@ -39,7 +38,7 @@ public class EventLoop implements ActionListener {
         for (int i = 0; i < 30; i++) {
             Undead boba = new Undead(new AIController());
             players.add(boba);
-            boba.move(100+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
+            boba.move(300+(int)(Math.random()*1000)%500, 300+(int)(Math.random()*1000)%500);
         }
         timer.start();
     }

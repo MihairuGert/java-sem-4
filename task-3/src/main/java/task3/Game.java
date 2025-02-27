@@ -6,6 +6,7 @@ import task3.server.EventLoop;
 import task3.view.MainWindow;
 import task3.controller.SystemConfig;
 import task3.view.Scene;
+import task3.weapon.Melee;
 
 public class Game {
     public void runGame() {
@@ -16,6 +17,7 @@ public class Game {
         PlayerController playerController = new PlayerController(systemConfig.getScreenSize());
         mainWindow.setController(playerController);
         Player player = new Player(playerController);
+        player.setWeapon(new Melee());
         EventLoop eventLoop = new EventLoop(scene);
         eventLoop.addPlayer(player);
     }

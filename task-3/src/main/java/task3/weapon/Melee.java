@@ -1,7 +1,7 @@
 package task3.weapon;
 
 public class Melee extends Weapon {
-    Melee() {
-        range = 100;
+    public Melee() {
+        range = 50;
     }
 }
