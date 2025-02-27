@@ -5,6 +5,7 @@ public class Entity {
     protected int y = 0;
     protected int xSize = 0;
     protected int ySize = 0;
+    protected boolean isDead = false;
 
     public int getxSize() {
         return xSize;
@@ -25,5 +26,13 @@ public class Entity {
     }
     public int getY() {
         return y;
+    }
+
+    public void kill() {
+        isDead = true;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 }

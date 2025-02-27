@@ -1,11 +1,12 @@
 package task3.server;
 
 import task3.controller.AIController;
+import task3.entity.Entity;
 import task3.entity.Obstacle;
 import task3.entity.Player;
 import task3.entity.Undead;
 import task3.server.commands.player.Movement;
-import task3.server.commands.player.Fire;
+import task3.server.commands.world.Shoot;
 import task3.view.Scene;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 // TODO: Rename
 public class EventLoop implements ActionListener {
@@ -34,7 +36,7 @@ public class EventLoop implements ActionListener {
         obstacles.add(new Obstacle(300,600,100,500));
         addBoundaries();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 30; i++) {
             Undead boba = new Undead(new AIController());
             players.add(boba);
             boba.move(100+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
@@ -44,21 +46,21 @@ public class EventLoop implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        LinkedList<Entity> entities = new LinkedList<>();
+        entities.addAll(players);
+        entities.addAll(obstacles);
         for (Player p : players) {
             Movement.execute(p, p.getInput());
-            for (Obstacle o : obstacles) {
-                Collision.handleCollision(p, o);
-            }
-            for (Player player : players) {
-                if (p != player) {
-                    Collision.handleCollision(p, player);
-                    Point point = p.getMousePoint();
-                    if (point != null) {
-                        if (Fire.isHit(new Point(p.getX(), p.getY()), point, player)) {
-                            player.kill();
-                        }
-                    }
+            Point point = p.getMousePoint();
+            for (Entity entity : entities) {
+                if (p != entity) {
+                    Collision.handleCollision(p, entity);
+                    p.tryAttack(point, entity);
                 }
+            }
+            Entity entity = p.whoWasKilled();
+            if (entity != null) {
+                entity.kill();
             }
         }
         players.removeIf(Player::isDead);

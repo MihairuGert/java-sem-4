@@ -8,4 +8,5 @@ import java.util.LinkedList;
 public interface Controller {
     LinkedList<ControllerCommand> getActiveCommands();
     Point getPoint();
+    void setPointNull();
 }

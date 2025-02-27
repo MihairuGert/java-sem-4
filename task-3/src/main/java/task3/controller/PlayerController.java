@@ -50,6 +50,11 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
     }
 
     @Override
+    public void setPointNull() {
+        activePoint = null;
+    }
+
+    @Override
     public void keyTyped(KeyEvent e) {
 
     }

@@ -1,4 +1,4 @@
-package task3.server.commands.player;
+package task3.server.commands.world;
 
 import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
@@ -6,7 +6,7 @@ import task3.entity.Entity;
 
 import java.awt.*;
 
-public class Fire {
+public class Shoot {
     public static boolean isHit(Point point1, Point point2, Entity entity) {
         SimpleMatrix A = new SimpleMatrix(2,2,true,
                 entity.getxSize(), point1.x - point2.x, 0, point1.y - point2.y);
@@ -59,4 +59,7 @@ public class Fire {
 
         return false;
     }
+
+
+
 }

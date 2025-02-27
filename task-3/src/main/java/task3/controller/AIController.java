@@ -16,4 +16,7 @@ public class AIController implements Controller {
         return null;
     }
 
+    @Override
+    public void setPointNull() {}
+
 }
