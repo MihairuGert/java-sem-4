@@ -30,6 +30,7 @@ public class Scene extends JPanel {
         this.setPreferredSize(screenSize);
         dimension = screenSize;
         obstacleTextures = new HashMap<>();
+        setDoubleBuffered(true);
 
         URL iconURL = getClass().getResource("/zombie.png");
         if (iconURL != null)

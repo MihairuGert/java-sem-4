@@ -25,7 +25,7 @@ public class EventLoop implements ActionListener {
     Scene scene;
 
     public EventLoop(Scene scene) {
-        timer = new Timer(1, this);
+        timer = new Timer(10, this);
         // TODO: REMOVE OR MAKE AN ARRAY LIST
         // TODO: SEPARATE PLAYERS AND UNDEAD
         this.scene = scene;
@@ -38,7 +38,7 @@ public class EventLoop implements ActionListener {
         for (int i = 0; i < 30; i++) {
             Undead boba = new Undead(new AIController());
             players.add(boba);
-            boba.move(300+(int)(Math.random()*1000)%500, 300+(int)(Math.random()*1000)%500);
+            boba.move(300+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
         }
         timer.start();
     }
