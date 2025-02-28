@@ -80,10 +80,10 @@ public class EventLoop implements ActionListener {
 
     private void addBoundaries() {
         Dimension dim = scene.getDimension();
-        obstacles.add(new Obstacle(0,0,dim.width,10));
-        obstacles.add(new Obstacle(dim.width - 20,0, 10, dim.height));
-        obstacles.add(new Obstacle(0, dim.height - 100, dim.width, 10));
-        obstacles.add(new Obstacle(0,0,10, dim.height));
+        obstacles.add(new Obstacle(0,0,dim.width,30));
+        obstacles.add(new Obstacle(dim.width - 20,0, 30, dim.height));
+        obstacles.add(new Obstacle(0, dim.height - 100, dim.width, 30));
+        obstacles.add(new Obstacle(0,0,30, dim.height));
     }
 
 }
