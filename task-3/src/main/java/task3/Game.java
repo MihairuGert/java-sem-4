@@ -17,7 +17,6 @@ public class Game {
         PlayerController playerController = new PlayerController(systemConfig.getScreenSize());
         mainWindow.setController(playerController);
         Player player = new Player(playerController);
-        player.setWeapon(new Melee());
         EventLoop eventLoop = new EventLoop(scene);
         eventLoop.addPlayer(player);
     }
