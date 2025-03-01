@@ -7,7 +7,7 @@ import task3.entity.Player;
 import task3.entity.Undead;
 import task3.server.commands.player.Movement;
 import task3.sound.SoundPlayer;
-import task3.view.Scene;
+import task3.view.GameField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,13 +23,13 @@ public class EventLoop implements ActionListener {
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<Obstacle> obstacles = new ArrayList<>();
 
-    Scene scene;
+    GameField gameField;
 
-    public EventLoop(Scene scene) {
+    public EventLoop(GameField gameField) {
         timer = new Timer(10, this);
         // TODO: REMOVE OR MAKE AN ARRAY LIST
         // TODO: SEPARATE PLAYERS AND UNDEAD
-        this.scene = scene;
+        this.gameField = gameField;
         obstacles.add(new Obstacle(100,100,100,100));
         obstacles.add(new Obstacle(100,240,100,100));
         obstacles.add(new Obstacle(220,330/2,100,100));
@@ -68,9 +68,9 @@ public class EventLoop implements ActionListener {
         }
         players.removeIf(Player::isDead);
         // ADD AWT EVENT THREAD SO VIEW BE INDEPENDENT
-        scene.setPlayers(players);
-        scene.setObstacles(obstacles);
-        scene.repaint();
+        gameField.setPlayers(players);
+        gameField.setObstacles(obstacles);
+        gameField.repaint();
     }
 
     public void addPlayer(Player player) {
@@ -83,7 +83,7 @@ public class EventLoop implements ActionListener {
     }
 
     private void addBoundaries() {
-        Dimension dim = scene.getDimension();
+        Dimension dim = gameField.getDimension();
         obstacles.add(new Obstacle(0,0,dim.width,30));
         obstacles.add(new Obstacle(dim.width - 20,0, 30, dim.height));
         obstacles.add(new Obstacle(0, dim.height - 100, dim.width, 30));
