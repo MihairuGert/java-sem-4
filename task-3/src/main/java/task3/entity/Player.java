@@ -31,6 +31,7 @@ public class Player extends Entity{
         Point lookPoint = ((PlayerController)playerController).getLookPoint();
         if (lookPoint == null) {
             rotationAngle = 0;
+            return;
         }
         double norm = Math.hypot(lookPoint.y - playerCenterY, lookPoint.x - playerCenterX);
         if (lookPoint.x > playerCenterX) {
