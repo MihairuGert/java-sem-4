@@ -21,8 +21,8 @@ public class MainWindow extends JFrame {
         this.setIconImage(icon.getImage());
     }
 
-    public void setScene(GameField gameField) {
-        this.add(gameField);
+    public void setScene(Scene scene) {
+        this.add(scene);
         this.pack();
         if (!isVisible) {
             this.setVisible(true);
