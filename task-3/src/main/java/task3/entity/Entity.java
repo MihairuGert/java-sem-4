@@ -7,6 +7,16 @@ public class Entity {
     protected int ySize = 0;
     protected boolean isDead = false;
 
+    public int getRotationAngle() {
+        return rotationAngle;
+    }
+
+    public void setRotationAngle(int rotationAngle) {
+        this.rotationAngle = rotationAngle;
+    }
+
+    protected int rotationAngle = 0;
+
     public int getxSize() {
         return xSize;
     }

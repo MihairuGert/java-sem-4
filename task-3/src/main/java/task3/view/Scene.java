@@ -59,14 +59,15 @@ public class Scene extends JPanel {
         graphics2D.drawImage(backgroundTexture, 0,0,null);
         if (players != null) {
             for (Player player : players) {
-                //graphics2D.drawRect(player.getX(), player.getY(), player.getxSize(), player.getySize());
+                graphics2D.drawRect(player.getX(), player.getY(), player.getxSize(), player.getySize());
                 if (player.getClass().getName().equals("task3.entity.Player")) {
-                    //AffineTransform oldTransform = graphics2D.getTransform();
-                    //graphics2D.rotate(Math.toRadians(rotationAngle), player.getX() + (double)player.getxSize() / 2, player.getY() + (double)player.getySize() / 2);
+                    AffineTransform oldTransform = graphics2D.getTransform();
+                    graphics2D.rotate(Math.toRadians(rotationAngle), player.getX() + (double)player.getxSize() / 2, player.getY() + (double)player.getySize() / 2);
                     graphics2D.drawImage(playerTexture, player.getX() - 5, player.getY() - 5, null);
-                    //graphics2D.setTransform(oldTransform);
+                    graphics2D.setTransform(oldTransform);
                 } else if (player.getClass().getName().equals("task3.entity.Undead")) {
                     graphics2D.drawImage(zombieTexture, player.getX() - 5, player.getY() - 5, null);
+                    graphics2D.drawRect(player.getX(), player.getY(), player.getxSize(), player.getySize());
                 }
             }
         }
@@ -82,10 +83,10 @@ public class Scene extends JPanel {
                 graphics2D.drawRect(obstacle.getX(), obstacle.getY(), obstacle.getxSize(), obstacle.getySize());
             }
         }
-//        rotationAngle += 1;
-//        if (rotationAngle >= 360) {
-//            rotationAngle = 0;
-//        }
+        rotationAngle += 1;
+        if (rotationAngle >= 360) {
+            rotationAngle = 0;
+        }
     }
 
     public Dimension getDimension() {

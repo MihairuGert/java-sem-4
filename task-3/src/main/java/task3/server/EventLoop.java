@@ -54,7 +54,8 @@ public class EventLoop implements ActionListener {
             for (Entity entity : entities) {
                 if (p != entity) {
                     Collision.handleCollision(p, entity);
-                    p.tryAttack(point, entity);
+                    //if (p.getClass().getName().equals("task3.entity.Player"))
+                        p.tryAttack(point, entity);
                 }
             }
             Entity entity = p.whoWasKilled();
@@ -64,6 +65,7 @@ public class EventLoop implements ActionListener {
         }
         players.removeIf(Player::isDead);
         // TODO ADD HERE VISION
+        // ADD AWT EVENT THREAD SO VIEW BE INDEPENDENT
         scene.setPlayers(players);
         scene.setObstacles(obstacles);
         scene.repaint();
