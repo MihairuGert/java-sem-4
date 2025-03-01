@@ -4,10 +4,7 @@ import task3.server.commands.player.ControllerCommand;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -15,6 +12,11 @@ import java.util.*;
 public class PlayerController extends JPanel implements KeyListener, MouseListener, Controller {
     HashMap<String, Key> activeKeys;
     Point activePoint = null;
+    Point lookPoint = null;
+
+    public Point getLookPoint() {
+        return lookPoint;
+    }
 
     public PlayerController(Dimension screenSize) {
         InputStream inputStream = PlayerController.class.getResourceAsStream("/keybindings.properties");
@@ -33,6 +35,14 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
         this.addKeyListener(this);
         this.setFocusable(true);
         this.setPreferredSize(screenSize);
+        addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                lookPoint = e.getPoint();
+            }
+            @Override
+            public void mouseDragged(MouseEvent e) {}
+        });
     }
 
     public void print() {
@@ -43,6 +53,7 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
     public LinkedList<ControllerCommand> getActiveCommands() {
         LinkedList<ControllerCommand> commands = new LinkedList<>();
         activeKeys.forEach((key, value) -> { if (value.isKeyActive()) commands.push(value.getName());});
+
         return commands;
     }
     public Point getPoint() {
