@@ -6,6 +6,7 @@ import task3.entity.Obstacle;
 import task3.entity.Player;
 import task3.entity.Undead;
 import task3.server.commands.player.Movement;
+import task3.sound.SoundPlayer;
 import task3.view.Scene;
 
 import javax.swing.*;
@@ -51,6 +52,9 @@ public class EventLoop implements ActionListener {
         for (Player p : players) {
             Movement.execute(p, p.getInput());
             Point point = p.getMousePoint();
+            if (point != null && p.getClass().getName().equals("task3.entity.Player")) {
+                SoundPlayer.playShoot();
+            }
             for (Entity entity : entities) {
                 if (p != entity) {
                     Collision.handleCollision(p, entity);

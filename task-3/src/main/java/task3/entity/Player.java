@@ -3,6 +3,7 @@ package task3.entity;
 import task3.controller.Controller;
 import task3.controller.PlayerController;
 import task3.server.commands.player.ControllerCommand;
+import task3.sound.SoundPlayer;
 import task3.weapon.Melee;
 import task3.weapon.Weapon;
 
