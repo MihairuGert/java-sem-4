@@ -26,11 +26,16 @@ public class MainWindow extends JFrame {
         this.pack();
         if (!isVisible) {
             this.setVisible(true);
+            isVisible = true;
         }
+        this.revalidate();
+        this.repaint();
     }
 
     public void removeScene(Scene scene) {
         this.remove(scene);
+        this.revalidate();
+        this.repaint();
     }
 
     public void setController(PlayerController playerController) {

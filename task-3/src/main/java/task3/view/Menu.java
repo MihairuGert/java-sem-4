@@ -15,6 +15,8 @@ public class Menu extends Scene implements ActionListener {
     public Menu(Dimension screenSize, MenuListener menuListener) {
         super(screenSize);
         this.setLayout(null);
+        this.setOpaque(true);
+        this.setBackground(Color.BLACK);
         this.menuListener = menuListener;
 
         singlePlayerButton = new JButton("Single player");

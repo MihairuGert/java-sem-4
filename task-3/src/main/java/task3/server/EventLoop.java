@@ -17,15 +17,16 @@ import java.util.LinkedList;
 public class EventLoop implements ActionListener {
     Timer timer;
 
+    ArrayList<Player> players = new ArrayList<>();
     ArrayList<Movable> movables = new ArrayList<>();
     ArrayList<Obstacle> obstacles = new ArrayList<>();
+    EventLoopListener eventLoopListener;
 
     GameField gameField;
 
-    public EventLoop(GameField gameField) {
+    public EventLoop(GameField gameField, EventLoopListener eventLoopListener) {
         timer = new Timer(10, this);
         // TODO: REMOVE OR MAKE AN ARRAY LIST
-        // TODO: SEPARATE PLAYERS AND UNDEAD
         this.gameField = gameField;
         obstacles.add(new Obstacle(100,100,100,100));
         obstacles.add(new Obstacle(100,240,100,100));
@@ -38,6 +39,9 @@ public class EventLoop implements ActionListener {
             movables.add(boba);
             boba.move(300+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
         }
+
+        this.eventLoopListener = eventLoopListener;
+
         timer.start();
     }
 
@@ -64,14 +68,27 @@ public class EventLoop implements ActionListener {
             }
         }
         movables.removeIf(Movable::isDead);
+        players.removeIf(Player::isDead);
+
+        if (arePlayersDead()) {
+            timer.stop();
+            eventLoopListener.endGame();
+        }
+
         // ADD AWT EVENT THREAD SO VIEW BE INDEPENDENT
+
         gameField.setPlayers(movables);
         gameField.setObstacles(obstacles);
         gameField.repaint();
     }
 
+    private boolean arePlayersDead() {
+        return players.isEmpty();
+    }
+
     public void addPlayer(Player player) {
         movables.add(player);
+        players.add(player);
         for (Movable undead : movables) {
             if (undead.getClass().getName().equals("task3.entity.Undead")) {
                 ((Undead) undead).setEntityToChase(player);
