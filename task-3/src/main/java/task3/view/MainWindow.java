@@ -29,6 +29,10 @@ public class MainWindow extends JFrame {
         }
     }
 
+    public void removeScene(Scene scene) {
+        this.remove(scene);
+    }
+
     public void setController(PlayerController playerController) {
         this.add(playerController);
     }

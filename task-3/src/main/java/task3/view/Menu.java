@@ -10,11 +10,13 @@ public class Menu extends Scene implements ActionListener {
     private JButton singlePlayerButton;
     private JButton multiPlayerButton;
     private JButton exitButton;
-    private boolean isStart = false;
+    private MenuListener menuListener;
 
-    public Menu(Dimension screenSize) {
+    public Menu(Dimension screenSize, MenuListener menuListener) {
         super(screenSize);
         this.setLayout(null);
+        this.menuListener = menuListener;
+
         singlePlayerButton = new JButton("Single player");
         singlePlayerButton.setBounds(50,100,200, 100);
         singlePlayerButton.addActionListener(this);
@@ -33,6 +35,8 @@ public class Menu extends Scene implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == singlePlayerButton) {
+            menuListener.startSingleplayer();
+        }
     }
 }

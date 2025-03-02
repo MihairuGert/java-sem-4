@@ -7,20 +7,48 @@ import task3.view.MainWindow;
 import task3.controller.SystemConfig;
 import task3.view.GameField;
 import task3.view.Menu;
+import task3.view.MenuListener;
 
-public class Game {
+import javax.swing.*;
+
+public class Game implements MenuListener {
+    private SystemConfig systemConfig;
+    private MainWindow mainWindow;
+    private Menu menu;
+
     public void runGame() {
-        SystemConfig systemConfig = new SystemConfig();
+        systemConfig = new SystemConfig();
+        mainWindow = new MainWindow();
 
-        MainWindow mainWindow = new MainWindow();
-        Menu menu = new Menu(systemConfig.getScreenSize());
+        menu = new Menu(systemConfig.getScreenSize(), this);
         mainWindow.setScene(menu);
-//        GameField gameField = new GameField(systemConfig.getScreenSize());
-//        mainWindow.setScene(gameField);
-//        PlayerController playerController = new PlayerController(systemConfig.getScreenSize());
-//        mainWindow.setController(playerController);
-//        Player player = new Player(playerController);
-//        EventLoop eventLoop = new EventLoop(gameField);
-//        eventLoop.addPlayer(player);
+    }
+
+    @Override
+    public void startSingleplayer() {
+        mainWindow.removeScene(menu);
+        GameField gameField = new GameField(systemConfig.getScreenSize());
+
+        mainWindow.setScene(gameField);
+
+        PlayerController playerController = new PlayerController(systemConfig.getScreenSize());
+        mainWindow.setController(playerController);
+
+        playerController.setFocusable(true);
+        playerController.requestFocusInWindow();
+
+        Player player = new Player(playerController);
+        EventLoop eventLoop = new EventLoop(gameField);
+        eventLoop.addPlayer(player);
+    }
+
+    @Override
+    public void startMultiplayer() {
+
+    }
+
+    @Override
+    public void exit() {
+
     }
 }
