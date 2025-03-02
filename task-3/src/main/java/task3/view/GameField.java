@@ -1,7 +1,7 @@
 package task3.view;
 
+import task3.entity.Movable;
 import task3.entity.Obstacle;
-import task3.entity.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameField extends Scene {
-    private ArrayList<Player> players;
+    private ArrayList<Movable> movables;
     private ArrayList<Obstacle> obstacles;
     private final HashMap<Dimension, Image> obstacleTextures;
 
@@ -38,8 +38,8 @@ public class GameField extends Scene {
             wallTexture = new ImageIcon(iconURL).getImage();
     }
 
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
+    public void setPlayers(ArrayList<Movable> players) {
+        this.movables = players;
     }
     public void setObstacles(ArrayList<Obstacle> obstacles) {
         this.obstacles = obstacles;
@@ -49,17 +49,17 @@ public class GameField extends Scene {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
         graphics2D.drawImage(backgroundTexture, 0,0,null);
-        if (players != null) {
-            for (Player player : players) {
-                //graphics2D.drawRect(player.getX(), player.getY(), player.getxSize(), player.getySize());
-                if (player.getClass().getName().equals("task3.entity.Player")) {
+        if (movables != null) {
+            for (Movable movable : movables) {
+                //graphics2D.drawRect(movable.getX(), movable.getY(), movable.getxSize(), movable.getySize());
+                if (movable.getClass().getName().equals("task3.entity.Player")) {
                     AffineTransform oldTransform = graphics2D.getTransform();
-                    graphics2D.rotate(Math.toRadians(player.getRotationAngle()), player.getX() + (double)player.getxSize() / 2, player.getY() + (double)player.getySize() / 2);
-                    graphics2D.drawImage(playerTexture, player.getX() - 5, player.getY() - 5, null);
+                    graphics2D.rotate(Math.toRadians(movable.getRotationAngle()), movable.getX() + (double) movable.getxSize() / 2, movable.getY() + (double) movable.getySize() / 2);
+                    graphics2D.drawImage(playerTexture, movable.getX() - 5, movable.getY() - 5, null);
                     graphics2D.setTransform(oldTransform);
-                } else if (player.getClass().getName().equals("task3.entity.Undead")) {
-                    graphics2D.drawImage(zombieTexture, player.getX() - 5, player.getY() - 5, null);
-                    //graphics2D.drawRect(player.getX(), player.getY(), player.getxSize(), player.getySize());
+                } else if (movable.getClass().getName().equals("task3.entity.Undead")) {
+                    graphics2D.drawImage(zombieTexture, movable.getX() - 5, movable.getY() - 5, null);
+                    //graphics2D.drawRect(movable.getX(), movable.getY(), movable.getxSize(), movable.getySize());
                 }
             }
         }

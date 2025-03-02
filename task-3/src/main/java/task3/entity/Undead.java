@@ -2,29 +2,18 @@ package task3.entity;
 
 import task3.controller.Controller;
 import task3.server.commands.player.ControllerCommand;
-import task3.weapon.Weapon;
 import task3.weapon.ZombieClaw;
 
 import java.awt.*;
 import java.util.LinkedList;
 
-public class Undead extends Player {
-    private int visionRangeX = 100;
-    private int visionRangeY = 100;
+public class Undead extends Movable {
     Entity entityToChase;
 
     public Undead(Controller AIController) {
         super(AIController);
         velocity = 1+(int)(Math.random()*100)%2;
         weapon = new ZombieClaw();
-    }
-
-    public int getVisionRangeX() {
-        return visionRangeX;
-    }
-
-    public int getVisionRangeY() {
-        return visionRangeY;
     }
 
     public LinkedList<ControllerCommand> getTrace(Entity entity) {

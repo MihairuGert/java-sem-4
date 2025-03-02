@@ -1,10 +1,7 @@
 package task3.server;
 
 import task3.controller.AIController;
-import task3.entity.Entity;
-import task3.entity.Obstacle;
-import task3.entity.Player;
-import task3.entity.Undead;
+import task3.entity.*;
 import task3.server.commands.player.Movement;
 import task3.sound.SoundPlayer;
 import task3.view.GameField;
@@ -20,7 +17,7 @@ import java.util.LinkedList;
 public class EventLoop implements ActionListener {
     Timer timer;
 
-    ArrayList<Player> players = new ArrayList<>();
+    ArrayList<Movable> movables = new ArrayList<>();
     ArrayList<Obstacle> obstacles = new ArrayList<>();
 
     GameField gameField;
@@ -38,7 +35,7 @@ public class EventLoop implements ActionListener {
 
         for (int i = 0; i < 30; i++) {
             Undead boba = new Undead(new AIController());
-            players.add(boba);
+            movables.add(boba);
             boba.move(300+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
         }
         timer.start();
@@ -47,9 +44,9 @@ public class EventLoop implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         LinkedList<Entity> entities = new LinkedList<>();
-        entities.addAll(players);
+        entities.addAll(movables);
         entities.addAll(obstacles);
-        for (Player p : players) {
+        for (Movable p : movables) {
             Movement.execute(p, p.getInput());
             Point point = p.getMousePoint();
             if (point != null && p.getClass().getName().equals("task3.entity.Player")) {
@@ -66,16 +63,16 @@ public class EventLoop implements ActionListener {
                 entity.kill();
             }
         }
-        players.removeIf(Player::isDead);
+        movables.removeIf(Movable::isDead);
         // ADD AWT EVENT THREAD SO VIEW BE INDEPENDENT
-        gameField.setPlayers(players);
+        gameField.setPlayers(movables);
         gameField.setObstacles(obstacles);
         gameField.repaint();
     }
 
     public void addPlayer(Player player) {
-        players.add(player);
-        for (Player undead : players) {
+        movables.add(player);
+        for (Movable undead : movables) {
             if (undead.getClass().getName().equals("task3.entity.Undead")) {
                 ((Undead) undead).setEntityToChase(player);
             }

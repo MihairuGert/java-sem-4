@@ -1,11 +1,11 @@
 package task3.server.commands.player;
 
-import task3.entity.Player;
+import task3.entity.Movable;
 
 import java.util.LinkedList;
 
 public class Movement {
-    static public void execute(Player player, LinkedList<ControllerCommand> commands) {
+    static public void execute(Movable player, LinkedList<ControllerCommand> commands) {
         for (ControllerCommand command : commands) {
             switch (command) {
                 case UP:

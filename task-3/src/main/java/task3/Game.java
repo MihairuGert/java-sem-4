@@ -1,6 +1,7 @@
 package task3;
 
 import task3.controller.PlayerController;
+import task3.entity.Movable;
 import task3.entity.Player;
 import task3.server.EventLoop;
 import task3.view.MainWindow;
@@ -8,8 +9,6 @@ import task3.controller.SystemConfig;
 import task3.view.GameField;
 import task3.view.Menu;
 import task3.view.MenuListener;
-
-import javax.swing.*;
 
 public class Game implements MenuListener {
     private SystemConfig systemConfig;
