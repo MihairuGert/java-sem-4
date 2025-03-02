@@ -4,7 +4,9 @@ import task3.controller.Controller;
 import task3.server.commands.player.ControllerCommand;
 import task3.weapon.ZombieClaw;
 
+import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.LinkedList;
 
 public class Undead extends Movable {
@@ -14,6 +16,9 @@ public class Undead extends Movable {
         super(AIController);
         velocity = 1+(int)(Math.random()*100)%2;
         weapon = new ZombieClaw();
+        URL iconURL = getClass().getResource("/zombie.png");
+        if (iconURL != null)
+            texture = new ImageIcon(iconURL).getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT);
     }
 
     public LinkedList<ControllerCommand> getTrace(Entity entity) {

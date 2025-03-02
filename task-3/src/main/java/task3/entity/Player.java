@@ -6,12 +6,17 @@ import task3.server.commands.player.ControllerCommand;
 import task3.weapon.Melee;
 import task3.weapon.Weapon;
 
+import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.LinkedList;
 
 public class Player extends Movable{
     public Player(PlayerController playerController) {
         super(playerController);
+        URL iconURL = getClass().getResource("/player/range/player.png");
+        if (iconURL != null)
+            texture = new ImageIcon(iconURL).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
     }
     private void calculateAngle() {
         int playerCenterX = x + xSize / 2;

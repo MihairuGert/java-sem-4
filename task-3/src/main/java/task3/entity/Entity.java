@@ -1,16 +1,23 @@
 package task3.entity;
 
+import java.awt.*;
+
 public class Entity {
     protected int x = 0;
     protected int y = 0;
     protected int xSize = 0;
     protected int ySize = 0;
     protected boolean isDead = false;
+    protected Image texture = null;
 
     protected double rotationAngle = 0;
 
     public double getRotationAngle() {
         return rotationAngle;
+    }
+
+    public Image getTexture() {
+        return texture;
     }
 
     public void setRotationAngle(int rotationAngle) {
