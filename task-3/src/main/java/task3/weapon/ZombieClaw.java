@@ -2,8 +2,8 @@ package task3.weapon;
 
 import task3.entity.Entity;
 
-public class VirusClaw extends Melee{
-    public VirusClaw() {
+public class ZombieClaw extends Melee{
+    public ZombieClaw() {
         range = 50;
     }
 
