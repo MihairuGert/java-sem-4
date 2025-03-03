@@ -28,12 +28,8 @@ public class EventLoop implements ActionListener {
         timer = new Timer(10, this);
         // TODO: REMOVE OR MAKE AN ARRAY LIST
         this.gameField = gameField;
-        obstacles.add(new Obstacle(100,100,100,100));
-        obstacles.add(new Obstacle(100,240,100,100));
-        obstacles.add(new Obstacle(220,330/2,100,100));
-        obstacles.add(new Obstacle(300,600,100,500));
         addBoundaries();
-
+        createMap();
         for (int i = 0; i < 30; i++) {
             Undead boba = new Undead(new AIController());
             movables.add(boba);
@@ -98,10 +94,58 @@ public class EventLoop implements ActionListener {
 
     private void addBoundaries() {
         Dimension dim = gameField.getDimension();
-        obstacles.add(new Obstacle(0,0,dim.width,30));
+        obstacles.add(new Obstacle(-20,-20, dim.width,30));
         obstacles.add(new Obstacle(dim.width - 20,0, 30, dim.height));
-        obstacles.add(new Obstacle(0, dim.height - 100, dim.width, 30));
-        obstacles.add(new Obstacle(0,0,30, dim.height));
+        obstacles.add(new Obstacle(-20, dim.height - 100, dim.width, 30));
+        obstacles.add(new Obstacle(-20,-20,30, dim.height));
     }
 
+    private void createDebugMap() {
+        obstacles.add(new Obstacle(100,100,100,100));
+        obstacles.add(new Obstacle(100,240,100,100));
+        obstacles.add(new Obstacle(220,330/2,100,100));
+        obstacles.add(new Obstacle(300,600,100,500));
+    }
+
+    private void createMap() {
+        Dimension dim = gameField.getDimension();
+
+        obstacles.add(new Obstacle(dim.width - 120, 0, 50, dim.height / 3));
+        obstacles.add(new Obstacle(dim.width - 400, 0, 50, dim.height / 4));
+        obstacles.add(new Obstacle(dim.width - 400, dim.height / 3 - 50, 280, 50));
+        obstacles.add(new Obstacle(dim.width - 120, dim.height / 3 + 50, 50, dim.height / 2));
+        obstacles.add(new Obstacle(dim.width - 200, dim.height / 3 + 50, 50, dim.height / 2));
+        obstacles.add(new Obstacle(dim.width - 280, dim.height / 3 + 50, 50, dim.height / 2));
+
+        obstacles.add(new Obstacle(50, 0, 40, dim.height / 2));
+        obstacles.add(new Obstacle(50, dim.height / 2 - 100, 180, 40));
+        obstacles.add(new Obstacle(200, dim.height / 2 - 100, 40, 180));
+        obstacles.add(new Obstacle(100, dim.height / 2 + 50, 20, 100));
+        obstacles.add(new Obstacle(150, dim.height / 2 + 50, 20, 100));
+
+        obstacles.add(new Obstacle(dim.width / 2 - 120, dim.height / 2 - 60, 100, 100));
+        obstacles.add(new Obstacle(dim.width / 2 + 20, dim.height / 2 - 60, 100, 100));
+        obstacles.add(new Obstacle(dim.width / 2 - 60, dim.height / 2 + 60, 120, 20));
+
+
+        obstacles.add(new Obstacle(dim.width - 500, dim.height - 150, 150, 40));
+        obstacles.add(new Obstacle(dim.width - 550, dim.height / 2, 40, 120));
+        obstacles.add(new Obstacle(dim.width - 600, dim.height / 2 + 100, 20, 100));
+        obstacles.add(new Obstacle(dim.width - 450, dim.height / 2 + 100, 20, 100));
+
+        obstacles.add(new Obstacle(dim.width / 2 - 200, 100, 400, 30));
+        obstacles.add(new Obstacle(dim.width / 2 - 200, dim.height - 240, 400, 30));
+
+        obstacles.add(new Obstacle(300, 200, 60, 60));
+        obstacles.add(new Obstacle(dim.width - 360, dim.height - 200, 60, 60));
+
+        obstacles.add(new Obstacle(400, dim.height - 150, 20, 100));
+        obstacles.add(new Obstacle(500, dim.height - 200, 20, 100));
+        obstacles.add(new Obstacle(600, dim.height - 250, 20, 100));
+
+        obstacles.add(new Obstacle(50, dim.height - 350, 200, 20));
+        obstacles.add(new Obstacle(150, dim.height - 300, 20, 100));
+        obstacles.add(new Obstacle(250, dim.height - 250, 20, 100));
+        obstacles.add(new Obstacle(300, dim.height - 200, 100, 20));
+    }
 }
