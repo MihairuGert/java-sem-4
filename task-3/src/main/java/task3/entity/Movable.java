@@ -50,7 +50,7 @@ public class Movable extends Entity{
         if (point == null) {
             return;
         }
-        weapon.isHit(new Point(x, y), point, entity);
+        weapon.isHit(new Point(x + xSize / 2, y + ySize / 2), point, entity);
     }
     public Entity whoWasKilled() {
         playerController.setPointNull();
