@@ -15,6 +15,30 @@ public class Menu extends Scene implements ActionListener {
     private JButton exitButton;
     private MenuListener menuListener;
 
+    private final int buttonHeight = 150;
+    private final int buttonWidth = 300;
+    private final int xOffset = 60;
+    private final int yOffset = 100;
+    private final int rangeBetweenButtons = 25;
+    private int buttonsNum = 0;
+
+    private JButton addButton(String path) {
+        buttonsNum++;
+        URL iconURL = getClass().getResource(path);
+        Icon texture = null;
+        if (iconURL != null) {
+            Image image = new ImageIcon(iconURL).getImage().getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_DEFAULT);
+            texture = new ImageIcon(image);
+        }
+        JButton button = new JButton(texture);
+        button.setBounds(xOffset,yOffset + (buttonHeight + rangeBetweenButtons) * buttonsNum, buttonWidth, buttonHeight);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.addActionListener(this);
+        return button;
+    }
+
     public Menu(Dimension screenSize, MenuListener menuListener) {
         super(screenSize);
         this.setLayout(null);
@@ -22,26 +46,13 @@ public class Menu extends Scene implements ActionListener {
         this.setBackground(Color.lightGray);
         this.menuListener = menuListener;
 
-        URL iconURL = getClass().getResource("/singleplayerButton.png");
-        Icon texture = null;
-        if (iconURL != null)
-            texture = new ImageIcon(iconURL);
-        singlePlayerButton = new JButton(texture);
-        singlePlayerButton.setBounds(50,100,200, 100);
-        singlePlayerButton.setBorderPainted(false);
-        singlePlayerButton.setContentAreaFilled(false);
-        singlePlayerButton.setFocusPainted(false);
-        singlePlayerButton.addActionListener(this);
+        singlePlayerButton = addButton("/singleplayerButton.png");
         this.add(singlePlayerButton);
 
-        multiPlayerButton = new JButton("Multiplayer");
-        multiPlayerButton.setBounds(50,100 + 200,200, 100);
-        multiPlayerButton.addActionListener(this);
+        multiPlayerButton = addButton("/multiplayerButton.png");
         this.add(multiPlayerButton);
 
-        exitButton = new JButton("Exit game");
-        exitButton.setBounds(50,100 + 200 * 2,200, 100);
-        exitButton.addActionListener(this);
+        exitButton = addButton("/exitButton.png");
         this.add(exitButton);
     }
 
@@ -49,6 +60,9 @@ public class Menu extends Scene implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == singlePlayerButton) {
             menuListener.startSingleplayer();
+        }
+        else if (e.getSource() == exitButton) {
+            menuListener.exit();
         }
     }
 }

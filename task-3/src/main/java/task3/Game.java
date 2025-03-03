@@ -57,7 +57,7 @@ public class Game implements MenuListener, EventLoopListener {
 
     @Override
     public void exit() {
-
+        mainWindow.dispose();
     }
 
     @Override
