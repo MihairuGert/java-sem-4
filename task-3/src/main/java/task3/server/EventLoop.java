@@ -139,7 +139,7 @@ public class EventLoop implements ActionListener {
         obstacles.add(new Obstacle(300, 200, 60, 60));
         obstacles.add(new Obstacle(dim.width - 360, dim.height - 200, 60, 60));
 
-        obstacles.add(new Obstacle(400, dim.height - 150, 20, 100));
+        obstacles.add(new Obstacle(400, dim.height - 100, 20, 100));
         obstacles.add(new Obstacle(500, dim.height - 200, 20, 100));
         obstacles.add(new Obstacle(600, dim.height - 250, 20, 100));
 
