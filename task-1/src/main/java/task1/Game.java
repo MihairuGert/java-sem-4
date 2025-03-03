@@ -29,7 +29,7 @@ public class Game {
                 gameInterface.printSuccess();
                 break;
             }
-            gameInterface.printCowsAndBulls(countCows(inputString), countBulls(inputString));
+            gameInterface.printCowsAndBulls(countCows(inputString) - countBulls(inputString), countBulls(inputString));
         }
     }
     private int countCows(String string) {
