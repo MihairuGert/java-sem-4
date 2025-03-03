@@ -1,9 +1,12 @@
 package task3.view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class Menu extends Scene implements ActionListener {
 
@@ -16,11 +19,18 @@ public class Menu extends Scene implements ActionListener {
         super(screenSize);
         this.setLayout(null);
         this.setOpaque(true);
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.lightGray);
         this.menuListener = menuListener;
 
-        singlePlayerButton = new JButton("Single player");
+        URL iconURL = getClass().getResource("/singleplayerButton.png");
+        Icon texture = null;
+        if (iconURL != null)
+            texture = new ImageIcon(iconURL);
+        singlePlayerButton = new JButton(texture);
         singlePlayerButton.setBounds(50,100,200, 100);
+        singlePlayerButton.setBorderPainted(false);
+        singlePlayerButton.setContentAreaFilled(false);
+        singlePlayerButton.setFocusPainted(false);
         singlePlayerButton.addActionListener(this);
         this.add(singlePlayerButton);
 
