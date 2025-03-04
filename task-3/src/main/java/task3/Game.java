@@ -12,6 +12,7 @@ import task3.view.Menu;
 
 import java.awt.*;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class Game implements MenuListener, GameModelListener {
     }
 
     private void joinGame() {
-        try (Socket socket = new Socket("localhost", 49001)) {
+        try (Socket socket = new Socket("192.168.0.120", 49001)) {
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
