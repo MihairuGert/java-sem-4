@@ -1,19 +1,16 @@
 package task3;
 
 import task3.controller.PlayerController;
-import task3.entity.Movable;
 import task3.entity.Player;
-import task3.server.EventLoop;
-import task3.server.EventLoopListener;
+import task3.server.GameModel;
+import task3.server.GameModelListener;
 import task3.view.MainWindow;
 import task3.controller.SystemConfig;
 import task3.view.GameField;
 import task3.view.Menu;
 import task3.view.MenuListener;
 
-import java.awt.*;
-
-public class Game implements MenuListener, EventLoopListener {
+public class Game implements MenuListener, GameModelListener {
     private SystemConfig systemConfig;
     private MainWindow mainWindow;
     private Menu menu;
@@ -46,8 +43,8 @@ public class Game implements MenuListener, EventLoopListener {
         playerController.requestFocusInWindow();
 
         Player player = new Player(playerController);
-        EventLoop eventLoop = new EventLoop(gameField, this);
-        eventLoop.addPlayer(player);
+        GameModel gameModel = new GameModel(this, gameField);
+        gameModel.addPlayer(player);
     }
 
     @Override
