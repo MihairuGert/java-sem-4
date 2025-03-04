@@ -26,7 +26,6 @@ public class GameModel implements EventLoopListener {
         return obstacles;
     }
 
-    //[ipets
     private Dimension getScreenSize() {
         int minX = Integer.MAX_VALUE;
         int minY = Integer.MAX_VALUE;

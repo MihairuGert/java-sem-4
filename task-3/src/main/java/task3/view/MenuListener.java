@@ -4,4 +4,5 @@ public interface MenuListener {
     void startSingleplayer();
     void startMultiplayer();
     void exit();
+    void goBack();
 }
