@@ -44,7 +44,7 @@ public class GameMenu extends Menu{
             menuListener.startSingleplayer();
         }
         else if (e.getSource() == multiPlayerButton) {
-            menuListener.startMultiplayer();
+            menuListener.startMultiplayerMenu();
         }
         else if (e.getSource() == exitButton) {
             menuListener.exit();

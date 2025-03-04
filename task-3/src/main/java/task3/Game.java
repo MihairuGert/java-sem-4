@@ -11,6 +11,9 @@ import task3.controller.SystemConfig;
 import task3.view.Menu;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -54,9 +57,26 @@ public class Game implements MenuListener, GameModelListener {
     }
 
     @Override
-    public void startMultiplayer() {
+    public void startMultiplayerMenu() {
         mainWindow.remove(gameMenu);
         mainWindow.setScene(multiplayerMenu);
+    }
+
+    private void hostGame() {
+        try (ServerSocket serverSocket = new ServerSocket(6969)) {
+            Socket client = serverSocket.accept();
+            System.out.println("Есть контакт");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void joinGame() {
+        try (Socket socket = new Socket("localhost", 6969)) {
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -68,6 +88,16 @@ public class Game implements MenuListener, GameModelListener {
     public void goBack() {
         mainWindow.remove(multiplayerMenu);
         mainWindow.setScene(gameMenu);
+    }
+
+    @Override
+    public void host() {
+        hostGame();
+    }
+
+    @Override
+    public void join() {
+        joinGame();
     }
 
     @Override

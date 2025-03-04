@@ -40,6 +40,12 @@ public class MultiplayerMenu extends Menu{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == hostButton) {
+            menuListener.host();
+        }
+        if (e.getSource() == joinButton) {
+            menuListener.join();
+        }
         if (e.getSource() == exitButton) {
             menuListener.goBack();
         }
