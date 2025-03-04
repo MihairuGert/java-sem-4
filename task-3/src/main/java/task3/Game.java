@@ -63,7 +63,8 @@ public class Game implements MenuListener, GameModelListener {
     }
 
     private void hostGame() {
-        try (ServerSocket serverSocket = new ServerSocket(6969)) {
+        try (ServerSocket serverSocket = new ServerSocket(49001)) {
+            System.out.println("Я сказала стартуем");
             Socket client = serverSocket.accept();
             System.out.println("Есть контакт");
         } catch (IOException e) {
@@ -72,7 +73,7 @@ public class Game implements MenuListener, GameModelListener {
     }
 
     private void joinGame() {
-        try (Socket socket = new Socket("localhost", 6969)) {
+        try (Socket socket = new Socket("localhost", 49001)) {
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
