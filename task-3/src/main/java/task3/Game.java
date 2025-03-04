@@ -1,6 +1,8 @@
 package task3;
 
 import task3.controller.PlayerController;
+import task3.entity.Movable;
+import task3.entity.Obstacle;
 import task3.entity.Player;
 import task3.server.GameModel;
 import task3.server.GameModelListener;
@@ -9,6 +11,10 @@ import task3.controller.SystemConfig;
 import task3.view.GameField;
 import task3.view.Menu;
 import task3.view.MenuListener;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Game implements MenuListener, GameModelListener {
     private SystemConfig systemConfig;
@@ -43,7 +49,7 @@ public class Game implements MenuListener, GameModelListener {
         playerController.requestFocusInWindow();
 
         Player player = new Player(playerController);
-        GameModel gameModel = new GameModel(this, gameField);
+        GameModel gameModel = new GameModel(this);
         gameModel.addPlayer(player);
     }
 
@@ -62,5 +68,17 @@ public class Game implements MenuListener, GameModelListener {
         mainWindow.removeScene(gameField);
         mainWindow.remove(playerController);
         continueGame();
+    }
+
+    @Override
+    public Dimension getScreenSize() {
+        return systemConfig.getScreenSize();
+    }
+
+    @Override
+    public void update(ArrayList<Movable> movables, ArrayList<Obstacle> obstacles) {
+        gameField.setPlayers(movables);
+        gameField.setObstacles(obstacles);
+        gameField.repaint();
     }
 }

@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class GameField extends Scene {
     private ArrayList<Movable> movables;

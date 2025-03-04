@@ -18,12 +18,10 @@ import java.util.LinkedList;
 public class EventLoop implements ActionListener {
     Timer timer;
     GameModel gameModel;
-    EventLoopListener eventLoopListener;
 
     public EventLoop(GameModel gameModel) {
         this.gameModel = gameModel;
         timer = new Timer(10, this);
-        // TODO: REMOVE OR MAKE AN ARRAY LIST
         timer.start();
     }
 

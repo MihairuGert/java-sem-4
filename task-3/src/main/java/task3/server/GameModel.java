@@ -8,6 +8,7 @@ import task3.entity.Undead;
 import task3.view.GameField;
 
 import java.awt.*;
+import java.io.DataInput;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -15,26 +16,33 @@ public class GameModel implements EventLoopListener {
     private final ArrayList<Player> players = new ArrayList<>();
     private final ArrayList<Movable> movables = new ArrayList<>();
     private final ArrayList<Obstacle> obstacles = new ArrayList<>();
-    private final LinkedList<GameModelListener> gameModelListeners = new LinkedList<>();
-    private final GameField gameField;
+    private final ArrayList<GameModelListener> gameModelListeners = new ArrayList<>();
     private EventLoop eventLoop;
 
-    ArrayList<Player> getPlayers() {
-        return players;
-    }
     ArrayList<Movable> getMovables() {
         return movables;
     }
     ArrayList<Obstacle> getObstacles() {
         return obstacles;
     }
-    public GameModel(GameModelListener gameModelListener, GameField gameField) {
-        this.gameField = gameField;
+
+    //[ipets
+    private Dimension getScreenSize() {
+        int minX = Integer.MAX_VALUE;
+        int minY = Integer.MAX_VALUE;
+        for (GameModelListener gameModelListener : gameModelListeners) {
+            minX = Math.min(gameModelListener.getScreenSize().width, minX);
+            minY = Math.min(gameModelListener.getScreenSize().height, minY);
+        }
+        return new Dimension(minX, minY);
+    }
+
+    public GameModel(GameModelListener gameModelListener) {
+        addGameModelListener(gameModelListener);
         addBoundaries();
         createMap();
         spawnZombie();
         eventLoop = new EventLoop(this);
-        addGameModelListener(gameModelListener);
     }
     public void addGameModelListener(GameModelListener gameModelListener) {
         gameModelListeners.add(gameModelListener);
@@ -47,7 +55,7 @@ public class GameModel implements EventLoopListener {
         }
     }
     private void addBoundaries() {
-        Dimension dim = gameField.getDimension();
+        Dimension dim = getScreenSize();
         obstacles.add(new Obstacle(-20,-20, dim.width,30));
         obstacles.add(new Obstacle(dim.width - 20,0, 30, dim.height));
         obstacles.add(new Obstacle(-20, dim.height - 100, dim.width, 30));
@@ -62,7 +70,7 @@ public class GameModel implements EventLoopListener {
     }
 
     private void createMap() {
-        Dimension dim = gameField.getDimension();
+        Dimension dim = getScreenSize();
 
         obstacles.add(new Obstacle(dim.width - 120, 0, 50, dim.height / 3));
         obstacles.add(new Obstacle(dim.width - 400, 0, 50, dim.height / 4));
@@ -107,9 +115,9 @@ public class GameModel implements EventLoopListener {
         players.removeIf(Player::isDead);
     }
     void update() {
-        gameField.setPlayers(movables);
-        gameField.setObstacles(obstacles);
-        gameField.repaint();
+        for (GameModelListener gameModelListener : gameModelListeners) {
+            gameModelListener.update(movables, obstacles);
+        }
     }
 
     boolean arePlayersDead() {
