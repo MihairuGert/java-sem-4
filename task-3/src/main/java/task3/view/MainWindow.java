@@ -41,11 +41,4 @@ public class MainWindow extends JFrame {
     public void setController(PlayerController playerController) {
         this.add(playerController);
     }
-//
-//    public void paint(Graphics graphics) {
-//        scene.paint(graphics);
-//    }
-//
-
-
 }

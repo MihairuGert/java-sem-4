@@ -17,6 +17,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
 
 public class Game implements MenuListener, GameModelListener {
     private SystemConfig systemConfig;
@@ -64,17 +67,21 @@ public class Game implements MenuListener, GameModelListener {
     }
 
     private void hostGame() {
-        try (ServerSocket serverSocket = new ServerSocket(49001)) {
-            System.out.println("Я сказала стартуем");
-            Socket client = serverSocket.accept();
-            System.out.println("Есть контакт");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        multiplayerMenu.showHostIp();
+        new Thread(() -> {
+            try (ServerSocket serverSocket = new ServerSocket(49001)) {
+                System.out.println("Я сказала стартуем");
+                Socket client = serverSocket.accept();
+                System.out.println("Есть контакт");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }).start();
     }
 
     private void joinGame() {
-        try (Socket socket = new Socket("192.168.0.120", 49001)) {
+        String ip = multiplayerMenu.writeHostIp();
+        try (Socket socket = new Socket(ip, 49001)) {
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
