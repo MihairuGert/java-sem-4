@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.LinkedList;
 
 public class Movable extends Entity{
+    // todo add transient
     protected Controller controller;
 
     public void setWeapon(Weapon weapon) {

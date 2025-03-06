@@ -21,6 +21,8 @@ public class Entity implements Serializable {
         return texture;
     }
 
+    public void setTexture() {}
+
     public void setRotationAngle(int rotationAngle) {
         this.rotationAngle = rotationAngle;
     }

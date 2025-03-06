@@ -21,7 +21,7 @@ public class EventLoop implements ActionListener {
 
     public EventLoop(GameModel gameModel) {
         this.gameModel = gameModel;
-        timer = new Timer(2, this);
+        timer = new Timer(10, this);
         timer.start();
     }
 

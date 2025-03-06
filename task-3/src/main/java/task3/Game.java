@@ -1,11 +1,13 @@
 package task3;
 
 import task3.controller.PlayerController;
+import task3.entity.Entity;
 import task3.entity.Movable;
 import task3.entity.Obstacle;
 import task3.entity.Player;
 import task3.network.Client;
 import task3.network.Host;
+import task3.network.SavedGame;
 import task3.server.GameModel;
 import task3.server.GameModelListener;
 import task3.view.*;
@@ -105,7 +107,30 @@ public class Game implements MenuListener, GameModelListener {
                 }
             }
         }).start();
+        while (true) {
+            SavedGame savedGame = client.receiveGameData();
+            ArrayList<Movable> movables = savedGame.getMovables();
+            ArrayList<Obstacle> obstacles = savedGame.getObstacles();
+            assignTexture(movables);
+            assignTextureObs(obstacles);
+            update(movables, obstacles);
+        }
     }
+
+    private void assignTexture(ArrayList<Movable> entities) {
+        for (Entity entity : entities) {
+            entity.setTexture();
+        }
+    }
+
+    // todo fix this bullshit using polymorphism
+    private void assignTextureObs(ArrayList<Obstacle> entities) {
+        for (Entity entity : entities) {
+            entity.setTexture();
+        }
+    }
+
+
 
     @Override
     public void exit() {

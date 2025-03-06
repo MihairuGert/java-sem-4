@@ -21,6 +21,12 @@ public class Undead extends Movable {
             texture = new ImageIcon(iconURL).getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT);
     }
 
+    public void setTexture() {
+        URL iconURL = getClass().getResource("/zombie.png");
+        if (iconURL != null)
+            texture = new ImageIcon(iconURL).getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT);
+    }
+
     public LinkedList<ControllerCommand> getTrace(Entity entity) {
         LinkedList<ControllerCommand> trace = new LinkedList<>();
         if (entity.getX() > x) {
