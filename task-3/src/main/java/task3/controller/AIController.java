@@ -19,4 +19,9 @@ public class AIController implements Controller {
     @Override
     public void setPointNull() {}
 
+    @Override
+    public Point getLookPoint() {
+        return null;
+    }
+
 }

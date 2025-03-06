@@ -95,9 +95,16 @@ public class Game implements MenuListener, GameModelListener {
         playerController.requestFocusInWindow();
 
         Player player = new Player(playerController);
-        while (true) {
-            client.sendPlayerInputInfo(player);
-        }
+        new Thread(() -> {
+            while (true) {
+                client.sendPlayerInputInfo(player);
+                try {
+                    sleep(16);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override

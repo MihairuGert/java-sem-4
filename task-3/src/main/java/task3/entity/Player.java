@@ -23,7 +23,7 @@ public class Player extends Movable{
     private void calculateAngle() {
         int playerCenterX = x + xSize / 2;
         int playerCenterY = y + ySize / 2;
-        Point lookPoint = ((PlayerController)controller).getLookPoint();
+        Point lookPoint = controller.getLookPoint();
         if (lookPoint == null) {
             rotationAngle = 0;
             return;

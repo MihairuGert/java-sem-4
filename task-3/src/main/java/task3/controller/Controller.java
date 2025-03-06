@@ -9,4 +9,5 @@ public interface Controller {
     LinkedList<ControllerCommand> getActiveCommands();
     Point getPoint();
     void setPointNull();
+    public Point getLookPoint();
 }
