@@ -14,6 +14,7 @@ import task3.view.*;
 import task3.controller.SystemConfig;
 import task3.view.Menu;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -31,6 +32,7 @@ public class Game implements MenuListener, GameModelListener {
     private GameField gameField;
     private PlayerController playerController;
     private GameModel gameModel;
+    private Host host = null;
 
     public void runGame() {
         systemConfig = new SystemConfig();
@@ -78,7 +80,7 @@ public class Game implements MenuListener, GameModelListener {
         mainWindow.removeScene(multiplayerMenu);
         // some timeout prob
         initializeGame();
-        Host host = new Host(gameModel);
+        host = new Host(gameModel);
     }
 
     private void joinGame() {
@@ -107,14 +109,16 @@ public class Game implements MenuListener, GameModelListener {
                 }
             }
         }).start();
-        while (true) {
-            SavedGame savedGame = client.receiveGameData();
-            ArrayList<Movable> movables = savedGame.getMovables();
-            ArrayList<Obstacle> obstacles = savedGame.getObstacles();
-            assignTexture(movables);
-            assignTextureObs(obstacles);
-            update(movables, obstacles);
-        }
+        new Thread(() -> {
+            while (true) {
+                SavedGame savedGame = client.receiveGameData();
+                ArrayList<Movable> movables = savedGame.getMovables();
+                ArrayList<Obstacle> obstacles = savedGame.getObstacles();
+                assignTexture(movables);
+                assignTextureObs(obstacles);
+                update(movables, obstacles);
+            }
+        }).start();
     }
 
     private void assignTexture(ArrayList<Movable> entities) {
@@ -129,8 +133,6 @@ public class Game implements MenuListener, GameModelListener {
             entity.setTexture();
         }
     }
-
-
 
     @Override
     public void exit() {
@@ -167,6 +169,9 @@ public class Game implements MenuListener, GameModelListener {
 
     @Override
     public void update(ArrayList<Movable> movables, ArrayList<Obstacle> obstacles) {
+        if (host != null) {
+            host.sendUpdate(new SavedGame(obstacles, movables));
+        }
         gameField.setPlayers(movables);
         gameField.setObstacles(obstacles);
         gameField.repaint();

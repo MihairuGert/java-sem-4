@@ -40,7 +40,7 @@ public class Host {
 
     public void sendUpdate(SavedGame savedGame) {
         for (ClientHandler clientHandler : clientHandlers) {
-
+            clientHandler.sendSavedGame(savedGame);
         }
     }
 }
