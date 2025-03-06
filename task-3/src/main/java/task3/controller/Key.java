@@ -2,7 +2,9 @@ package task3.controller;
 
 import task3.server.commands.player.ControllerCommand;
 
-public class Key {
+import java.io.Serializable;
+
+public class Key implements Serializable {
     private char keyChar;
     private boolean isKeyActive;
     private ControllerCommand controllerCommand;

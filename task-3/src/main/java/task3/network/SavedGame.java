@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SavedGame implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private ArrayList<Player> players = new ArrayList<>();
     private ArrayList<Movable> movables = new ArrayList<>();
     private ArrayList<Obstacle> obstacles = new ArrayList<>();

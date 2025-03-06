@@ -3,8 +3,9 @@ package task3.weapon;
 import task3.entity.Entity;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class Weapon {
+public class Weapon implements Serializable {
     protected Entity closestEntity = null;
     protected double closestDistance = Double.MAX_VALUE;
     protected double range = Double.MAX_VALUE;

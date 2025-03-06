@@ -1,14 +1,15 @@
 package task3.entity;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class Entity {
+public class Entity implements Serializable {
     protected int x = 0;
     protected int y = 0;
     protected int xSize = 0;
     protected int ySize = 0;
     protected boolean isDead = false;
-    protected Image texture = null;
+    transient protected Image texture = null;
 
     protected double rotationAngle = 0;
 
