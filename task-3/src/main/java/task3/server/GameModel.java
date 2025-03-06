@@ -1,6 +1,7 @@
 package task3.server;
 
 import task3.controller.AIController;
+import task3.controller.PlayerController;
 import task3.controller.RemoteController;
 import task3.entity.Movable;
 import task3.entity.Obstacle;
@@ -146,7 +147,7 @@ public class GameModel implements EventLoopListener, HostListener {
 
     @Override
     public void newClient(ClientHandler clientHandler) {
-        Player player = new Player(new RemoteController(clientHandler));
+        Player player = new Player(new PlayerController(getScreenSize()));//new RemoteController(clientHandler));
         movables.add(player);
         players.add(player);
     }

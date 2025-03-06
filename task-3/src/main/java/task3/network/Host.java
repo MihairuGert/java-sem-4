@@ -23,8 +23,10 @@ public class Host {
     }
 
     private void startListen() {
-        while (!isGameOver) {
-            try (ServerSocket serverSocket = new ServerSocket(49001)) {
+        // is game over?
+        while (true) {
+            try {
+                System.out.println("Я сказала стартуем");
                 Socket client = serverSocket.accept();
                 ClientHandler clientHandler = new ClientHandler(client);
                 clientHandlers.add(clientHandler);
