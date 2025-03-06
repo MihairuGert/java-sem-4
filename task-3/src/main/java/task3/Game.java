@@ -87,7 +87,7 @@ public class Game implements MenuListener, GameModelListener {
         String ip = multiplayerMenu.writeHostIp();
         Client client = new Client(ip);
 
-        mainWindow.removeScene(gameMenu);
+        mainWindow.removeScene(multiplayerMenu);
         gameField = new GameField(systemConfig.getScreenSize());
 
         mainWindow.setScene(gameField);
