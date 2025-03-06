@@ -5,12 +5,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 
-public class Host implements ClientHandlerListener {
+public class Host {
     LinkedList<ClientHandler> clientHandlers;
+    HostListener hostListener;
     private boolean isGameOver = false;
     ServerSocket serverSocket;
 
-    public Host() {
+    public Host(HostListener hostListener) {
+        this.hostListener = hostListener;
         clientHandlers = new LinkedList<>();
         try {
             serverSocket = new ServerSocket(49001);
@@ -24,8 +26,9 @@ public class Host implements ClientHandlerListener {
         while (!isGameOver) {
             try (ServerSocket serverSocket = new ServerSocket(49001)) {
                 Socket client = serverSocket.accept();
-                ClientHandler clientHandler = new ClientHandler(this, client);
+                ClientHandler clientHandler = new ClientHandler(client);
                 clientHandlers.add(clientHandler);
+                hostListener.newClient(clientHandler);
                 System.out.println("Есть контакт");
             } catch (IOException e) {
                 System.err.println(e.getMessage());

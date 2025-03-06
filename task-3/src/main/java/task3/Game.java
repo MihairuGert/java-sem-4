@@ -4,6 +4,7 @@ import task3.controller.PlayerController;
 import task3.entity.Movable;
 import task3.entity.Obstacle;
 import task3.entity.Player;
+import task3.network.Host;
 import task3.server.GameModel;
 import task3.server.GameModelListener;
 import task3.view.*;
@@ -43,6 +44,10 @@ public class Game implements MenuListener, GameModelListener {
 
     @Override
     public void startSingleplayer() {
+        initializeGame();
+    }
+
+    private void initializeGame() {
         mainWindow.removeScene(gameMenu);
         gameField = new GameField(systemConfig.getScreenSize());
 
@@ -67,6 +72,9 @@ public class Game implements MenuListener, GameModelListener {
 
     private void hostGame() {
         multiplayerMenu.showHostIp();
+        // some timeout prob
+        initializeGame();
+        Host host = new Host(gameModel);
     }
 
     private void joinGame() {

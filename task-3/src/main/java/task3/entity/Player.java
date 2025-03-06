@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class Player extends Movable{
     private static final long serialVersionUID = 1L;
 
-    public Player(PlayerController playerController) {
+    public Player(Controller playerController) {
         super(playerController);
         URL iconURL = getClass().getResource("/player/range/player.png");
         if (iconURL != null)

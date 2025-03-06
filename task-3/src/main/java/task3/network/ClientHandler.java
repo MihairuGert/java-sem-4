@@ -10,13 +10,11 @@ import java.net.Socket;
 import java.util.LinkedList;
 
 public class ClientHandler {
-    private ClientHandlerListener clientHandlerListener;
     private Socket client;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
 
-    public ClientHandler(ClientHandlerListener clientHandlerListener, Socket client) {
-        this.clientHandlerListener = clientHandlerListener;
+    public ClientHandler(Socket client) {
         this.client = client;
         try {
             objectOutputStream = new ObjectOutputStream(client.getOutputStream());

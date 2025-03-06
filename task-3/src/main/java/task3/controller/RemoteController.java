@@ -9,7 +9,7 @@ import java.util.LinkedList;
 public class RemoteController implements Controller {
     ClientHandler clientHandler;
 
-    RemoteController(ClientHandler clientHandler) {
+    public RemoteController(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
     }
 

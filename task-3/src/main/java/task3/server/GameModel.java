@@ -1,18 +1,22 @@
 package task3.server;
 
 import task3.controller.AIController;
+import task3.controller.RemoteController;
 import task3.entity.Movable;
 import task3.entity.Obstacle;
 import task3.entity.Player;
 import task3.entity.Undead;
+import task3.network.ClientHandler;
+import task3.network.HostListener;
 import task3.view.GameField;
 
 import java.awt.*;
 import java.io.DataInput;
+import java.rmi.Remote;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class GameModel implements EventLoopListener {
+public class GameModel implements EventLoopListener, HostListener {
     private final ArrayList<Player> players = new ArrayList<>();
     private final ArrayList<Movable> movables = new ArrayList<>();
     private final ArrayList<Obstacle> obstacles = new ArrayList<>();
@@ -47,7 +51,7 @@ public class GameModel implements EventLoopListener {
         gameModelListeners.add(gameModelListener);
     }
     private void spawnZombie() {
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 0; i++) {
             Undead boba = new Undead(new AIController());
             movables.add(boba);
             boba.move(300+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
@@ -138,5 +142,12 @@ public class GameModel implements EventLoopListener {
         for (GameModelListener gameModelListener : gameModelListeners) {
             gameModelListener.endGame();
         }
+    }
+
+    @Override
+    public void newClient(ClientHandler clientHandler) {
+        Player player = new Player(new RemoteController(clientHandler));
+        movables.add(player);
+        players.add(player);
     }
 }
