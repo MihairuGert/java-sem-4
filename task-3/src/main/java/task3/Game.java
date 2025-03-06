@@ -16,8 +16,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
@@ -81,7 +79,7 @@ public class Game implements MenuListener, GameModelListener {
 
     private void joinGame() {
         String ip = multiplayerMenu.writeHostIp();
-        try (Socket socket = new Socket(ip, 49001)) {
+        try (Socket socket = new Socket("192.168.0.120", 49001)) {
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
