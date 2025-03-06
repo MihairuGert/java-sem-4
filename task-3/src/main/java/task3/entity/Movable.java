@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.LinkedList;
 
 public class Movable extends Entity{
-    protected Controller playerController;
+    protected Controller controller;
 
     public void setWeapon(Weapon weapon) {
         this.weapon = new Melee();
@@ -20,16 +20,16 @@ public class Movable extends Entity{
     protected int velocity = 8;
 
     public Movable(Controller playerController) {
-        this.playerController = playerController;
+        this.controller = playerController;
         xSize = 30;
         ySize = 30;
         weapon = new Weapon();
     }
     public LinkedList<ControllerCommand> getInput() {
-        return playerController.getActiveCommands();
+        return controller.getActiveCommands();
     }
     public Point getMousePoint() {
-        return playerController.getPoint();
+        return controller.getPoint();
     }
     public int getPositiveXNextPosition() {
         return x + velocity;
@@ -53,7 +53,7 @@ public class Movable extends Entity{
         weapon.isHit(new Point(x + xSize / 2, y + ySize / 2), point, entity);
     }
     public Entity whoWasKilled() {
-        playerController.setPointNull();
+        controller.setPointNull();
         return weapon.whoWasKilled();
     }
 }

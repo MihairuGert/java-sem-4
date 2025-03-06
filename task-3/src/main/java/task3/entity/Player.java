@@ -21,7 +21,7 @@ public class Player extends Movable{
     private void calculateAngle() {
         int playerCenterX = x + xSize / 2;
         int playerCenterY = y + ySize / 2;
-        Point lookPoint = ((PlayerController)playerController).getLookPoint();
+        Point lookPoint = ((PlayerController)controller).getLookPoint();
         if (lookPoint == null) {
             rotationAngle = 0;
             return;
@@ -41,7 +41,7 @@ public class Player extends Movable{
 
     @Override
     public LinkedList<ControllerCommand> getInput() {
-        LinkedList<ControllerCommand> linkedList = playerController.getActiveCommands();
+        LinkedList<ControllerCommand> linkedList = controller.getActiveCommands();
         calculateAngle();
         return linkedList;
     }

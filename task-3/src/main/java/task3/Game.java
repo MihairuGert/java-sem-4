@@ -26,6 +26,7 @@ public class Game implements MenuListener, GameModelListener {
     private MultiplayerMenu multiplayerMenu;
     private GameField gameField;
     private PlayerController playerController;
+    private GameModel gameModel;
 
     public void runGame() {
         systemConfig = new SystemConfig();
@@ -54,7 +55,7 @@ public class Game implements MenuListener, GameModelListener {
         playerController.requestFocusInWindow();
 
         Player player = new Player(playerController);
-        GameModel gameModel = new GameModel(this);
+        gameModel = new GameModel(this);
         gameModel.addPlayer(player);
     }
 
@@ -66,15 +67,6 @@ public class Game implements MenuListener, GameModelListener {
 
     private void hostGame() {
         multiplayerMenu.showHostIp();
-        new Thread(() -> {
-            try (ServerSocket serverSocket = new ServerSocket(49001)) {
-                System.out.println("Я сказала стартуем");
-                Socket client = serverSocket.accept();
-                System.out.println("Есть контакт");
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }).start();
     }
 
     private void joinGame() {
