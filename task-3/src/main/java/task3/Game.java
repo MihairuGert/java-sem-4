@@ -82,6 +82,22 @@ public class Game implements MenuListener, GameModelListener {
     private void joinGame() {
         String ip = multiplayerMenu.writeHostIp();
         Client client = new Client(ip);
+
+        mainWindow.removeScene(gameMenu);
+        gameField = new GameField(systemConfig.getScreenSize());
+
+        mainWindow.setScene(gameField);
+
+        playerController = new PlayerController(systemConfig.getScreenSize());
+        mainWindow.setController(playerController);
+
+        playerController.setFocusable(true);
+        playerController.requestFocusInWindow();
+
+        Player player = new Player(playerController);
+        while (true) {
+            client.sendPlayerInputInfo(player);
+        }
     }
 
     @Override

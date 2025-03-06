@@ -147,7 +147,7 @@ public class GameModel implements EventLoopListener, HostListener {
 
     @Override
     public void newClient(ClientHandler clientHandler) {
-        Player player = new Player(new PlayerController(getScreenSize()));//new RemoteController(clientHandler));
+        Player player = new Player(new RemoteController(clientHandler));
         movables.add(player);
         players.add(player);
     }
