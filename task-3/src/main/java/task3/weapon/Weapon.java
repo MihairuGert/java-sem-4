@@ -6,6 +6,8 @@ import java.awt.*;
 import java.io.Serializable;
 
 public class Weapon implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     protected Entity closestEntity = null;
     protected double closestDistance = Double.MAX_VALUE;
     protected double range = Double.MAX_VALUE;

@@ -5,6 +5,8 @@ import task3.server.commands.player.ControllerCommand;
 import java.io.Serializable;
 
 public class Key implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private char keyChar;
     private boolean isKeyActive;
     private ControllerCommand controllerCommand;

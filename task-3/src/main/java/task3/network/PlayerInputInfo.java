@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 public class PlayerInputInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final LinkedList<ControllerCommand> commands;
     private final Point point;
 
