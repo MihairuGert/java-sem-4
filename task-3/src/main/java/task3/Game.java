@@ -13,6 +13,7 @@ import task3.server.GameModelListener;
 import task3.view.*;
 import task3.controller.SystemConfig;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -108,31 +109,14 @@ public class Game implements MenuListener, GameModelListener {
                 SavedGame savedGame = client.receiveGameData();
                 ArrayList<Movable> movables = savedGame.getMovables();
                 ArrayList<Obstacle> obstacles = savedGame.getObstacles();
-                assignTexture(movables);
-                assignTextureObs(obstacles);
-
-//                for (Movable movable : movables) {
-//                    System.out.println(movable.getX() + " " + movable.getY());
-//                    //System.out.println(movable.getInput() + " " + movable.getRotationAngle());
-//                    System.out.println("----------------------------");
-//                }
-
                 update(movables, obstacles);
+                try {
+                    sleep(16);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
-    }
-
-    private void assignTexture(ArrayList<Movable> entities) {
-        for (Entity entity : entities) {
-            entity.setTexture();
-        }
-    }
-
-    // todo fix this bullshit using polymorphism
-    private void assignTextureObs(ArrayList<Obstacle> entities) {
-        for (Entity entity : entities) {
-            entity.setTexture();
-        }
     }
 
     @Override
