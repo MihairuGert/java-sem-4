@@ -14,7 +14,8 @@ public class Client {
 
     public Client(String ip) {
         try {
-            server = new Socket("192.168.0.120", 49001);
+            //"192.168.0.120"
+            server = new Socket("localhost", 49001);
             objectOutputStream = new ObjectOutputStream(server.getOutputStream());
             objectInputStream = new ObjectInputStream(server.getInputStream());
         } catch (IOException e) {
