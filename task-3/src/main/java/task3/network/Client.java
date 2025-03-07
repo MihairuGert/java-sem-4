@@ -13,7 +13,7 @@ public class Client {
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
 
-    public Client(String ip) {
+    public Client(String ip) throws Exception {
         try {
             //"192.168.0.120"
             server = new Socket(ip, 49001);
@@ -21,7 +21,7 @@ public class Client {
             objectOutputStream.flush();
             objectInputStream = new ObjectInputStream(server.getInputStream());
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new Exception("Server not found.");
         }
     }
 

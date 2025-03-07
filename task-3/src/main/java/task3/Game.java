@@ -26,7 +26,6 @@ public class Game implements MenuListener, GameModelListener {
     private MultiplayerMenu multiplayerMenu;
     private GameField gameField;
     private PlayerController playerController;
-    private GameModel gameModel;
     private Host host = null;
 
     public void runGame() {
@@ -49,19 +48,15 @@ public class Game implements MenuListener, GameModelListener {
 
     private void initializeGame() {
         mainWindow.removeScene(gameMenu);
-        gameField = new GameField(systemConfig.getScreenSize());
+        mainWindow.removeScene(multiplayerMenu);
 
+        gameField = new GameField(systemConfig.getScreenSize());
         mainWindow.setScene(gameField);
 
         playerController = new PlayerController(systemConfig.getScreenSize());
         mainWindow.setController(playerController);
-
         playerController.setFocusable(true);
         playerController.requestFocusInWindow();
-
-        Player player = new Player(playerController);
-        gameModel = new GameModel(this);
-        gameModel.addPlayer(player);
     }
 
     @Override
@@ -71,31 +66,29 @@ public class Game implements MenuListener, GameModelListener {
     }
 
     private void hostGame() {
-        mainWindow.removeScene(multiplayerMenu);
         initializeGame();
+        GameModel gameModel = new GameModel(this);
+
+        Player player = new Player(playerController);
+        gameModel.addPlayer(player);
+
         host = new Host(gameModel);
     }
 
     private void joinGame() {
         String ip = multiplayerMenu.writeHostIp();
-        Client client = new Client(ip);
-
-        mainWindow.removeScene(multiplayerMenu);
-        gameField = new GameField(systemConfig.getScreenSize());
-
-        mainWindow.setScene(gameField);
-
-        playerController = new PlayerController(systemConfig.getScreenSize());
-        mainWindow.setController(playerController);
-
-        playerController.setFocusable(true);
-        playerController.requestFocusInWindow();
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);;
-
+        Client client;
+        try {
+            client = new Client(ip);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+        initializeGame();
         Player player = new Player(playerController);
-        scheduler.scheduleAtFixedRate(() -> {
-            client.sendPlayerInputInfo(player);
-        }, 0, 6, TimeUnit.MILLISECONDS);
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+
+        scheduler.scheduleAtFixedRate(() -> client.sendPlayerInputInfo(player), 0, 6, TimeUnit.MILLISECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {
             SavedGame savedGame = client.receiveGameData();
