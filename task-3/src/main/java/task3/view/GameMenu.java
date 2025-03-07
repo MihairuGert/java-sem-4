@@ -32,10 +32,7 @@ public class GameMenu extends Menu{
         exitButton = addButton("/exitButton.png");
         this.add(exitButton);
 
-        this.setComponentZOrder(background, this.getComponentCount() - 1);
-        this.setComponentZOrder(singlePlayerButton, 0);
-        this.setComponentZOrder(multiPlayerButton, 1);
-        this.setComponentZOrder(exitButton, 2);
+        setZOrder();
     }
 
     @Override

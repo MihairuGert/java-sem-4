@@ -8,8 +8,7 @@ import java.util.LinkedList;
 public class AIController implements Controller {
     @Override
     public LinkedList<ControllerCommand> getActiveCommands() {
-        LinkedList<ControllerCommand> action = new LinkedList<>();
-        return action;
+        return new LinkedList<>();
     }
     @Override
     public Point getPoint() {
@@ -23,5 +22,4 @@ public class AIController implements Controller {
     public Point getLookPoint() {
         return null;
     }
-
 }

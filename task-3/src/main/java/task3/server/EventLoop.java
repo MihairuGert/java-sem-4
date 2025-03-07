@@ -1,17 +1,13 @@
 package task3.server;
 
-import task3.Game;
-import task3.controller.AIController;
 import task3.entity.*;
 import task3.server.commands.player.Movement;
 import task3.sound.SoundPlayer;
-import task3.view.GameField;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 // TODO: Rename

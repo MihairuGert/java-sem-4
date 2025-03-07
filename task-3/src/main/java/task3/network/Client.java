@@ -1,6 +1,5 @@
 package task3.network;
 
-import task3.entity.Movable;
 import task3.entity.Player;
 
 import java.io.IOException;
@@ -15,7 +14,6 @@ public class Client {
 
     public Client(String ip) throws Exception {
         try {
-            //"192.168.0.120"
             server = new Socket(ip, 49001);
             objectOutputStream = new ObjectOutputStream(server.getOutputStream());
             objectOutputStream.flush();

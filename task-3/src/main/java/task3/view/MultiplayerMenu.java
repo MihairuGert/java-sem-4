@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.InetAddress;
 import java.net.URL;
-import java.net.UnknownHostException;
 
 public class MultiplayerMenu extends Menu {
 
@@ -52,10 +50,7 @@ public class MultiplayerMenu extends Menu {
         exitButton = addButton("/exitButton.png");
         this.add(exitButton);
 
-        this.setComponentZOrder(background, this.getComponentCount() - 1);
-        this.setComponentZOrder(hostButton, 0);
-        this.setComponentZOrder(joinButton, 1);
-        this.setComponentZOrder(exitButton, 2);
+        setZOrder();
     }
 
     @Override
@@ -82,12 +77,7 @@ public class MultiplayerMenu extends Menu {
         confirmButton.setBounds(ipInputField.getX(), ipInputField.getY() + 40, 200, 30);
         this.add(confirmButton);
 
-        this.setComponentZOrder(background, this.getComponentCount() - 1);
-        this.setComponentZOrder(ipInputField, 0);
-        this.setComponentZOrder(confirmButton, 1);
-        this.setComponentZOrder(hostButton, 2);
-        this.setComponentZOrder(joinButton, 3);
-        this.setComponentZOrder(exitButton, 4);
+        setZOrder();
 
         this.revalidate();
         this.repaint();

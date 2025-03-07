@@ -9,10 +9,10 @@ import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Host {
-    CopyOnWriteArrayList<ClientHandler> clientHandlers;
-    HostListener hostListener;
+    private CopyOnWriteArrayList<ClientHandler> clientHandlers;
+    private HostListener hostListener;
     private boolean isGameOver = false;
-    ServerSocket serverSocket;
+    private ServerSocket serverSocket;
 
     public Host(HostListener hostListener) {
         this.hostListener = hostListener;
@@ -26,15 +26,12 @@ public class Host {
     }
 
     private void startListen() {
-        // is game over?
-        while (true) {
+        while (!isGameOver) {
             try {
-                System.out.println("Я сказала стартуем");
                 Socket client = serverSocket.accept();
                 ClientHandler clientHandler = new ClientHandler(client);
                 clientHandlers.add(clientHandler);
                 hostListener.newClient(clientHandler);
-                System.out.println("Есть контакт");
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }

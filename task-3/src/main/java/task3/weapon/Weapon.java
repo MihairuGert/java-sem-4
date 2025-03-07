@@ -11,7 +11,6 @@ public class Weapon implements Serializable {
     protected Entity closestEntity = null;
     protected double closestDistance = Double.MAX_VALUE;
     protected double range = Double.MAX_VALUE;
-    protected int damage;
 
     private void calculateClosest(double projectileLength, Entity entity) {
         if (closestDistance > projectileLength && projectileLength <= range) {

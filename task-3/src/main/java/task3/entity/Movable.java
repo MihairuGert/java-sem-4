@@ -1,7 +1,6 @@
 package task3.entity;
 
 import task3.controller.Controller;
-import task3.controller.PlayerController;
 import task3.server.commands.player.ControllerCommand;
 import task3.weapon.Melee;
 import task3.weapon.Weapon;
@@ -11,7 +10,6 @@ import java.util.LinkedList;
 
 public class Movable extends Entity{
     private static final long serialVersionUID = 1L;
-    // todo add transient
     transient protected Controller controller;
 
     public void setWeapon(Weapon weapon) {

@@ -45,10 +45,6 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
         });
     }
 
-    public void print() {
-        activeKeys.forEach((key, value) -> System.out.println(key + " " + value.getName()));
-    }
-
     @Override
     public LinkedList<ControllerCommand> getActiveCommands() {
         LinkedList<ControllerCommand> commands = new LinkedList<>();

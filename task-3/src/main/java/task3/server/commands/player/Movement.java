@@ -1,6 +1,7 @@
 package task3.server.commands.player;
 
 import task3.entity.Movable;
+import task3.entity.Undead;
 
 import java.util.LinkedList;
 
@@ -29,7 +30,7 @@ public class Movement {
             }
         }
         if (!commands.contains(ControllerCommand.CROUCH)) {
-            if (!player.getClass().getName().equals("task3.entity.Undead")) {
+            if (!(player instanceof Undead)) {
                 player.setSize(30, 30);
                 player.setVelocity(8);
             }

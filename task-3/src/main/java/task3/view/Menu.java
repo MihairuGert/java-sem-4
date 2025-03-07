@@ -5,10 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.LinkedList;
 
 public class Menu extends Scene implements ActionListener {
 
     protected final MenuListener menuListener;
+    private LinkedList<JButton> buttonsPool;
 
     protected final int buttonHeight = 150;
     protected final int buttonWidth = 300;
@@ -33,11 +35,13 @@ public class Menu extends Scene implements ActionListener {
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
         button.addActionListener(this);
+        buttonsPool.add(button);
         return button;
     }
 
     public Menu(Dimension screenSize, MenuListener menuListener) {
         super(screenSize);
+        buttonsPool = new LinkedList<>();
 
         URL iconURL = getClass().getResource("/menuBackground.png");
         ImageIcon backGroundImage = null;
@@ -53,6 +57,15 @@ public class Menu extends Scene implements ActionListener {
         background = new JLabel(backGroundImage);
         background.setBounds(0,0, screenSize.width, screenSize.height);
         this.add(background);
+    }
+
+    protected void setZOrder() {
+        this.setComponentZOrder(background, this.getComponentCount() - 1);
+        int index = 0;
+        for (JButton button : buttonsPool) {
+            this.setComponentZOrder(button, index);
+            index++;
+        }
     }
 
     @Override

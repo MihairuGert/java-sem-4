@@ -44,6 +44,9 @@ public class Game implements MenuListener, GameModelListener {
     @Override
     public void startSingleplayer() {
         initializeGame();
+        GameModel gameModel = new GameModel(this);
+        Player player = new Player(playerController);
+        gameModel.addPlayer(player);
     }
 
     private void initializeGame() {
@@ -87,7 +90,6 @@ public class Game implements MenuListener, GameModelListener {
         initializeGame();
         Player player = new Player(playerController);
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
-
         scheduler.scheduleAtFixedRate(() -> client.sendPlayerInputInfo(player), 0, 6, TimeUnit.MILLISECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {

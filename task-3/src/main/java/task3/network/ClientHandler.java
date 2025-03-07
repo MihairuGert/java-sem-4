@@ -10,12 +10,10 @@ import java.net.Socket;
 import java.util.LinkedList;
 
 public class ClientHandler {
-    private Socket client;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
 
     public ClientHandler(Socket client) {
-        this.client = client;
         try {
             objectOutputStream = new ObjectOutputStream(client.getOutputStream());
             objectOutputStream.flush();
@@ -23,7 +21,6 @@ public class ClientHandler {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-
     }
 
     public void sendSavedGame(SavedGame savedGame) {
