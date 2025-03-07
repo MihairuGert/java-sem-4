@@ -71,29 +71,6 @@ public class MultiplayerMenu extends Menu {
         }
     }
 
-    public void showHostIp() {
-        try {
-            String ipAddress = InetAddress.getLocalHost().getHostAddress();
-            JLabel ipLabel = new JLabel(ipAddress);
-            ipLabel.setBounds(hostButton.getX() + xOffset * 2, hostButton.getY(), 300, 30);
-            ipLabel.setForeground(Color.WHITE);
-            ipLabel.setFont(new Font("Arial", Font.BOLD, 24));
-            this.add(ipLabel);
-
-            this.setComponentZOrder(background, this.getComponentCount() - 1);
-            this.setComponentZOrder(ipLabel, 0);
-            this.setComponentZOrder(hostButton, 1);
-            this.setComponentZOrder(joinButton, 2);
-            this.setComponentZOrder(exitButton, 3);
-
-            this.revalidate();
-            this.repaint();
-
-        } catch (UnknownHostException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     private void prepareIpInput() {
         ipInputField = new JTextField();
         ipInputField.setBounds(joinButton.getX() + xOffset * 5, joinButton.getY() + 50, 200, 30);

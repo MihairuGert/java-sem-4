@@ -1,7 +1,6 @@
 package task3;
 
 import task3.controller.PlayerController;
-import task3.entity.Entity;
 import task3.entity.Movable;
 import task3.entity.Obstacle;
 import task3.entity.Player;
@@ -13,11 +12,12 @@ import task3.server.GameModelListener;
 import task3.view.*;
 import task3.controller.SystemConfig;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static java.lang.Thread.sleep;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Game implements MenuListener, GameModelListener {
     private SystemConfig systemConfig;
@@ -71,9 +71,7 @@ public class Game implements MenuListener, GameModelListener {
     }
 
     private void hostGame() {
-        multiplayerMenu.showHostIp();
         mainWindow.removeScene(multiplayerMenu);
-        // some timeout prob
         initializeGame();
         host = new Host(gameModel);
     }
@@ -92,31 +90,19 @@ public class Game implements MenuListener, GameModelListener {
 
         playerController.setFocusable(true);
         playerController.requestFocusInWindow();
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);;
 
         Player player = new Player(playerController);
-        new Thread(() -> {
-            while (true) {
-                client.sendPlayerInputInfo(player);
-                try {
-                    sleep(6);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-        new Thread(() -> {
-            while (true) {
-                SavedGame savedGame = client.receiveGameData();
-                ArrayList<Movable> movables = savedGame.getMovables();
-                ArrayList<Obstacle> obstacles = savedGame.getObstacles();
-                update(movables, obstacles);
-                try {
-                    sleep(6);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        scheduler.scheduleAtFixedRate(() -> {
+            client.sendPlayerInputInfo(player);
+        }, 0, 6, TimeUnit.MILLISECONDS);
+
+        scheduler.scheduleAtFixedRate(() -> {
+            SavedGame savedGame = client.receiveGameData();
+            ArrayList<Movable> movables = savedGame.getMovables();
+            ArrayList<Obstacle> obstacles = savedGame.getObstacles();
+            update(movables, obstacles);
+        }, 0, 6, TimeUnit.MILLISECONDS);
     }
 
     @Override
