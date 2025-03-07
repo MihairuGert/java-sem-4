@@ -33,6 +33,7 @@ public class RemoteController implements Controller {
 
     @Override
     public void setPointNull() {
+
     }
 
     @Override
