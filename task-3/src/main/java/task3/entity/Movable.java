@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.LinkedList;
 
 public class Movable extends Entity{
+    private static final long serialVersionUID = 1L;
     // todo add transient
     transient protected Controller controller;
 

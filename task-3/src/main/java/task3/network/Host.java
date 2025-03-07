@@ -6,16 +6,17 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Host {
-    LinkedList<ClientHandler> clientHandlers;
+    CopyOnWriteArrayList<ClientHandler> clientHandlers;
     HostListener hostListener;
     private boolean isGameOver = false;
     ServerSocket serverSocket;
 
     public Host(HostListener hostListener) {
         this.hostListener = hostListener;
-        clientHandlers = new LinkedList<>();
+        clientHandlers = new CopyOnWriteArrayList<>();
         try {
             serverSocket = new ServerSocket(49001);
         } catch (IOException e) {

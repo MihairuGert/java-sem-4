@@ -30,6 +30,7 @@ public class ClientHandler {
     public void sendSavedGame(SavedGame savedGame) {
         try {
             objectOutputStream.writeObject(savedGame);
+            objectOutputStream.reset();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
