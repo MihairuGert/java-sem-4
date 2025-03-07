@@ -15,20 +15,35 @@ public class GameField extends Scene {
     private ArrayList<Obstacle> obstacles;
     private HashMap<String, Image> textures;
 
+    private HashMap<Dimension, Image> obstacleTextures;
+    private Image wallTexture;
+
     // Textures.
     private Image backgroundTexture;
 
     private void getTextures() {
-        URL iconURL = getClass().getResource("/player/range/player.png");
+        textures = new HashMap<>();
+        obstacleTextures = new HashMap<>();
         Image texture = null;
+        URL iconURL = getClass().getResource("/player/range/player.png");
         if (iconURL != null)
             texture = new ImageIcon(iconURL).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
         textures.put("task3.entity.Player", texture);
+
+        iconURL = getClass().getResource("/zombie.png");
+        if (iconURL != null)
+            texture = new ImageIcon(iconURL).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+        textures.put("task3.entity.Undead", texture);
+
+        iconURL = getClass().getResource("/wall0.png");
+        if (iconURL != null)
+            wallTexture = new ImageIcon(iconURL).getImage();
     }
 
     public GameField(Dimension screenSize) {
         super(screenSize);
-
+        // todo make sth better
+        getTextures();
         setDoubleBuffered(true);
         URL iconURL = getClass().getResource("/background.png");
         if (iconURL != null)
@@ -53,17 +68,23 @@ public class GameField extends Scene {
                 if (movable instanceof Player) {
                     AffineTransform oldTransform = graphics2D.getTransform();
                     graphics2D.rotate(Math.toRadians(movable.getRotationAngle()), movable.getX() + (double) movable.getxSize() / 2, movable.getY() + (double) movable.getySize() / 2);
-                    graphics2D.drawImage(movable.getTexture(), movable.getX() - 5, movable.getY() - 5, this);
+                    graphics2D.drawImage(textures.get(movable.getClass().getName()), movable.getX() - 5, movable.getY() - 5, this);
                     graphics2D.setTransform(oldTransform);
                 } else if (movable instanceof Undead) {
-                    graphics2D.drawImage(movable.getTexture(), movable.getX() - 5, movable.getY() - 5, this);
+                    graphics2D.drawImage(textures.get(movable.getClass().getName()), movable.getX() - 5, movable.getY() - 5, this);
                     //graphics2D.drawRect(movable.getX(), movable.getY(), movable.getxSize(), movable.getySize());
                 }
             }
         }
         if (obstacles != null) {
             for (Obstacle obstacle : obstacles) {
-                graphics2D.drawImage(obstacle.getTexture(), obstacle.getX(), obstacle.getY(), this);
+                Dimension size = new Dimension(obstacle.getxSize(), obstacle.getySize());
+                Image scaledTexture = obstacleTextures.get(size);
+                if (scaledTexture == null) {
+                    scaledTexture = wallTexture.getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT);
+                    obstacleTextures.put(size, scaledTexture);
+                }
+                graphics2D.drawImage(scaledTexture, obstacle.getX(), obstacle.getY(), null);
                 graphics2D.drawRect(obstacle.getX(), obstacle.getY(), obstacle.getxSize(), obstacle.getySize());
             }
         }
