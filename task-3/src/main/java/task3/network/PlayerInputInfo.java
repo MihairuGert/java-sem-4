@@ -1,7 +1,6 @@
 package task3.network;
 
-import task3.server.commands.player.ControllerCommand;
-import task3.view.Scene;
+import task3.model.commands.player.ControllerCommand;
 
 import java.awt.*;
 import java.io.Serializable;

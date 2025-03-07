@@ -1,7 +1,7 @@
-package task3.server;
+package task3.model;
 
 import task3.entity.*;
-import task3.server.commands.player.Movement;
+import task3.model.commands.player.Movement;
 import task3.sound.SoundPlayer;
 
 import javax.swing.*;

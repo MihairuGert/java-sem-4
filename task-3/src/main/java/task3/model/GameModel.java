@@ -1,7 +1,6 @@
-package task3.server;
+package task3.model;
 
 import task3.controller.AIController;
-import task3.controller.PlayerController;
 import task3.controller.RemoteController;
 import task3.entity.Movable;
 import task3.entity.Obstacle;
@@ -9,13 +8,9 @@ import task3.entity.Player;
 import task3.entity.Undead;
 import task3.network.ClientHandler;
 import task3.network.HostListener;
-import task3.view.GameField;
 
 import java.awt.*;
-import java.io.DataInput;
-import java.rmi.Remote;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class GameModel implements EventLoopListener, HostListener {
     private final ArrayList<Player> players = new ArrayList<>();

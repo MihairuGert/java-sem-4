@@ -1,4 +1,4 @@
-package task3.server.commands.player;
+package task3.model.commands.player;
 
 import task3.entity.Movable;
 import task3.entity.Undead;
@@ -7,6 +7,9 @@ import java.util.LinkedList;
 
 public class Movement {
     static public void execute(Movable player, LinkedList<ControllerCommand> commands) {
+        if (commands == null) {
+            return;
+        }
         for (ControllerCommand command : commands) {
             switch (command) {
                 case UP:

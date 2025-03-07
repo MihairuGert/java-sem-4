@@ -1,7 +1,7 @@
 package task3.controller;
 
 import task3.network.ClientHandler;
-import task3.server.commands.player.ControllerCommand;
+import task3.model.commands.player.ControllerCommand;
 
 import java.awt.*;
 import java.util.LinkedList;

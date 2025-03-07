@@ -1,12 +1,10 @@
-package task3.server;
+package task3.model;
 
 import task3.entity.Movable;
 import task3.entity.Obstacle;
-import task3.entity.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public interface GameModelListener {
      void endGame();

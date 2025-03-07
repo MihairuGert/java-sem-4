@@ -1,11 +1,8 @@
 package task3.network;
 
-import task3.entity.Movable;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Host {
@@ -41,6 +38,12 @@ public class Host {
     public void sendUpdate(SavedGame savedGame) {
         for (ClientHandler clientHandler : clientHandlers) {
             clientHandler.sendSavedGame(savedGame);
+        }
+    }
+
+    public void closeConnection() {
+        for (ClientHandler clientHandler : clientHandlers) {
+            clientHandler.closeConnection();
         }
     }
 }

@@ -7,8 +7,8 @@ import task3.entity.Player;
 import task3.network.Client;
 import task3.network.Host;
 import task3.network.SavedGame;
-import task3.server.GameModel;
-import task3.server.GameModelListener;
+import task3.model.GameModel;
+import task3.model.GameModelListener;
 import task3.view.*;
 import task3.controller.SystemConfig;
 
@@ -19,18 +19,20 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Game implements MenuListener, GameModelListener {
+public class Game implements MainWindowListener,MenuListener, GameModelListener {
     private SystemConfig systemConfig;
     private MainWindow mainWindow;
     private GameMenu gameMenu;
     private MultiplayerMenu multiplayerMenu;
     private GameField gameField;
     private PlayerController playerController;
+    GameModel gameModel;
     private Host host = null;
+    private Client client = null;
 
     public void runGame() {
         systemConfig = new SystemConfig();
-        mainWindow = new MainWindow();
+        mainWindow = new MainWindow(this);
 
         gameMenu = new GameMenu(systemConfig.getScreenSize(), this);
         multiplayerMenu = new MultiplayerMenu(systemConfig.getScreenSize(), this);
@@ -49,7 +51,7 @@ public class Game implements MenuListener, GameModelListener {
             System.err.println(e.getMessage());
             return;
         }
-        GameModel gameModel = new GameModel(this);
+        gameModel = new GameModel(this);
         Player player = new Player(playerController);
         gameModel.addPlayer(player);
     }
@@ -75,6 +77,8 @@ public class Game implements MenuListener, GameModelListener {
     @Override
     public void startMultiplayerMenu() {
         mainWindow.remove(gameMenu);
+        if (gameField != null)
+            mainWindow.remove(gameField);
         mainWindow.setScene(multiplayerMenu);
     }
 
@@ -95,7 +99,6 @@ public class Game implements MenuListener, GameModelListener {
 
     private void joinGame() {
         String ip = multiplayerMenu.writeHostIp();
-        Client client;
         try {
             client = new Client(ip);
         } catch (Exception e) {
@@ -110,13 +113,28 @@ public class Game implements MenuListener, GameModelListener {
         }
         Player player = new Player(playerController);
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
-        scheduler.scheduleAtFixedRate(() -> client.sendPlayerInputInfo(player), 0, 6, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                client.sendPlayerInputInfo(player);
+            } catch (RuntimeException e) {
+                scheduler.shutdown();
+                startMultiplayerMenu();
+            }
+            }, 0, 6, TimeUnit.MILLISECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {
-            SavedGame savedGame = client.receiveGameData();
-            ArrayList<Movable> movables = savedGame.getMovables();
-            ArrayList<Obstacle> obstacles = savedGame.getObstacles();
-            update(movables, obstacles);
+            SavedGame savedGame = null;
+            try {
+                savedGame = client.receiveGameData();
+            } catch (RuntimeException e) {
+                scheduler.shutdown();
+                startMultiplayerMenu();
+            }
+            if (savedGame != null) {
+                ArrayList<Movable> movables = savedGame.getMovables();
+                ArrayList<Obstacle> obstacles = savedGame.getObstacles();
+                update(movables, obstacles);
+            }
         }, 0, 6, TimeUnit.MILLISECONDS);
     }
 
@@ -161,5 +179,19 @@ public class Game implements MenuListener, GameModelListener {
         gameField.setPlayers(movables);
         gameField.setObstacles(obstacles);
         gameField.repaint();
+    }
+
+    @Override
+    public void mainWindowExit() {
+        try {
+            if (client != null) {
+                client.closeConnection();
+            }
+            else if (host != null) {
+                host.closeConnection();
+            }
+        } catch (RuntimeException e) {
+            System.err.println("Cannot close connection: " + e.getMessage());
+        }
     }
 }

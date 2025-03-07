@@ -1,4 +1,4 @@
-package task3.server;
+package task3.model;
 
 public interface EventLoopListener {
     void endGame();

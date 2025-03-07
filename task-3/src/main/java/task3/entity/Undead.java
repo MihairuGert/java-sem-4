@@ -1,7 +1,7 @@
 package task3.entity;
 
 import task3.controller.Controller;
-import task3.server.commands.player.ControllerCommand;
+import task3.model.commands.player.ControllerCommand;
 import task3.weapon.ZombieClaw;
 
 import java.awt.*;

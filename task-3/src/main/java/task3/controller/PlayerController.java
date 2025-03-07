@@ -1,6 +1,6 @@
 package task3.controller;
 
-import task3.server.commands.player.ControllerCommand;
+import task3.model.commands.player.ControllerCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +49,6 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
     public LinkedList<ControllerCommand> getActiveCommands() {
         LinkedList<ControllerCommand> commands = new LinkedList<>();
         activeKeys.forEach((key, value) -> { if (value.isKeyActive()) commands.push(value.getName());});
-
         return commands;
     }
     public Point getPoint() {
