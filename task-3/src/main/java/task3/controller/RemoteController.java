@@ -15,12 +15,20 @@ public class RemoteController implements Controller {
 
     @Override
     public LinkedList<ControllerCommand> getActiveCommands() {
-        return clientHandler.receiveInputCommands();
+        try {
+            return clientHandler.receiveInputCommands();
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 
     @Override
     public Point getPoint() {
-        return clientHandler.receiveShootPoint();
+        try {
+            return clientHandler.receiveShootPoint();
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 
     @Override
@@ -29,6 +37,10 @@ public class RemoteController implements Controller {
 
     @Override
     public Point getLookPoint() {
-        return clientHandler.receiveLookPoint();
+        try {
+            return clientHandler.receiveLookPoint();
+        } catch (RuntimeException e) {
+            return null;
+        }
     }
 }

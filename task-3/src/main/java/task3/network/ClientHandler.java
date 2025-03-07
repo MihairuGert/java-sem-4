@@ -33,51 +33,39 @@ public class ClientHandler {
             objectOutputStream.writeObject(savedGame);
             objectOutputStream.reset();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
     public LinkedList<ControllerCommand> receiveInputCommands() {
-        if (client.isClosed()) {
-            return null;
-        }
         try {
             return ((PlayerInputInfo) objectInputStream.readObject()).getCommands();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public Point receiveShootPoint() {
-        if (client.isClosed()) {
-            return null;
-        }
         try {
             return ((PlayerInputInfo) objectInputStream.readObject()).getShootPoint();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public Point receiveLookPoint() {
-        if (client.isClosed()) {
-            return null;
-        }
         try {
             return ((PlayerInputInfo) objectInputStream.readObject()).getLookPoint();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public void closeConnection() {
         try {
             client.close();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }

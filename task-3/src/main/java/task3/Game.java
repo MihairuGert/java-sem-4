@@ -176,7 +176,9 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
     @Override
     public void update(ArrayList<Movable> movables, ArrayList<Obstacle> obstacles) {
         if (host != null) {
-            host.sendUpdate(new SavedGame(obstacles, movables));
+            try {
+                host.sendUpdate(new SavedGame(obstacles, movables));
+            } catch (RuntimeException ignored) {}
         }
         gameField.setPlayers(movables);
         gameField.setObstacles(obstacles);
