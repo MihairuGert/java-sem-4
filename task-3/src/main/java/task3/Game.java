@@ -43,7 +43,12 @@ public class Game implements MenuListener, GameModelListener {
 
     @Override
     public void startSingleplayer() {
-        initializeGame();
+        try {
+            initializeGame();
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
         GameModel gameModel = new GameModel(this);
         Player player = new Player(playerController);
         gameModel.addPlayer(player);
@@ -53,7 +58,12 @@ public class Game implements MenuListener, GameModelListener {
         mainWindow.removeScene(gameMenu);
         mainWindow.removeScene(multiplayerMenu);
 
-        gameField = new GameField(systemConfig.getScreenSize());
+        try {
+            gameField = new GameField(systemConfig.getScreenSize());
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Cannot initialize game: " + e.getMessage());
+        }
+
         mainWindow.setScene(gameField);
 
         playerController = new PlayerController(systemConfig.getScreenSize());
@@ -69,7 +79,12 @@ public class Game implements MenuListener, GameModelListener {
     }
 
     private void hostGame() {
-        initializeGame();
+        try {
+            initializeGame();
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
         GameModel gameModel = new GameModel(this);
 
         Player player = new Player(playerController);
@@ -87,7 +102,12 @@ public class Game implements MenuListener, GameModelListener {
             System.err.println(e.getMessage());
             return;
         }
-        initializeGame();
+        try {
+            initializeGame();
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
         Player player = new Player(playerController);
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
         scheduler.scheduleAtFixedRate(() -> client.sendPlayerInputInfo(player), 0, 6, TimeUnit.MILLISECONDS);

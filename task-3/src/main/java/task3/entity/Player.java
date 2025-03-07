@@ -13,15 +13,6 @@ public class Player extends Movable{
 
     public Player(Controller playerController) {
         super(playerController);
-        URL iconURL = getClass().getResource("/player/range/player.png");
-        if (iconURL != null)
-            texture = new ImageIcon(iconURL).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
-    }
-
-    public void setTexture() {
-        URL iconURL = getClass().getResource("/player/range/player.png");
-        if (iconURL != null)
-            texture = new ImageIcon(iconURL).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
     }
 
     private void calculateAngle() {

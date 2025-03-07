@@ -2,6 +2,7 @@ package task3.entity;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.net.URL;
 
 public class Entity implements Serializable {
     protected int x = 0;
@@ -9,19 +10,12 @@ public class Entity implements Serializable {
     protected int xSize = 0;
     protected int ySize = 0;
     protected boolean isDead = false;
-    transient protected Image texture = null;
 
     protected double rotationAngle = 0;
 
     public double getRotationAngle() {
         return rotationAngle;
     }
-
-    public Image getTexture() {
-        return texture;
-    }
-
-    public void setTexture() {}
 
     public void setRotationAngle(int rotationAngle) {
         this.rotationAngle = rotationAngle;
