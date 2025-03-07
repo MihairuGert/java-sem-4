@@ -98,7 +98,7 @@ public class Game implements MenuListener, GameModelListener {
             while (true) {
                 client.sendPlayerInputInfo(player);
                 try {
-                    sleep(16);
+                    sleep(8);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -111,7 +111,7 @@ public class Game implements MenuListener, GameModelListener {
                 ArrayList<Obstacle> obstacles = savedGame.getObstacles();
                 update(movables, obstacles);
                 try {
-                    sleep(16);
+                    sleep(8);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
