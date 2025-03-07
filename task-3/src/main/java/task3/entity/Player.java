@@ -48,6 +48,10 @@ public class Player extends Movable{
         //System.out.println(rotationAngle);
     }
 
+    public Point getLookPoint() {
+        return controller.getLookPoint();
+    }
+
     @Override
     public LinkedList<ControllerCommand> getInput() {
         LinkedList<ControllerCommand> linkedList = controller.getActiveCommands();

@@ -11,18 +11,24 @@ public class PlayerInputInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final LinkedList<ControllerCommand> commands;
-    private final Point point;
+    private final Point shootPoint;
+    private final Point lookPoint;
 
-    public Point getPoint() {
-        return point;
+    public Point getShootPoint() {
+        return shootPoint;
     }
 
     public LinkedList<ControllerCommand> getCommands() {
         return commands;
     }
 
-    public PlayerInputInfo(LinkedList<ControllerCommand> commands, Point point) {
+    public Point getLookPoint() {
+        return lookPoint;
+    }
+
+    public PlayerInputInfo(LinkedList<ControllerCommand> commands, Point shootPoint, Point lookPoint) {
         this.commands = commands;
-        this.point = point;
+        this.shootPoint = shootPoint;
+        this.lookPoint = lookPoint;
     }
 }

@@ -27,7 +27,7 @@ public class Client {
 
     public void sendPlayerInputInfo(Player player) {
         try {
-            objectOutputStream.writeObject(new PlayerInputInfo(player.getInput(), player.getMousePoint()));
+            objectOutputStream.writeObject(new PlayerInputInfo(player.getInput(), player.getMousePoint(), player.getLookPoint()));
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

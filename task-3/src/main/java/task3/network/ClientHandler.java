@@ -1,6 +1,5 @@
 package task3.network;
 
-import task3.entity.Movable;
 import task3.server.commands.player.ControllerCommand;
 
 import java.awt.*;
@@ -45,10 +44,18 @@ public class ClientHandler {
         return null;
     }
 
-
-    public Point receivePoint() {
+    public Point receiveShootPoint() {
         try {
-            return ((PlayerInputInfo) objectInputStream.readObject()).getPoint();
+            return ((PlayerInputInfo) objectInputStream.readObject()).getShootPoint();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public Point receiveLookPoint() {
+        try {
+            return ((PlayerInputInfo) objectInputStream.readObject()).getLookPoint();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println(e.getMessage());
         }

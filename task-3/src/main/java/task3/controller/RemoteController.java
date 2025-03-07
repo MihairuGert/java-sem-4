@@ -1,6 +1,5 @@
 package task3.controller;
 
-import task3.entity.Player;
 import task3.network.ClientHandler;
 import task3.server.commands.player.ControllerCommand;
 
@@ -21,7 +20,7 @@ public class RemoteController implements Controller {
 
     @Override
     public Point getPoint() {
-        return clientHandler.receivePoint();
+        return clientHandler.receiveShootPoint();
     }
 
     @Override
@@ -31,6 +30,6 @@ public class RemoteController implements Controller {
 
     @Override
     public Point getLookPoint() {
-        return clientHandler.receivePoint();
+        return clientHandler.receiveLookPoint();
     }
 }

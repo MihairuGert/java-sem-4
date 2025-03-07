@@ -52,7 +52,7 @@ public class GameModel implements EventLoopListener, HostListener {
         gameModelListeners.add(gameModelListener);
     }
     private void spawnZombie() {
-        for (int i = 0; i < 0; i++) {
+        for (int i = 0; i < 3; i++) {
             Undead boba = new Undead(new AIController());
             movables.add(boba);
             boba.move(300+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
