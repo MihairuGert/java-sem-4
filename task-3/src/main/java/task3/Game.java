@@ -76,9 +76,9 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
 
     @Override
     public void startMultiplayerMenu() {
-        mainWindow.remove(gameMenu);
+        mainWindow.removeScene(gameMenu);
         if (gameField != null)
-            mainWindow.remove(gameField);
+            mainWindow.removeScene(gameField);
         mainWindow.setScene(multiplayerMenu);
     }
 
@@ -118,7 +118,8 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
                 client.sendPlayerInputInfo(player);
             } catch (RuntimeException e) {
                 scheduler.shutdown();
-                startMultiplayerMenu();
+                endGame();
+                return;
             }
             }, 0, 6, TimeUnit.MILLISECONDS);
 
@@ -128,7 +129,8 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
                 savedGame = client.receiveGameData();
             } catch (RuntimeException e) {
                 scheduler.shutdown();
-                startMultiplayerMenu();
+                endGame();
+                return;
             }
             if (savedGame != null) {
                 ArrayList<Movable> movables = savedGame.getMovables();

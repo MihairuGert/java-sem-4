@@ -24,26 +24,19 @@ public class Client {
     }
 
     public void sendPlayerInputInfo(Player player) {
-        if (server.isClosed()) {
-            throw new RuntimeException();
-        }
         try {
             objectOutputStream.writeObject(new PlayerInputInfo(player.getInput(), player.getMousePoint(), player.getLookPoint()));
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
     public SavedGame receiveGameData() {
-        if (server.isClosed()) {
-            throw new RuntimeException();
-        }
         try {
             return (SavedGame) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        return null;
     }
 
     public void closeConnection() {
