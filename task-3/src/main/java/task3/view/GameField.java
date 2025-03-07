@@ -85,7 +85,7 @@ public class GameField extends Scene {
                     obstacleTextures.put(size, scaledTexture);
                 }
                 graphics2D.drawImage(scaledTexture, obstacle.getX(), obstacle.getY(), null);
-                graphics2D.drawRect(obstacle.getX(), obstacle.getY(), obstacle.getxSize(), obstacle.getySize());
+                //graphics2D.drawRect(obstacle.getX(), obstacle.getY(), obstacle.getxSize(), obstacle.getySize());
             }
         }
     }
