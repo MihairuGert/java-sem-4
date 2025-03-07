@@ -1,5 +1,7 @@
 package task3.network;
 
+import task3.entity.Movable;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;

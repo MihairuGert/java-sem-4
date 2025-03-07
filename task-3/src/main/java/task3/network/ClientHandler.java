@@ -1,5 +1,6 @@
 package task3.network;
 
+import task3.entity.Movable;
 import task3.server.commands.player.ControllerCommand;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ public class ClientHandler {
         this.client = client;
         try {
             objectOutputStream = new ObjectOutputStream(client.getOutputStream());
+            objectOutputStream.flush();
             objectInputStream = new ObjectInputStream(client.getInputStream());
         } catch (IOException e) {
             System.err.println(e.getMessage());

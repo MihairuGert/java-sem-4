@@ -12,14 +12,8 @@ import task3.server.GameModel;
 import task3.server.GameModelListener;
 import task3.view.*;
 import task3.controller.SystemConfig;
-import task3.view.Menu;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -116,6 +110,13 @@ public class Game implements MenuListener, GameModelListener {
                 ArrayList<Obstacle> obstacles = savedGame.getObstacles();
                 assignTexture(movables);
                 assignTextureObs(obstacles);
+
+//                for (Movable movable : movables) {
+//                    System.out.println(movable.getX() + " " + movable.getY());
+//                    //System.out.println(movable.getInput() + " " + movable.getRotationAngle());
+//                    System.out.println("----------------------------");
+//                }
+
                 update(movables, obstacles);
             }
         }).start();
