@@ -12,6 +12,7 @@ import task3.model.GameModelListener;
 import task3.view.*;
 import task3.controller.SystemConfig;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -32,11 +33,13 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
 
     public void runGame() {
         systemConfig = new SystemConfig();
-        mainWindow = new MainWindow(this);
+        SwingUtilities.invokeLater(() -> {
+            mainWindow = new MainWindow(this);
 
-        gameMenu = new GameMenu(systemConfig.getScreenSize(), this);
-        multiplayerMenu = new MultiplayerMenu(systemConfig.getScreenSize(), this);
-        mainWindow.setScene(gameMenu);
+            gameMenu = new GameMenu(systemConfig.getScreenSize(), this);
+            multiplayerMenu = new MultiplayerMenu(systemConfig.getScreenSize(), this);
+            mainWindow.setScene(gameMenu);
+        });
     }
 
     private void continueGame() {
@@ -45,29 +48,28 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
 
     @Override
     public void startSingleplayer() {
-        try {
-            initializeGame();
-        } catch (RuntimeException e) {
-            System.err.println(e.getMessage());
-            return;
-        }
-        gameModel = new GameModel(this);
-        Player player = new Player(playerController);
-        gameModel.addPlayer(player);
+        SwingUtilities.invokeLater(() -> {
+            try {
+                initializeGame();
+            } catch (RuntimeException e) {
+                System.err.println(e.getMessage());
+                return;
+            }
+            gameModel = new GameModel(this);
+            Player player = new Player(playerController);
+            gameModel.addPlayer(player);
+        });
     }
 
     private void initializeGame() {
         mainWindow.removeScene(gameMenu);
         mainWindow.removeScene(multiplayerMenu);
-
         try {
             gameField = new GameField(systemConfig.getScreenSize());
         } catch (RuntimeException e) {
             throw new RuntimeException("Cannot initialize game: " + e.getMessage());
         }
-
         mainWindow.setScene(gameField);
-
         playerController = new PlayerController(systemConfig.getScreenSize());
         mainWindow.setController(playerController);
         playerController.setFocusable(true);
@@ -129,13 +131,13 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
                 savedGame = client.receiveGameData();
             } catch (RuntimeException e) {
                 scheduler.shutdown();
-                endGame();
+                SwingUtilities.invokeLater(this::endGame);
                 return;
             }
             if (savedGame != null) {
                 ArrayList<Movable> movables = savedGame.getMovables();
                 ArrayList<Obstacle> obstacles = savedGame.getObstacles();
-                update(movables, obstacles);
+                SwingUtilities.invokeLater(() -> update(movables, obstacles));
             }
         }, 0, 6, TimeUnit.MILLISECONDS);
     }
@@ -178,16 +180,17 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
 
     @Override
     public void update(ArrayList<Movable> movables, ArrayList<Obstacle> obstacles) {
-        if (host != null) {
-            try {
-                host.sendUpdate(new SavedGame(obstacles, movables));
-            } catch (RuntimeException ignored) {}
-        }
-        gameField.setPlayers(movables);
-        gameField.setObstacles(obstacles);
-        gameField.repaint();
+        SwingUtilities.invokeLater(() -> {
+            if (host != null) {
+                try {
+                    host.sendUpdate(new SavedGame(obstacles, movables));
+                } catch (RuntimeException ignored) {}
+            }
+            gameField.setPlayers(movables);
+            gameField.setObstacles(obstacles);
+            gameField.repaint();
+        });
     }
-
     @Override
     public void mainWindowExit() {
         try {

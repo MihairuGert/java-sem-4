@@ -64,20 +64,24 @@ public class MainWindow extends JFrame {
     }
 
     public void setScene(Scene scene) {
-        this.add(scene);
-        this.pack();
-        if (!isVisible) {
-            this.setVisible(true);
-            isVisible = true;
-        }
-        this.revalidate();
-        this.repaint();
+        SwingUtilities.invokeLater(() -> {
+            this.add(scene);
+            this.pack();
+            if (!isVisible) {
+                this.setVisible(true);
+                isVisible = true;
+            }
+            this.revalidate();
+            this.repaint();
+        });
     }
 
     public void removeScene(Scene scene) {
-        this.remove(scene);
-        this.revalidate();
-        this.repaint();
+        SwingUtilities.invokeLater(() -> {
+            this.remove(scene);
+            this.revalidate();
+            this.repaint();
+        });
     }
 
     public void setController(PlayerController playerController) {
