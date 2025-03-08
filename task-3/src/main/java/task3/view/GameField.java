@@ -21,7 +21,7 @@ public class GameField extends Scene {
     private void getTextures() {
         textures = new HashMap<>();
         obstacleTextures = new HashMap<>();
-        for (String className : new String[]{"Player", "Undead"}) {
+        for (String className : new String[]{"Player", "Undead" , "FastUndead"}) {
             URL iconURL = getClass().getResource("/textures/" + className + ".png");
             if (iconURL == null) {
                 continue;

@@ -29,7 +29,7 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
                 activeKeys.put(keyChar, new Key(ControllerCommand.valueOf(commandName)));
             }
         } catch (IOException e) {
-            System.out.println("Unable to load keybindings.");
+            System.err.println("Unable to load keybindings.");
         }
         this.addMouseListener(this);
         this.addKeyListener(this);

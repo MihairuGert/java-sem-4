@@ -1,6 +1,7 @@
 package task3.weapon;
 
 import task3.entity.Entity;
+import task3.entity.Undead;
 
 public class ZombieClaw extends Melee{
     public ZombieClaw() {
@@ -13,7 +14,7 @@ public class ZombieClaw extends Melee{
         if (entity == null) {
             return null;
         }
-        if (entity.getClass().getName().equals("task3.entity.Undead")) {
+        if (entity instanceof Undead) {
             return null;
         }
         return entity;

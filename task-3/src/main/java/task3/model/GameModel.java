@@ -1,22 +1,24 @@
 package task3.model;
 
 import task3.controller.AIController;
+import task3.controller.Controller;
 import task3.controller.RemoteController;
-import task3.entity.Movable;
-import task3.entity.Obstacle;
-import task3.entity.Player;
-import task3.entity.Undead;
+import task3.entity.*;
 import task3.network.ClientHandler;
 import task3.network.HostListener;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameModel implements EventLoopListener, HostListener {
     private final ArrayList<Player> players = new ArrayList<>();
     private final ArrayList<Movable> movables = new ArrayList<>();
     private final ArrayList<Obstacle> obstacles = new ArrayList<>();
     private final ArrayList<GameModelListener> gameModelListeners = new ArrayList<>();
+
+    private final WaveGenerator waveGenerator = new WaveGenerator(30);
     private EventLoop eventLoop;
 
     ArrayList<Movable> getMovables() {
@@ -40,19 +42,28 @@ public class GameModel implements EventLoopListener, HostListener {
         addGameModelListener(gameModelListener);
         addBoundaries();
         createMap();
-        spawnZombie();
         eventLoop = new EventLoop(this);
     }
     public void addGameModelListener(GameModelListener gameModelListener) {
         gameModelListeners.add(gameModelListener);
     }
-    private void spawnZombie() {
-        for (int i = 0; i < 3; i++) {
-            Undead boba = new Undead(new AIController());
-            movables.add(boba);
-            boba.move(300+(int)(Math.random()*1000)%500, 100+(int)(Math.random()*1000)%500);
+
+    private void spawnEnemy(String className, int number) {
+        for (int i = 0; i < number; i++) {
+            Undead undead = null;
+            try {
+                undead = (Undead) Class.forName(className).getDeclaredConstructor(Controller.class).newInstance(new AIController());
+            } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException | NoSuchMethodException e) {
+                System.err.println(e.getMessage());
+                continue;
+            }
+            movables.add(undead);
+            undead.move(100 + (int)(Math.random() * 1500) % 1000, 100 + (int)(Math.random() * 1500) % 1000);
+            undead.setEntityToChase(players.get((int)(Math.random() * 10) % players.size()));
         }
     }
+
     private void addBoundaries() {
         Dimension dim = getScreenSize();
         obstacles.add(new Obstacle(-20,-20, dim.width,30));
@@ -145,5 +156,12 @@ public class GameModel implements EventLoopListener, HostListener {
         Player player = new Player(new RemoteController(clientHandler));
         movables.add(player);
         players.add(player);
+    }
+
+    public void nextWave() {
+        HashMap<String, Integer> nextWave = waveGenerator.calculateNextWave();
+        nextWave.forEach((className, enemyNumber) -> {
+            spawnEnemy(className, enemyNumber);
+        });
     }
 }

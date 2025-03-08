@@ -19,6 +19,10 @@ public class Movable extends Entity{
     protected Weapon weapon;
     protected int velocity = 8;
 
+    public Movable(){
+
+    }
+
     public Movable(Controller playerController) {
         this.controller = playerController;
         xSize = 30;

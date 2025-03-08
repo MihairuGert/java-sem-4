@@ -8,7 +8,12 @@ import java.awt.*;
 import java.util.LinkedList;
 
 public class Undead extends Movable {
-    Entity entityToChase;
+    private Entity entityToChase;
+    private int difficultyClass = 10;
+
+    public Undead() {
+        super();
+    }
 
     public Undead(Controller AIController) {
         super(AIController);
@@ -48,5 +53,13 @@ public class Undead extends Movable {
     @Override
     public Point getMousePoint() {
         return new Point(x, y);
+    }
+
+    public int getDifficultyClass() {
+        return difficultyClass;
+    }
+
+    public void setDifficultyClass(int difficultyClass) {
+        this.difficultyClass = difficultyClass;
     }
 }

@@ -8,21 +8,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.LinkedList;
 
-// TODO: Rename
 public class EventLoop implements ActionListener {
-    Timer timer;
-    GameModel gameModel;
+    private final Timer timer;
+    private long tickCount = 0;
+    private final int wavePeriod = 15;
+    private final GameModel gameModel;
+    private final int delay = 10;
+
 
     public EventLoop(GameModel gameModel) {
         this.gameModel = gameModel;
-        timer = new Timer(10, this);
+        timer = new Timer(delay, this);
         timer.start();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        tickCount++;
         LinkedList<Entity> entities = new LinkedList<>();
         entities.addAll(gameModel.getMovables());
         entities.addAll(gameModel.getObstacles());
@@ -49,5 +54,12 @@ public class EventLoop implements ActionListener {
             gameModel.endGame();
         }
         gameModel.update();
+        if (tickCount % (getSeconds() * wavePeriod) == 0) {
+            gameModel.nextWave();
+        }
+    }
+
+    private int getSeconds() {
+        return 1000 / delay;
     }
 }
