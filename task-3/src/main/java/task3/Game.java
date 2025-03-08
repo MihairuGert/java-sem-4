@@ -165,6 +165,9 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
     public void endGame() {
         mainWindow.removeScene(gameField);
         mainWindow.remove(playerController);
+        if (host != null) {
+            host.closeConnection();
+        }
         continueGame();
     }
 

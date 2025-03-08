@@ -18,7 +18,6 @@ public class EventLoop implements ActionListener {
     private final GameModel gameModel;
     private final int delay = 10;
 
-
     public EventLoop(GameModel gameModel) {
         this.gameModel = gameModel;
         timer = new Timer(delay, this);
