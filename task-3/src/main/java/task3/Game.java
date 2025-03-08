@@ -48,17 +48,15 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
 
     @Override
     public void startSingleplayer() {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                initializeGame();
-            } catch (RuntimeException e) {
-                System.err.println(e.getMessage());
-                return;
-            }
-            gameModel = new GameModel(this);
-            Player player = new Player(playerController);
-            gameModel.addPlayer(player);
-        });
+        try {
+            initializeGame();
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+        gameModel = new GameModel(this);
+        Player player = new Player(playerController);
+        gameModel.addPlayer(player);
     }
 
     private void initializeGame() {
@@ -69,7 +67,9 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
         } catch (RuntimeException e) {
             throw new RuntimeException("Cannot initialize game: " + e.getMessage());
         }
-        mainWindow.setScene(gameField);
+        SwingUtilities.invokeLater(() -> {
+                    mainWindow.setScene(gameField);
+                });
         playerController = new PlayerController(systemConfig.getScreenSize());
         mainWindow.setController(playerController);
         playerController.setFocusable(true);
@@ -180,12 +180,12 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
 
     @Override
     public void update(ArrayList<Movable> movables, ArrayList<Obstacle> obstacles) {
+        if (host != null) {
+            try {
+                host.sendUpdate(new SavedGame(obstacles, movables));
+            } catch (RuntimeException ignored) {}
+        }
         SwingUtilities.invokeLater(() -> {
-            if (host != null) {
-                try {
-                    host.sendUpdate(new SavedGame(obstacles, movables));
-                } catch (RuntimeException ignored) {}
-            }
             gameField.setPlayers(movables);
             gameField.setObstacles(obstacles);
             gameField.repaint();

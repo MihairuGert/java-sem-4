@@ -37,7 +37,6 @@ public class GameField extends Scene {
     public GameField(Dimension screenSize) {
         super(screenSize);
         getTextures();
-        setDoubleBuffered(true);
         URL iconURL = getClass().getResource("/background.png");
         if (iconURL != null)
             backgroundTexture = new ImageIcon(iconURL).getImage().getScaledInstance(screenSize.width, screenSize.height, Image.SCALE_DEFAULT);
@@ -54,7 +53,7 @@ public class GameField extends Scene {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D graphics2D = (Graphics2D) graphics;
-        graphics2D.drawImage(backgroundTexture, 0,0,this);
+        graphics2D.drawImage(backgroundTexture, 0, 0, this);
         if (movables != null) {
             for (Movable movable : movables) {
                 //graphics2D.drawRect(movable.getX(), movable.getY(), movable.getxSize(), movable.getySize());
