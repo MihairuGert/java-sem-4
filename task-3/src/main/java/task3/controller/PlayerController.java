@@ -52,7 +52,9 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
         return commands;
     }
     public Point getPoint() {
-        return activePoint;
+        Point temp = activePoint;
+        activePoint = null;
+        return temp;
     }
 
     @Override

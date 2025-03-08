@@ -14,6 +14,8 @@ public class ClientHandler {
     private ObjectInputStream objectInputStream;
     private Socket client;
 
+    private PlayerInputInfo playerInputInfo;
+
     public ClientHandler(Socket client) {
         try {
             this.client = client;
@@ -24,6 +26,10 @@ public class ClientHandler {
             System.err.println(e.getMessage());
         }
     }
+
+//    public void listenClient() {
+//
+//    }
 
     public void sendSavedGame(SavedGame savedGame) {
         if (client.isClosed()) {
