@@ -3,14 +3,11 @@ package task3.network;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.HashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Host {
-    private HashMap<String, ClientHandler> clientHandlers;
-    private HostListener hostListener;
+    private final HashMap<String, ClientHandler> clientHandlers;
+    private final HostListener hostListener;
     private DatagramSocket serverSocket;
     private volatile boolean isGameOver;
 

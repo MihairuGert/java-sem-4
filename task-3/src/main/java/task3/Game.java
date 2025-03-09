@@ -129,7 +129,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
 
 
         scheduler.scheduleAtFixedRate(() -> {
-            SavedGame savedGame = null;
+            SavedGame savedGame;
             try {
                 savedGame = client.receiveSavedData();
             } catch (RuntimeException e) {

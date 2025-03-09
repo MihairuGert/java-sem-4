@@ -19,7 +19,7 @@ public class GameModel implements EventLoopListener, HostListener {
     private final ArrayList<GameModelListener> gameModelListeners = new ArrayList<>();
 
     private final WaveGenerator waveGenerator = new WaveGenerator(30);
-    private EventLoop eventLoop;
+    private final EventLoop eventLoop;
 
     ArrayList<Movable> getMovables() {
         return movables;
@@ -50,7 +50,7 @@ public class GameModel implements EventLoopListener, HostListener {
 
     private void spawnEnemy(String className, int number) {
         for (int i = 0; i < number; i++) {
-            Undead undead = null;
+            Undead undead;
             try {
                 undead = (Undead) Class.forName(className).getDeclaredConstructor(Controller.class).newInstance(new AIController());
             } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
@@ -70,13 +70,6 @@ public class GameModel implements EventLoopListener, HostListener {
         obstacles.add(new Obstacle(dim.width - 20,0, 30, dim.height));
         obstacles.add(new Obstacle(-20, dim.height - 100, dim.width, 30));
         obstacles.add(new Obstacle(-20,-20,30, dim.height));
-    }
-
-    private void createDebugMap() {
-        obstacles.add(new Obstacle(100,100,100,100));
-        obstacles.add(new Obstacle(100,240,100,100));
-        obstacles.add(new Obstacle(220,330/2,100,100));
-        obstacles.add(new Obstacle(300,600,100,500));
     }
 
     private void createMap() {

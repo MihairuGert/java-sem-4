@@ -1,6 +1,5 @@
 package task3.view;
 
-import task3.Game;
 import task3.controller.PlayerController;
 
 import javax.swing.*;
@@ -10,7 +9,7 @@ import java.net.URL;
 
 public class MainWindow extends JFrame {
     private boolean isVisible = false;
-    private MainWindowListener mainWindowListener;
+    private final MainWindowListener mainWindowListener;
 
     public MainWindow(MainWindowListener mainWindowListener) {
         this.mainWindowListener = mainWindowListener;

@@ -3,14 +3,12 @@ package task3.model;
 import task3.entity.*;
 import task3.model.commands.player.Movement;
 import task3.sound.ShootSound;
-import task3.sound.SoundPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public class EventLoop implements ActionListener {

@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.LinkedList;
 
 public class ClientHandler {
-    private String playerId;
+    private final String playerId;
 
     private PlayerInputInfo playerInputInfo;
 

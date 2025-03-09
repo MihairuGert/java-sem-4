@@ -1,8 +1,6 @@
 package task3.entity;
 
-import java.awt.*;
 import java.io.Serializable;
-import java.net.URL;
 
 public class Entity implements Serializable {
     protected int x = 0;
@@ -15,10 +13,6 @@ public class Entity implements Serializable {
 
     public double getRotationAngle() {
         return rotationAngle;
-    }
-
-    public void setRotationAngle(int rotationAngle) {
-        this.rotationAngle = rotationAngle;
     }
 
     public int getxSize() {

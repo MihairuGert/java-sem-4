@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.*;
 
 public class PlayerController extends JPanel implements KeyListener, MouseListener, Controller {
-    HashMap<String, Key> activeKeys;
+    final HashMap<String, Key> activeKeys;
     Point activePoint = null;
     Point lookPoint = null;
 

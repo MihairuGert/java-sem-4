@@ -7,9 +7,8 @@ import java.io.Serializable;
 public class Key implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private char keyChar;
     private boolean isKeyActive;
-    private ControllerCommand controllerCommand;
+    private final ControllerCommand controllerCommand;
 
     public Key(ControllerCommand controllerCommand) {
         this.controllerCommand = controllerCommand;
@@ -21,9 +20,7 @@ public class Key implements Serializable {
     public void setKeyNotActive() {
         isKeyActive = false;
     }
-    public boolean isKeyChar(char keyChar) {
-        return this.keyChar == keyChar;
-    }
+
     public boolean isKeyActive() {
         return isKeyActive;
     }
