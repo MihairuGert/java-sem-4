@@ -2,12 +2,14 @@ package task3.model;
 
 import task3.entity.*;
 import task3.model.commands.player.Movement;
+import task3.sound.ShootSound;
 import task3.sound.SoundPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -27,14 +29,17 @@ public class EventLoop implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         tickCount++;
+        ArrayList<String> sounds = new ArrayList<>();
         LinkedList<Entity> entities = new LinkedList<>();
         entities.addAll(gameModel.getMovables());
         entities.addAll(gameModel.getObstacles());
         for (Movable p : gameModel.getMovables()) {
             Movement.execute(p, p.getInput());
             Point point = p.getMousePoint();
-            if (point != null && p.getClass().getName().equals("task3.entity.Player")) {
-                SoundPlayer.playShoot();
+            if (point != null && p instanceof Player) {
+                ShootSound shootSound = new ShootSound();
+                sounds.add(shootSound.getClass().getName());
+                shootSound.playSound();
             }
             for (Entity entity : entities) {
                 if (p != entity) {
@@ -52,7 +57,7 @@ public class EventLoop implements ActionListener {
             timer.stop();
             gameModel.endGame();
         }
-        gameModel.update();
+        gameModel.update(sounds);
         if (tickCount % (getSeconds() * wavePeriod) == 0) {
             gameModel.nextWave();
         }

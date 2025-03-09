@@ -2,7 +2,6 @@ package task3.network;
 
 import task3.entity.Movable;
 import task3.entity.Obstacle;
-import task3.entity.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,10 +11,12 @@ public class SavedGame implements Serializable {
 
     private final ArrayList<Movable> movables;
     private final ArrayList<Obstacle> obstacles;
+    private final ArrayList<String> sounds;
 
-    public SavedGame(ArrayList<Obstacle> obstacles, ArrayList<Movable> movables) {
+    public SavedGame(ArrayList<Obstacle> obstacles, ArrayList<Movable> movables, ArrayList<String> sounds) {
         this.movables = movables;
         this.obstacles = obstacles;
+        this.sounds = sounds;
     }
 
     public ArrayList<Movable> getMovables() {
@@ -24,5 +25,9 @@ public class SavedGame implements Serializable {
 
     public ArrayList<Obstacle> getObstacles() {
         return obstacles;
+    }
+
+    public ArrayList<String> getSounds() {
+        return sounds;
     }
 }

@@ -9,5 +9,5 @@ import java.util.ArrayList;
 public interface GameModelListener {
      void endGame();
      Dimension getScreenSize();
-     void update(ArrayList<Movable> movables, ArrayList<Obstacle> obstacles);
+     void update(ArrayList<Movable> movables, ArrayList<Obstacle> obstacles, ArrayList<String> sounds);
 }

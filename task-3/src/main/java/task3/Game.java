@@ -9,11 +9,13 @@ import task3.network.Host;
 import task3.network.SavedGame;
 import task3.model.GameModel;
 import task3.model.GameModelListener;
+import task3.sound.Sound;
 import task3.view.*;
 import task3.controller.SystemConfig;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import java.util.concurrent.Executors;
@@ -138,7 +140,8 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
             if (savedGame != null) {
                 ArrayList<Movable> movables = savedGame.getMovables();
                 ArrayList<Obstacle> obstacles = savedGame.getObstacles();
-                SwingUtilities.invokeLater(() -> update(movables, obstacles));
+                ArrayList<String> sounds = savedGame.getSounds();
+                SwingUtilities.invokeLater(() -> update(movables, obstacles, sounds));
             }
         }, 0, 2, TimeUnit.MILLISECONDS);
     }
@@ -180,11 +183,20 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
     }
 
     @Override
-    public void update(ArrayList<Movable> movables, ArrayList<Obstacle> obstacles) {
+    public void update(ArrayList<Movable> movables, ArrayList<Obstacle> obstacles, ArrayList<String> sounds) {
         if (host != null) {
             try {
-                host.sendUpdate(new SavedGame(obstacles, movables));
+                host.sendUpdate(new SavedGame(obstacles, movables, sounds));
             } catch (RuntimeException ignored) {}
+        }
+        for (String soundName : sounds) {
+            try {
+                Sound sound = (Sound) Class.forName(soundName).getDeclaredConstructor().newInstance();
+                sound.playSound();
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException | ClassNotFoundException e) {
+                System.err.println(e.getMessage());
+            }
         }
         SwingUtilities.invokeLater(() -> {
             gameField.setPlayers(movables);

@@ -123,9 +123,9 @@ public class GameModel implements EventLoopListener, HostListener {
         movables.removeIf(Movable::isDead);
         players.removeIf(Player::isDead);
     }
-    void update() {
+    void update(ArrayList<String> sounds) {
         for (GameModelListener gameModelListener : gameModelListeners) {
-            gameModelListener.update(movables, obstacles);
+            gameModelListener.update(movables, obstacles, sounds);
         }
     }
 
