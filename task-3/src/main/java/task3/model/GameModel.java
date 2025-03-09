@@ -99,7 +99,6 @@ public class GameModel implements EventLoopListener, HostListener {
         obstacles.add(new Obstacle(dim.width / 2 + 20, dim.height / 2 - 60, 100, 100));
         obstacles.add(new Obstacle(dim.width / 2 - 60, dim.height / 2 + 60, 120, 20));
 
-
         obstacles.add(new Obstacle(dim.width - 500, dim.height - 150, 150, 40));
         obstacles.add(new Obstacle(dim.width - 550, dim.height / 2, 40, 120));
         obstacles.add(new Obstacle(dim.width - 600, dim.height / 2 + 100, 20, 100));

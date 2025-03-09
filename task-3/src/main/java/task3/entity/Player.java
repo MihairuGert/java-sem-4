@@ -8,9 +8,23 @@ import java.util.LinkedList;
 
 public class Player extends Movable{
     private static final long serialVersionUID = 1L;
+    private final String id;
 
     public Player(Controller playerController) {
         super(playerController);
+        id = generateId();
+    }
+
+    private String generateId() {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            str.append((int) (Math.random() * 100) % 10);
+        }
+        return str.toString();
+    }
+
+    public String getId() {
+        return id;
     }
 
     private void calculateAngle() {

@@ -3,47 +3,48 @@ package task3.network;
 import task3.entity.Player;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 public class Client {
-    private Socket server;
-    private ObjectOutputStream objectOutputStream;
-    private ObjectInputStream objectInputStream;
+    private DatagramSocket server;
+    private InetAddress ip;
+    private final int port = 49001;
+
+    private final int packetSize = 4096;
 
     public Client(String ip) throws Exception {
+        this.ip = InetAddress.getByName(ip);
+        server = new DatagramSocket();
+    }
+
+    public void sendPlayerData(Player player) {
+        PlayerInputInfo playerInputInfo = new PlayerInputInfo(player.getId(),
+                player.getInput(), player.getMousePoint(), player.getLookPoint());
         try {
-            server = new Socket(ip, 49001);
-            objectOutputStream = new ObjectOutputStream(server.getOutputStream());
-            objectOutputStream.flush();
-            objectInputStream = new ObjectInputStream(server.getInputStream());
+            byte[] data = Serializer.serialize(playerInputInfo);
+            DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
+            server.send(packet);
         } catch (IOException e) {
-            throw new Exception("Server not found.");
+            System.err.println(e.getMessage());
         }
     }
 
-    public void sendPlayerInputInfo(Player player) {
+    public SavedGame receiveSavedData() {
+        byte[] data = new byte[packetSize];
+        DatagramPacket packet = new DatagramPacket(data, packetSize);
         try {
-            objectOutputStream.writeObject(new PlayerInputInfo(player.getInput(), player.getMousePoint(), player.getLookPoint()));
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            server.receive(packet);
+            SavedGame savedGame = (SavedGame) Serializer.deserialize(packet.getData());
+            return (SavedGame) Serializer.deserialize(packet.getData());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-    }
-
-    public SavedGame receiveGameData() {
-        try {
-            return (SavedGame) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        return null;
     }
 
     public void closeConnection() {
-        try {
-            server.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        server.close();
     }
 }

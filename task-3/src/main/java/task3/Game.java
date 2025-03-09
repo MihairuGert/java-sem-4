@@ -116,7 +116,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
         scheduler.scheduleAtFixedRate(() -> {
             try {
-                client.sendPlayerInputInfo(player);
+                client.sendPlayerData(player);
             } catch (RuntimeException e) {
                 scheduler.shutdown();
                 endGame();
@@ -127,7 +127,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
         scheduler.scheduleAtFixedRate(() -> {
             SavedGame savedGame = null;
             try {
-                savedGame = client.receiveGameData();
+                savedGame = client.receiveSavedData();
             } catch (RuntimeException e) {
                 scheduler.shutdown();
                 SwingUtilities.invokeLater(this::endGame);

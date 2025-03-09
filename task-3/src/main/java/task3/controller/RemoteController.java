@@ -7,7 +7,8 @@ import java.awt.*;
 import java.util.LinkedList;
 
 public class RemoteController implements Controller {
-    ClientHandler clientHandler;
+    private final ClientHandler clientHandler;
+    private Point prevPoint;
 
     public RemoteController(ClientHandler clientHandler) {
         this.clientHandler = clientHandler;
@@ -24,11 +25,14 @@ public class RemoteController implements Controller {
 
     @Override
     public Point getPoint() {
-        try {
-            return clientHandler.receiveShootPoint();
-        } catch (RuntimeException e) {
-            return null;
+        Point newPoint = clientHandler.receiveShootPoint();
+        if (prevPoint != null) {
+            if (prevPoint.equals(newPoint)) {
+                return null;
+            }
         }
+        prevPoint = newPoint;
+        return prevPoint;
     }
 
     @Override

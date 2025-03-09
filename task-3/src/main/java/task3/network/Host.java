@@ -1,58 +1,77 @@
 package task3.network;
 
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Host {
-    private CopyOnWriteArrayList<ClientHandler> clientHandlers;
+    private HashMap<String, ClientHandler> clientHandlers;
     private HostListener hostListener;
-    private ServerSocket serverSocket;
+    private DatagramSocket serverSocket;
     private volatile boolean isGameOver;
+
+    private final int packetSize = 4096;
 
     public Host(HostListener hostListener) {
         this.hostListener = hostListener;
         isGameOver = false;
-        clientHandlers = new CopyOnWriteArrayList<>();
+        clientHandlers = new HashMap<>();
         try {
-            serverSocket = new ServerSocket(49001);
+            serverSocket = new DatagramSocket(49001);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-        new Thread(this::startListen).start();
+        new Thread(this::start).start();
     }
 
-    private void startListen() {
+    private byte[] serializedSavedGame;
+
+    public void start() {
         while (!isGameOver) {
             try {
-                Socket client = serverSocket.accept();
-                ClientHandler clientHandler = new ClientHandler(client);
-                clientHandlers.add(clientHandler);
-                hostListener.newClient(clientHandler);
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
+                byte[] buffer = new byte[packetSize];
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                serverSocket.receive(packet);
+
+                PlayerInputInfo inputInfo = (PlayerInputInfo) Serializer.deserialize(packet.getData());
+
+                String playerId = inputInfo.getId();
+                ClientHandler clientHandler = clientHandlers.get(playerId);
+                if (clientHandler == null) {
+                    clientHandler = new ClientHandler(playerId);
+                    hostListener.newClient(clientHandler);
+                    clientHandlers.put(playerId, clientHandler);
+                    continue;
+                }
+                clientHandler.setPlayerInputInfo(inputInfo);
+
+                if (serializedSavedGame == null) {
+                    continue;
+                }
+                byte[] response = serializedSavedGame;
+                DatagramPacket responsePacket = new DatagramPacket(response, response.length, packet.getAddress(), packet.getPort());
+                serverSocket.send(responsePacket);
+            } catch (IOException | ClassNotFoundException e) {
+                System.err.println("Error: " + e.getMessage());
             }
         }
     }
 
     public void sendUpdate(SavedGame savedGame) {
-        for (ClientHandler clientHandler : clientHandlers) {
-            clientHandler.sendSavedGame(savedGame);
+        try {
+            serializedSavedGame = Serializer.serialize(savedGame);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            serializedSavedGame = null;
         }
     }
 
     public void closeConnection() {
         isGameOver = true;
-        for (ClientHandler clientHandler : clientHandlers) {
-            clientHandler.closeConnection();
-        }
-        try {
-            serverSocket.close();
-        } catch (IOException e) {
-            if (!isGameOver) {
-                System.err.println(e.getMessage());
-            }
-        }
+        serverSocket.close();
     }
 }
