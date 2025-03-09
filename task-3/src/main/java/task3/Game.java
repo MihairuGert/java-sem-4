@@ -125,7 +125,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
                 scheduler.shutdown();
                 return;
             }
-            }, 0, 2, TimeUnit.MILLISECONDS);
+            }, 0, 6, TimeUnit.MILLISECONDS);
 
 
         scheduler.scheduleAtFixedRate(() -> {
@@ -143,7 +143,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
                 ArrayList<String> sounds = savedGame.getSounds();
                 SwingUtilities.invokeLater(() -> update(movables, obstacles, sounds));
             }
-        }, 0, 2, TimeUnit.MILLISECONDS);
+        }, 0, 6, TimeUnit.MILLISECONDS);
     }
 
     @Override
