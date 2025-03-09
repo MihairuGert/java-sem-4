@@ -122,7 +122,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
                 endGame();
                 return;
             }
-            }, 0, 6, TimeUnit.MILLISECONDS);
+            }, 0, 2, TimeUnit.MILLISECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {
             SavedGame savedGame = null;
@@ -138,7 +138,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
                 ArrayList<Obstacle> obstacles = savedGame.getObstacles();
                 SwingUtilities.invokeLater(() -> update(movables, obstacles));
             }
-        }, 0, 6, TimeUnit.MILLISECONDS);
+        }, 0, 2, TimeUnit.MILLISECONDS);
     }
 
     @Override
