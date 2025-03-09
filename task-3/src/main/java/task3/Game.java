@@ -33,11 +33,10 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
 
     public void runGame() {
         systemConfig = new SystemConfig();
+        mainWindow = new MainWindow(this);
+        gameMenu = new GameMenu(systemConfig.getScreenSize(), this);
+        multiplayerMenu = new MultiplayerMenu(systemConfig.getScreenSize(), this);
         SwingUtilities.invokeLater(() -> {
-            mainWindow = new MainWindow(this);
-
-            gameMenu = new GameMenu(systemConfig.getScreenSize(), this);
-            multiplayerMenu = new MultiplayerMenu(systemConfig.getScreenSize(), this);
             mainWindow.setScene(gameMenu);
         });
     }

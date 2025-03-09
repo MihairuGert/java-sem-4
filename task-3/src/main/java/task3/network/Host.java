@@ -8,11 +8,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Host {
     private CopyOnWriteArrayList<ClientHandler> clientHandlers;
     private HostListener hostListener;
-    private boolean isGameOver = false;
     private ServerSocket serverSocket;
+    private volatile boolean isGameOver;
 
     public Host(HostListener hostListener) {
         this.hostListener = hostListener;
+        isGameOver = false;
         clientHandlers = new CopyOnWriteArrayList<>();
         try {
             serverSocket = new ServerSocket(49001);
@@ -42,8 +43,16 @@ public class Host {
     }
 
     public void closeConnection() {
+        isGameOver = true;
         for (ClientHandler clientHandler : clientHandlers) {
             clientHandler.closeConnection();
+        }
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            if (!isGameOver) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 }
