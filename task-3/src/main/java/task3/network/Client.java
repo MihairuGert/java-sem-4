@@ -11,12 +11,13 @@ public class Client {
     private DatagramSocket server;
     private InetAddress ip;
     private final int port = 49001;
-
     private final int packetSize = 4096;
+    private final int timeout = 700;
 
     public Client(String ip) throws Exception {
         this.ip = InetAddress.getByName(ip);
         server = new DatagramSocket();
+        server.setSoTimeout(timeout);
     }
 
     public void sendPlayerData(Player player) {
@@ -27,7 +28,7 @@ public class Client {
             DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
             server.send(packet);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -36,12 +37,10 @@ public class Client {
         DatagramPacket packet = new DatagramPacket(data, packetSize);
         try {
             server.receive(packet);
-            SavedGame savedGame = (SavedGame) Serializer.deserialize(packet.getData());
             return (SavedGame) Serializer.deserialize(packet.getData());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public void closeConnection() {

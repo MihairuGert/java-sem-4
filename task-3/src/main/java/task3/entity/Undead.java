@@ -19,7 +19,11 @@ public class Undead extends Movable {
         super(AIController);
         velocity = 1+(int)(Math.random()*100)%2;
         weapon = new ZombieClaw();
+
+        trace = new LinkedList<>();
     }
+
+    private LinkedList<Point> trace;
 
     public LinkedList<ControllerCommand> getTrace(Entity entity) {
         LinkedList<ControllerCommand> trace = new LinkedList<>();
@@ -47,6 +51,7 @@ public class Undead extends Movable {
         if (entityToChase == null) {
             return new LinkedList<>();
         }
+
         return getTrace(entityToChase);
     }
 

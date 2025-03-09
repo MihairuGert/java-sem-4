@@ -113,24 +113,26 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
             return;
         }
         Player player = new Player(playerController);
+
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 client.sendPlayerData(player);
             } catch (RuntimeException e) {
+                SwingUtilities.invokeLater(this::endGame);
                 scheduler.shutdown();
-                endGame();
                 return;
             }
             }, 0, 2, TimeUnit.MILLISECONDS);
+
 
         scheduler.scheduleAtFixedRate(() -> {
             SavedGame savedGame = null;
             try {
                 savedGame = client.receiveSavedData();
             } catch (RuntimeException e) {
-                scheduler.shutdown();
                 SwingUtilities.invokeLater(this::endGame);
+                scheduler.shutdown();
                 return;
             }
             if (savedGame != null) {

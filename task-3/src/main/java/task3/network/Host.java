@@ -56,7 +56,7 @@ public class Host {
                 DatagramPacket responsePacket = new DatagramPacket(response, response.length, packet.getAddress(), packet.getPort());
                 serverSocket.send(responsePacket);
             } catch (IOException | ClassNotFoundException e) {
-                System.err.println("Error: " + e.getMessage());
+                closeConnection();
             }
         }
     }
