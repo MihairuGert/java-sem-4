@@ -1,7 +1,10 @@
 package task4;
 
+import task4.factory.Factory;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        Factory factory = new Factory();
+        factory.run("test.txt");
     }
 }
