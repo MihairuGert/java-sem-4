@@ -1,12 +1,13 @@
 package task3.controller;
 
-import task3.model.commands.player.ControllerCommand;
+import task3.engine.commands.player.ControllerCommand;
+import task3.entity.Player;
 
-import java.awt.*;
+import task3.engine.Point;
 import java.util.LinkedList;
 
 public interface Controller {
-    LinkedList<ControllerCommand> getActiveCommands();
+    void setActiveCommands();
     Point getPoint();
     void setPointNull();
     Point getLookPoint();

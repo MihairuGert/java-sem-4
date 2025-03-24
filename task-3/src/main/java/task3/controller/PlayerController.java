@@ -1,6 +1,8 @@
 package task3.controller;
 
-import task3.model.commands.player.ControllerCommand;
+import task3.engine.commands.player.ControllerCommand;
+import task3.entity.Player;
+import task3.engine.Point;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,15 +12,16 @@ import java.io.InputStream;
 import java.util.*;
 
 public class PlayerController extends JPanel implements KeyListener, MouseListener, Controller {
-    final HashMap<String, Key> activeKeys;
-    Point activePoint = null;
-    Point lookPoint = null;
+    private final HashMap<String, Key> activeKeys;
+    private Point activePoint = null;
+    private Point lookPoint = null;
+    private final Player player;
 
     public Point getLookPoint() {
         return lookPoint;
     }
 
-    public PlayerController(Dimension screenSize) {
+    public PlayerController(Dimension screenSize, Player player) {
         InputStream inputStream = PlayerController.class.getResourceAsStream("/keybindings.properties");
         Properties properties = new Properties();
         activeKeys = new HashMap<>();
@@ -38,18 +41,21 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
         addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                lookPoint = e.getPoint();
+                java.awt.Point point = e.getPoint();
+                lookPoint = new Point(point.x, point.y);
+                player.setLookPoint(lookPoint);
             }
             @Override
             public void mouseDragged(MouseEvent e) {}
         });
+        this.player = player;
     }
 
     @Override
-    public LinkedList<ControllerCommand> getActiveCommands() {
+    public void setActiveCommands() {
         LinkedList<ControllerCommand> commands = new LinkedList<>();
         activeKeys.forEach((key, value) -> { if (value.isKeyActive()) commands.push(value.getName());});
-        return commands;
+        player.setActiveCommands(commands);
     }
     public Point getPoint() {
         return activePoint;
@@ -70,6 +76,7 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
         if (activeKeys.containsKey(Character.toString(e.getKeyChar()))) {
             activeKeys.get(Character.toString(e.getKeyChar())).setKeyActive();
         }
+        setActiveCommands();
     }
 
     @Override
@@ -77,6 +84,7 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
         if (activeKeys.containsKey(Character.toString(e.getKeyChar()))) {
             activeKeys.get(Character.toString(e.getKeyChar())).setKeyNotActive();
         }
+        setActiveCommands();
     }
 
     @Override
@@ -86,7 +94,9 @@ public class PlayerController extends JPanel implements KeyListener, MouseListen
 
     @Override
     public void mousePressed(MouseEvent e) {
-        activePoint = e.getPoint();
+        java.awt.Point point = e.getPoint();
+        activePoint = new Point(point.x, point.y);
+        player.setActivePoint(activePoint);
     }
 
     @Override

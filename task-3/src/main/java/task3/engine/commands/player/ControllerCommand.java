@@ -1,4 +1,4 @@
-package task3.model.commands.player;
+package task3.engine.commands.player;
 
 public enum ControllerCommand {
     UP,

@@ -1,13 +1,12 @@
 package task3.model;
 
-import task3.controller.AIController;
-import task3.controller.Controller;
-import task3.controller.RemoteController;
 import task3.entity.*;
+import task3.engine.EventLoop;
+import task3.engine.EventLoopListener;
+import task3.engine.WaveGenerator;
 import task3.network.ClientHandler;
 import task3.network.HostListener;
 
-import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,27 +20,17 @@ public class GameModel implements EventLoopListener, HostListener {
     private final WaveGenerator waveGenerator = new WaveGenerator(30);
     private final EventLoop eventLoop;
 
-    ArrayList<Movable> getMovables() {
+    public ArrayList<Movable> getMovables() {
         return movables;
     }
-    ArrayList<Obstacle> getObstacles() {
+    public ArrayList<Obstacle> getObstacles() {
         return obstacles;
     }
 
-    private Dimension getScreenSize() {
-        int minX = Integer.MAX_VALUE;
-        int minY = Integer.MAX_VALUE;
-        for (GameModelListener gameModelListener : gameModelListeners) {
-            minX = Math.min(gameModelListener.getScreenSize().width, minX);
-            minY = Math.min(gameModelListener.getScreenSize().height, minY);
-        }
-        return new Dimension(minX, minY);
-    }
-
-    public GameModel(GameModelListener gameModelListener) {
+    public GameModel(GameModelListener gameModelListener, int width, int height) {
         addGameModelListener(gameModelListener);
-        addBoundaries();
-        createMap();
+        addBoundaries(width, height);
+        createMap(width, height);
         eventLoop = new EventLoop(this);
     }
     public void addGameModelListener(GameModelListener gameModelListener) {
@@ -52,7 +41,7 @@ public class GameModel implements EventLoopListener, HostListener {
         for (int i = 0; i < number; i++) {
             Undead undead;
             try {
-                undead = (Undead) Class.forName(className).getDeclaredConstructor(Controller.class).newInstance(new AIController());
+                undead = (Undead) Class.forName(className).getDeclaredConstructor().newInstance();
             } catch (ClassNotFoundException | InvocationTargetException | InstantiationException |
                      IllegalAccessException | NoSuchMethodException e) {
                 System.err.println(e.getMessage());
@@ -64,65 +53,62 @@ public class GameModel implements EventLoopListener, HostListener {
         }
     }
 
-    private void addBoundaries() {
-        Dimension dim = getScreenSize();
-        obstacles.add(new Obstacle(-20,-20, dim.width,30));
-        obstacles.add(new Obstacle(dim.width - 20,0, 30, dim.height));
-        obstacles.add(new Obstacle(-20, dim.height - 100, dim.width, 30));
-        obstacles.add(new Obstacle(-20,-20,30, dim.height));
+    private void addBoundaries(int width, int height) {
+        obstacles.add(new Obstacle(-20,-20, width,30));
+        obstacles.add(new Obstacle(width - 20,0, 30, height));
+        obstacles.add(new Obstacle(-20, height - 100, width, 30));
+        obstacles.add(new Obstacle(-20,-20,30, height));
     }
 
-    private void createMap() {
-        Dimension dim = getScreenSize();
+    private void createMap(int width, int height) {
+        obstacles.add(new Obstacle(width - 120, 0, 50, height / 3));
+        obstacles.add(new Obstacle(width - 400, 0, 50, height / 4));
+        obstacles.add(new Obstacle(width - 400, height / 3 - 50, 280, 50));
+        obstacles.add(new Obstacle(width - 120, height / 3 + 50, 50, height / 2));
+        obstacles.add(new Obstacle(width - 200, height / 3 + 50, 50, height / 2));
+        obstacles.add(new Obstacle(width - 280, height / 3 + 50, 50, height / 2));
 
-        obstacles.add(new Obstacle(dim.width - 120, 0, 50, dim.height / 3));
-        obstacles.add(new Obstacle(dim.width - 400, 0, 50, dim.height / 4));
-        obstacles.add(new Obstacle(dim.width - 400, dim.height / 3 - 50, 280, 50));
-        obstacles.add(new Obstacle(dim.width - 120, dim.height / 3 + 50, 50, dim.height / 2));
-        obstacles.add(new Obstacle(dim.width - 200, dim.height / 3 + 50, 50, dim.height / 2));
-        obstacles.add(new Obstacle(dim.width - 280, dim.height / 3 + 50, 50, dim.height / 2));
+        obstacles.add(new Obstacle(50, 0, 40, height / 2));
+        obstacles.add(new Obstacle(50, height / 2 - 100, 180, 40));
+        obstacles.add(new Obstacle(200, height / 2 - 100, 40, 180));
+        obstacles.add(new Obstacle(100, height / 2 + 50, 20, 100));
+        obstacles.add(new Obstacle(150, height / 2 + 50, 20, 100));
 
-        obstacles.add(new Obstacle(50, 0, 40, dim.height / 2));
-        obstacles.add(new Obstacle(50, dim.height / 2 - 100, 180, 40));
-        obstacles.add(new Obstacle(200, dim.height / 2 - 100, 40, 180));
-        obstacles.add(new Obstacle(100, dim.height / 2 + 50, 20, 100));
-        obstacles.add(new Obstacle(150, dim.height / 2 + 50, 20, 100));
+        obstacles.add(new Obstacle(width / 2 - 120, height / 2 - 60, 100, 100));
+        obstacles.add(new Obstacle(width / 2 + 20, height / 2 - 60, 100, 100));
+        obstacles.add(new Obstacle(width / 2 - 60, height / 2 + 60, 120, 20));
 
-        obstacles.add(new Obstacle(dim.width / 2 - 120, dim.height / 2 - 60, 100, 100));
-        obstacles.add(new Obstacle(dim.width / 2 + 20, dim.height / 2 - 60, 100, 100));
-        obstacles.add(new Obstacle(dim.width / 2 - 60, dim.height / 2 + 60, 120, 20));
+        obstacles.add(new Obstacle(width - 500, height - 150, 150, 40));
+        obstacles.add(new Obstacle(width - 550, height / 2, 40, 120));
+        obstacles.add(new Obstacle(width - 600, height / 2 + 100, 20, 100));
+        obstacles.add(new Obstacle(width - 450, height / 2 + 100, 20, 100));
 
-        obstacles.add(new Obstacle(dim.width - 500, dim.height - 150, 150, 40));
-        obstacles.add(new Obstacle(dim.width - 550, dim.height / 2, 40, 120));
-        obstacles.add(new Obstacle(dim.width - 600, dim.height / 2 + 100, 20, 100));
-        obstacles.add(new Obstacle(dim.width - 450, dim.height / 2 + 100, 20, 100));
-
-        obstacles.add(new Obstacle(dim.width / 2 - 200, 100, 400, 30));
-        obstacles.add(new Obstacle(dim.width / 2 - 200, dim.height - 240, 400, 30));
+        obstacles.add(new Obstacle(width / 2 - 200, 100, 400, 30));
+        obstacles.add(new Obstacle(width / 2 - 200, height - 240, 400, 30));
 
         obstacles.add(new Obstacle(300, 200, 60, 60));
-        obstacles.add(new Obstacle(dim.width - 360, dim.height - 200, 60, 60));
+        obstacles.add(new Obstacle(width - 360, height - 200, 60, 60));
 
-        obstacles.add(new Obstacle(400, dim.height - 100, 20, 100));
-        obstacles.add(new Obstacle(500, dim.height - 200, 20, 100));
-        obstacles.add(new Obstacle(600, dim.height - 250, 20, 100));
+        obstacles.add(new Obstacle(400, height - 100, 20, 100));
+        obstacles.add(new Obstacle(500, height - 200, 20, 100));
+        obstacles.add(new Obstacle(600, height - 250, 20, 100));
 
-        obstacles.add(new Obstacle(50, dim.height - 350, 200, 20));
-        obstacles.add(new Obstacle(150, dim.height - 300, 20, 100));
-        obstacles.add(new Obstacle(250, dim.height - 250, 20, 100));
-        obstacles.add(new Obstacle(300, dim.height - 200, 100, 20));
+        obstacles.add(new Obstacle(50, height - 350, 200, 20));
+        obstacles.add(new Obstacle(150, height - 300, 20, 100));
+        obstacles.add(new Obstacle(250, height - 250, 20, 100));
+        obstacles.add(new Obstacle(300, height - 200, 100, 20));
     }
-    void removeDead() {
+    public void removeDead() {
         movables.removeIf(Movable::isDead);
         players.removeIf(Player::isDead);
     }
-    void update(ArrayList<String> sounds) {
+    public void update(ArrayList<String> sounds) {
         for (GameModelListener gameModelListener : gameModelListeners) {
             gameModelListener.update(movables, obstacles, sounds);
         }
     }
 
-    boolean arePlayersDead() {
+    public boolean arePlayersDead() {
         return players.isEmpty();
     }
 
@@ -145,15 +131,14 @@ public class GameModel implements EventLoopListener, HostListener {
 
     @Override
     public void newClient(ClientHandler clientHandler) {
-        Player player = new Player(new RemoteController(clientHandler));
+        Player player = new Player();
+        clientHandler.setPlayer(player);
         movables.add(player);
         players.add(player);
     }
 
     public void nextWave() {
         HashMap<String, Integer> nextWave = waveGenerator.calculateNextWave();
-        nextWave.forEach((className, enemyNumber) -> {
-            spawnEnemy(className, enemyNumber);
-        });
+        nextWave.forEach(this::spawnEnemy);
     }
 }

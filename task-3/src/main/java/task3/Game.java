@@ -28,7 +28,10 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
     private GameMenu gameMenu;
     private MultiplayerMenu multiplayerMenu;
     private GameField gameField;
+
     private PlayerController playerController;
+    private Player player;
+
     GameModel gameModel;
     private Host host = null;
     private Client client = null;
@@ -55,8 +58,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
             System.err.println(e.getMessage());
             return;
         }
-        gameModel = new GameModel(this);
-        Player player = new Player(playerController);
+        gameModel = new GameModel(this, systemConfig.getScreenSize().width, systemConfig.getScreenSize().height);
         gameModel.addPlayer(player);
     }
 
@@ -71,7 +73,8 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
         SwingUtilities.invokeLater(() -> {
                     mainWindow.setScene(gameField);
                 });
-        playerController = new PlayerController(systemConfig.getScreenSize());
+        player = new Player();
+        playerController = new PlayerController(systemConfig.getScreenSize(), player);
         mainWindow.setController(playerController);
         playerController.setFocusable(true);
         playerController.requestFocusInWindow();
@@ -92,30 +95,13 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
             System.err.println(e.getMessage());
             return;
         }
-        GameModel gameModel = new GameModel(this);
-
-        Player player = new Player(playerController);
+        GameModel gameModel = new GameModel(this, systemConfig.getScreenSize().width, systemConfig.getScreenSize().height);
         gameModel.addPlayer(player);
 
         host = new Host(gameModel);
     }
 
-    private void joinGame() {
-        String ip = multiplayerMenu.writeHostIp();
-        try {
-            client = new Client(ip);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            return;
-        }
-        try {
-            initializeGame();
-        } catch (RuntimeException e) {
-            System.err.println(e.getMessage());
-            return;
-        }
-        Player player = new Player(playerController);
-
+    private void runConnection() {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
         scheduler.scheduleAtFixedRate(() -> {
             try {
@@ -125,8 +111,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
                 scheduler.shutdown();
                 return;
             }
-            }, 0, 6, TimeUnit.MILLISECONDS);
-
+        }, 0, 6, TimeUnit.MILLISECONDS);
 
         scheduler.scheduleAtFixedRate(() -> {
             SavedGame savedGame;
@@ -144,6 +129,23 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
                 SwingUtilities.invokeLater(() -> update(movables, obstacles, sounds));
             }
         }, 0, 6, TimeUnit.MILLISECONDS);
+    }
+
+    private void joinGame() {
+        String ip = multiplayerMenu.writeHostIp();
+        try {
+            client = new Client(ip);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+        try {
+            initializeGame();
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+        runConnection();
     }
 
     @Override

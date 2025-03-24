@@ -12,7 +12,7 @@ public class Client {
     private final InetAddress ip;
     private final int port = 49001;
     private final int packetSize = 4096;
-    private final int timeout = 700;
+    private final int timeout = 1000;
 
     public Client(String ip) throws Exception {
         this.ip = InetAddress.getByName(ip);

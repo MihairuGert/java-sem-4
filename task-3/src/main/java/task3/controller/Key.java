@@ -1,6 +1,6 @@
 package task3.controller;
 
-import task3.model.commands.player.ControllerCommand;
+import task3.engine.commands.player.ControllerCommand;
 
 import java.io.Serializable;
 
