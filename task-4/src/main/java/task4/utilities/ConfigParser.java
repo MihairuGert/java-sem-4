@@ -9,7 +9,7 @@ public class ConfigParser {
 
     ConfigParser (String path) throws FileNotFoundException {
         if (!path.matches("[%:/A-Za-z0-9_.-]*.txt")) {
-            throw new FileNotFoundException("Inappropriate file name: it should look like .../<Latin word or numbers>.txt");
+            throw new FileNotFoundException("Inappropriate file name: it should look like .../<Latin word or numbers>.txt\nRunning with default config.");
         }
         scanner = new Scanner(new File(path));
     }
