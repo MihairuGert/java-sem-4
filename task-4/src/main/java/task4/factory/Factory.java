@@ -7,6 +7,6 @@ public class Factory {
     //todo Move to constructor
     public void run(String path) {
         config = new Config(path);
-        System.out.println(config.getFieldValue("aboba"));
+        config.DBGMSG();
     }
 }
