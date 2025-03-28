@@ -1,1 +1,3 @@
 aboba=        i_love_meow
+BodyStorageCapacity = 10
+BodySupplierSpeed = 1000
