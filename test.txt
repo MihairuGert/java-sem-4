@@ -1,3 +1,7 @@
 aboba=        i_love_meow
-BodyStorageCapacity = 10
+BodyStorageCapacity = 5
 BodySupplierSpeed = 1000
+EngineStorageCapacity = 10
+EngineSupplierSpeed = 2000
+AccessoryStorageCapacity = 1000
+AccessorySupplierSpeed = 500

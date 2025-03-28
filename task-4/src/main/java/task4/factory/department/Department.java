@@ -13,6 +13,10 @@ public class Department {
     private boolean isWorking = true;
 
     Department(int speed) {
+        if (speed == -1) {
+            this.speed = 10;
+            return;
+        }
         this.speed = speed;
     }
 }

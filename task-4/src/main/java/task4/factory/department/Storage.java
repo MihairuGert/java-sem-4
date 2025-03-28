@@ -10,15 +10,19 @@ public class Storage <T extends Detail> {
     private final int capacity;
 
     public Storage(int capacity) {
-        this.capacity = capacity;
         details = new LinkedList<>();
+        if (capacity == -1) {
+            this.capacity = 10;
+            return;
+        }
+        this.capacity = capacity;
     }
 
     public synchronized void add(T detail) throws Exception {
         while (details.size() > capacity) {
             wait();
         }
-        System.out.println("Detail with id = " + detail.getId() + " was added.");
+        //System.out.println("Detail with id = " + detail.getId() + " was added.");
         details.add(detail);
         notify();
     }
@@ -28,7 +32,7 @@ public class Storage <T extends Detail> {
             wait();
         }
         T detail = details.remove();
-        System.out.println("Detail with id = " + detail.getId() + " was taken.");
+        //System.out.println("Detail with id = " + detail.getId() + " was taken.");
         notify();
         return detail;
     }

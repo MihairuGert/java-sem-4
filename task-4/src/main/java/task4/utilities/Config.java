@@ -30,7 +30,11 @@ public class Config {
     }
 
     public String getFieldValue(String key) {
-        return configTable.get(key);
+        String value = configTable.get(key);
+        if (value == null) {
+            return "-1";
+        }
+        return value;
     }
 
     public void DBGMSG() {
