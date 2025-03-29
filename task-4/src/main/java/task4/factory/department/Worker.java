@@ -4,7 +4,6 @@ import task4.factory.car.Car;
 import task4.factory.car.details.Accessory;
 import task4.factory.car.details.Body;
 import task4.factory.car.details.Engine;
-import task4.threadpool.ThreadPool;
 
 public class Worker implements Runnable {
     private Storage<Body> bodyStorage;

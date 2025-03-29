@@ -11,8 +11,8 @@ public class Dealer extends Department implements Runnable {
     private static volatile Logger logger = LoggerFactory.getLogger(Dealer.class);
     private int number;
 
-    public Dealer(Storage<Car> carStorage, int speed, int number) {
-        super(speed);
+    public Dealer(Storage<Car> carStorage, int speed, int number, boolean isWorking) {
+        super(speed, isWorking);
         this.carStorage = carStorage;
         this.number = number;
     }

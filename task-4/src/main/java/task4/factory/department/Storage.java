@@ -1,6 +1,5 @@
 package task4.factory.department;
 
-import task4.factory.car.Car;
 import task4.factory.car.Product;
 
 import java.util.LinkedList;
@@ -33,7 +32,6 @@ public class Storage <T extends Product> {
         while (details.size() >= capacity) {
             wait();
         }
-        //System.out.println("Product with id = " + detail.getId() + " was added.");
         everCreated++;
         details.add(product);
         notifyAll();
@@ -45,7 +43,6 @@ public class Storage <T extends Product> {
             wait();
         }
         T detail = details.remove();
-        //System.out.println("Product with id = " + detail.getId() + " was taken.");
         notifyAll();
         return detail;
     }

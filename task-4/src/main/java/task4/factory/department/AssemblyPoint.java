@@ -28,4 +28,8 @@ public class AssemblyPoint {
     public int getQueueSize() {
         return threadPool.getTaskQueueSize();
     }
+
+    public void stop() {
+        threadPool.stop();
+    }
 }

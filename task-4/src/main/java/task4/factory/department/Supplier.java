@@ -8,8 +8,8 @@ public class Supplier<T extends Product> extends Department implements Runnable 
     private final Storage<T> storage;
     private final Creator<T> creator;
 
-    public Supplier(Storage<T> storage, int speed, Class<T> clazz) {
-        super(speed);
+    public Supplier(Storage<T> storage, int speed, boolean isWorking, Class<T> clazz) {
+        super(speed, isWorking);
         this.storage = storage;
         creator = new Creator<>(clazz);
     }

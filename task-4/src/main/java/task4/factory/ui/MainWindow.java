@@ -1,21 +1,18 @@
 package task4.factory.ui;
 
 import task4.factory.FactoryStat;
-import task4.factory.ui.buttons.StartButton;
 import task4.factory.ui.slider.FactorySlider;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.URL;
 import java.util.Objects;
 
 public class MainWindow extends JFrame implements ActionListener {
-
-    private StartButton startButton;
-    private boolean isWorking = false;
-
     private final MainWindowListener mainWindowListener;
 
     private int curGridy = 1;
@@ -64,9 +61,6 @@ public class MainWindow extends JFrame implements ActionListener {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        startButton = new StartButton(this);
-        startButton.setOpaque(true);
-        add(startButton, gbc);
 
         bodySlider = new FactorySlider(gbc, this, "Bodies sup");
         bodySlider.addChangeListener(e -> {
@@ -92,7 +86,7 @@ public class MainWindow extends JFrame implements ActionListener {
             mainWindowListener.setDealerSpeed(value);
         });
 
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.gridx = 2;
         carNum = new JPanel(new GridLayout(1, 5, 5, 10));
 
@@ -110,15 +104,48 @@ public class MainWindow extends JFrame implements ActionListener {
         timer = new Timer(10, this);
         timer.start();
 
+        this.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                mainWindowListener.mainWindowExit();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
+
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == startButton) {
-            isWorking = !isWorking;
-            startButton.setText(isWorking ? "Stop" : "Start");
-        } else if (e.getSource() == timer) {
             FactoryStat factoryStat = mainWindowListener.getStat();
 
             bodySlider.setCreated(factoryStat.bodiesCreated());
@@ -133,7 +160,6 @@ public class MainWindow extends JFrame implements ActionListener {
             carsCreated.setText("Cars created: " + factoryStat.carsCreated());
             carsInQueue.setText("Cars in queue: " + factoryStat.carsInQueue());
             carsInStock.setText("Cars in stock: " + factoryStat.carsInStock());
-        }
     }
 
     public int getCurGridy() {

@@ -14,13 +14,14 @@ public class Department {
     }
 
     private int speed;
-    private boolean isWorking = true;
+    private volatile boolean isWorking;
 
-    Department(int speed) {
+    Department(int speed, boolean isWorking) {
         if (speed == -1) {
             this.speed = 10;
             return;
         }
+        this.isWorking = isWorking;
         this.speed = speed;
     }
 

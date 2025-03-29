@@ -6,8 +6,8 @@ public class Controller extends Department implements Runnable{
     private final Storage<Car> carStorage;
     private final AssemblyPoint assemblyPoint;
 
-    public Controller(Storage<Car> carStorage, AssemblyPoint assemblyPoint) {
-        super(1);
+    public Controller(Storage<Car> carStorage, AssemblyPoint assemblyPoint, boolean isWorking) {
+        super(1, isWorking);
         this.carStorage = carStorage;
         this.assemblyPoint = assemblyPoint;
     }

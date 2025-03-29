@@ -10,4 +10,6 @@ public interface MainWindowListener {
     void setBodySupplySpeed(int speed);
     void setEngineSupplySpeed(int speed);
     void setAccessorySupplySpeed(int speed);
+
+    void mainWindowExit();
 }

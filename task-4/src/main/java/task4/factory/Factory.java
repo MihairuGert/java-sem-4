@@ -5,17 +5,13 @@ import task4.factory.car.details.Accessory;
 import task4.factory.car.details.Body;
 import task4.factory.car.details.Engine;
 import task4.factory.department.*;
-import task4.factory.ui.MainWindow;
 import task4.factory.ui.MainWindowListener;
 import task4.utilities.Config;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
-//todo correct close swing remove
-
 public class Factory implements MainWindowListener {
-    private Config config;
+    private final Config config;
 
     private Storage<Body> bodyStorage;
     private Storage<Accessory> accessoryStorage;
@@ -29,6 +25,8 @@ public class Factory implements MainWindowListener {
 
     private AssemblyPoint assemblyPoint;
 
+    private volatile boolean isWorking;
+
     private void initStorages() {
         bodyStorage = new Storage<>(Integer.parseInt(config.getFieldValue("BodyStorageCapacity")));
         accessoryStorage = new Storage<>(Integer.parseInt(config.getFieldValue("AccessoryStorageCapacity")));
@@ -37,7 +35,7 @@ public class Factory implements MainWindowListener {
     }
 
     private void initSuppliers() {
-        bodySupplier = new Supplier<>(bodyStorage, Integer.parseInt(config.getFieldValue("BodySupplierSpeed")), Body.class);
+        bodySupplier = new Supplier<>(bodyStorage, Integer.parseInt(config.getFieldValue("BodySupplierSpeed")), isWorking, Body.class);
 
         accessorySuppliers = new ArrayList<>();
         int accessorySuppliersSize = Integer.parseInt(config.getFieldValue("AccessorySuppliers"));
@@ -45,7 +43,7 @@ public class Factory implements MainWindowListener {
             accessorySuppliersSize = 10;
         }
         for (int i = 0; i < accessorySuppliersSize; i++) {
-            accessorySuppliers.add(new Supplier<>(accessoryStorage, Integer.parseInt(config.getFieldValue("AccessorySupplierSpeed")), Accessory.class));
+            accessorySuppliers.add(new Supplier<>(accessoryStorage, Integer.parseInt(config.getFieldValue("AccessorySupplierSpeed")), isWorking, Accessory.class));
         }
 
         dealers = new ArrayList<>();
@@ -54,19 +52,17 @@ public class Factory implements MainWindowListener {
             dealersSize = 10;
         }
         for (int i = 0; i < dealersSize; i++) {
-            dealers.add(new Dealer(carStorage, Integer.parseInt(config.getFieldValue("DealerSpeed")), i));
+            dealers.add(new Dealer(carStorage, Integer.parseInt(config.getFieldValue("DealerSpeed")), i, isWorking));
         }
 
-        engineSupplier = new Supplier<>(engineStorage, Integer.parseInt(config.getFieldValue("EngineSupplierSpeed")), Engine.class);
+        engineSupplier = new Supplier<>(engineStorage, Integer.parseInt(config.getFieldValue("EngineSupplierSpeed")), isWorking, Engine.class);
     }
 
     public Factory(String path) {
         config = new Config(path);
+        isWorking = true;
         initStorages();
         initSuppliers();
-        SwingUtilities.invokeLater( () -> {
-            MainWindow mainWindow = new MainWindow(this);}
-        );
     }
 
     public void start() {
@@ -79,7 +75,7 @@ public class Factory implements MainWindowListener {
         int workersNum = Integer.parseInt(config.getFieldValue("Workers"));
         assemblyPoint = new AssemblyPoint(workersNum, bodyStorage, engineStorage, accessoryStorage, carStorage);
 
-        Controller controller = new Controller(carStorage, assemblyPoint);
+        Controller controller = new Controller(carStorage, assemblyPoint, isWorking);
         new Thread(controller).start();
 
         for (Dealer dealer : dealers) {
@@ -117,5 +113,13 @@ public class Factory implements MainWindowListener {
         for (Supplier<Accessory> accessorySupplier : accessorySuppliers) {
             accessorySupplier.setSpeed(speed);
         }
+    }
+
+    @Override
+    public void mainWindowExit() {
+        synchronized (this) {
+            isWorking = false;
+        }
+        assemblyPoint.stop();
     }
 }
