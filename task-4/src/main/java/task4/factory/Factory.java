@@ -4,9 +4,7 @@ import task4.factory.car.Car;
 import task4.factory.car.details.Accessory;
 import task4.factory.car.details.Body;
 import task4.factory.car.details.Engine;
-import task4.factory.department.Storage;
-import task4.factory.department.Supplier;
-import task4.factory.department.Workers;
+import task4.factory.department.*;
 import task4.factory.ui.MainWindow;
 import task4.factory.ui.MainWindowListener;
 import task4.utilities.Config;
@@ -25,6 +23,7 @@ public class Factory implements MainWindowListener {
 
     private Supplier<Body> bodySupplier;
     private ArrayList<Supplier<Accessory>> accessorySuppliers;
+    private ArrayList<Dealer> dealers;
     private Supplier<Engine> engineSupplier;
 
     private void initStorages() {
@@ -36,6 +35,7 @@ public class Factory implements MainWindowListener {
 
     private void initSuppliers() {
         bodySupplier = new Supplier<>(bodyStorage, Integer.parseInt(config.getFieldValue("BodySupplierSpeed")), Body.class);
+
         accessorySuppliers = new ArrayList<>();
         int accessorySuppliersSize = Integer.parseInt(config.getFieldValue("AccessorySuppliers"));
         if (accessorySuppliersSize == -1) {
@@ -44,6 +44,16 @@ public class Factory implements MainWindowListener {
         for (int i = 0; i < accessorySuppliersSize; i++) {
             accessorySuppliers.add(new Supplier<>(accessoryStorage, Integer.parseInt(config.getFieldValue("AccessorySupplierSpeed")), Accessory.class));
         }
+
+        dealers = new ArrayList<>();
+        int dealersSize = Integer.parseInt(config.getFieldValue("Dealers"));
+        if (dealersSize == -1) {
+            dealersSize = 10;
+        }
+        for (int i = 0; i < dealersSize; i++) {
+            dealers.add(new Dealer(carStorage, Integer.parseInt(config.getFieldValue("DealerSpeed"))));
+        }
+
         engineSupplier = new Supplier<>(engineStorage, Integer.parseInt(config.getFieldValue("EngineSupplierSpeed")), Engine.class);
     }
 
@@ -64,18 +74,14 @@ public class Factory implements MainWindowListener {
         }
         new Thread(engineSupplier).start();
 
-        Workers workers = new Workers(10, 1000, bodyStorage, engineStorage, accessoryStorage, carStorage);
+        int workersNum = Integer.parseInt(config.getFieldValue("Workers"));
+        Workers workers = new Workers(workersNum, 1000, bodyStorage, engineStorage, accessoryStorage, carStorage);
 
-        for (int i = 0; i < 100; i++) {
-            workers.assembleCar();
-        }
+        Controller controller = new Controller(carStorage, workers);
+        new Thread(controller).start();
 
-        while (true) {
-            try {
-                System.out.println(carStorage.get().id());
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+        for (Dealer dealer : dealers) {
+            new Thread(dealer).start();
         }
     }
 

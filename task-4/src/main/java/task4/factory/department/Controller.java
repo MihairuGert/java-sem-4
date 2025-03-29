@@ -15,14 +15,16 @@ public class Controller extends Department implements Runnable{
 
     @Override
     public void run() {
-        while (!isWorking()) {
-            try {
-                carStorage.wait();
-            } catch (InterruptedException e) {
-                System.err.println(e.getMessage());
-            }
-            if (carStorage.getProdNum() < 1) {
-                workers.assembleCar();
+        while (isWorking()) {
+            synchronized (carStorage) {
+                try {
+                    carStorage.wait();
+                } catch (InterruptedException e) {
+                    System.err.println(e.getMessage());
+                }
+                if (carStorage.getProdNum() < 1) {
+                    workers.assembleCar();
+                }
             }
         }
     }

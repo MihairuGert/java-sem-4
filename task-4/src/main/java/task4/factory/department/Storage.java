@@ -29,7 +29,7 @@ public class Storage <T extends Product> {
     }
 
     public synchronized void add(T product) throws Exception {
-        while (details.size() > capacity) {
+        while (details.size() >= capacity) {
             wait();
         }
         //System.out.println("Product with id = " + detail.getId() + " was added.");
@@ -39,6 +39,7 @@ public class Storage <T extends Product> {
     }
 
     public synchronized T get() throws Exception {
+        notifyAll();
         while (details.isEmpty()) {
             wait();
         }
