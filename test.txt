@@ -6,3 +6,4 @@ EngineSupplierSpeed = 500
 AccessoryStorageCapacity = 500
 AccessorySupplierSpeed = 500
 CarStorageCapacity = 20
+AccessorySuppliers=5

@@ -4,11 +4,11 @@ import task4.factory.car.Product;
 
 import static java.lang.Thread.sleep;
 
-public class Suppliers<T extends Product> extends Department implements Runnable {
+public class Supplier<T extends Product> extends Department implements Runnable {
     private final Storage<T> storage;
     private final Creator<T> creator;
 
-    public Suppliers(Storage<T> storage, int speed, Class<T> clazz) {
+    public Supplier(Storage<T> storage, int speed, Class<T> clazz) {
         super(speed);
         this.storage = storage;
         creator = new Creator<>(clazz);

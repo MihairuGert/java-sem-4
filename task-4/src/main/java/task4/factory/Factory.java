@@ -5,13 +5,14 @@ import task4.factory.car.details.Accessory;
 import task4.factory.car.details.Body;
 import task4.factory.car.details.Engine;
 import task4.factory.department.Storage;
-import task4.factory.department.Suppliers;
+import task4.factory.department.Supplier;
 import task4.factory.department.Workers;
 import task4.factory.ui.MainWindow;
 import task4.factory.ui.MainWindowListener;
 import task4.utilities.Config;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Factory implements MainWindowListener {
     private Config config;
@@ -22,10 +23,9 @@ public class Factory implements MainWindowListener {
 
     private Storage<Car> carStorage;
 
-    private Suppliers<Body> bodySuppliers;
-    // todo thread pool
-    private Suppliers<Accessory> accessorySuppliers;
-    private Suppliers<Engine> engineSuppliers;
+    private Supplier<Body> bodySupplier;
+    private ArrayList<Supplier<Accessory>> accessorySuppliers;
+    private Supplier<Engine> engineSupplier;
 
     private void initStorages() {
         bodyStorage = new Storage<>(Integer.parseInt(config.getFieldValue("BodyStorageCapacity")));
@@ -35,10 +35,16 @@ public class Factory implements MainWindowListener {
     }
 
     private void initSuppliers() {
-        bodySuppliers = new Suppliers<>(bodyStorage, Integer.parseInt(config.getFieldValue("BodySupplierSpeed")), Body.class);
-        // todo thread pool
-        accessorySuppliers = new Suppliers<>(accessoryStorage, Integer.parseInt(config.getFieldValue("AccessorySupplierSpeed")), Accessory.class);
-        engineSuppliers = new Suppliers<>(engineStorage, Integer.parseInt(config.getFieldValue("EngineSupplierSpeed")), Engine.class);
+        bodySupplier = new Supplier<>(bodyStorage, Integer.parseInt(config.getFieldValue("BodySupplierSpeed")), Body.class);
+        accessorySuppliers = new ArrayList<>();
+        int accessorySuppliersSize = Integer.parseInt(config.getFieldValue("AccessorySuppliers"));
+        if (accessorySuppliersSize == -1) {
+            accessorySuppliersSize = 10;
+        }
+        for (int i = 0; i < accessorySuppliersSize; i++) {
+            accessorySuppliers.add(new Supplier<>(accessoryStorage, Integer.parseInt(config.getFieldValue("AccessorySupplierSpeed")), Accessory.class));
+        }
+        engineSupplier = new Supplier<>(engineStorage, Integer.parseInt(config.getFieldValue("EngineSupplierSpeed")), Engine.class);
     }
 
     public Factory(String path) {
@@ -52,9 +58,11 @@ public class Factory implements MainWindowListener {
     }
 
     public void start() {
-        new Thread(bodySuppliers).start();
-        new Thread(accessorySuppliers).start();
-        new Thread(engineSuppliers).start();
+        new Thread(bodySupplier).start();
+        for (Supplier<Accessory> accessorySupplier : accessorySuppliers) {
+            new Thread(accessorySupplier).start();
+        }
+        new Thread(engineSupplier).start();
 
         Workers workers = new Workers(10, 1000, bodyStorage, engineStorage, accessoryStorage, carStorage);
 
