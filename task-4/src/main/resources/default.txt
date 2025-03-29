@@ -8,5 +8,5 @@ AccessorySupplierSpeed = 500
 CarStorageCapacity = 20
 AccessorySuppliers=5
 Workers=10
-Dealers=20
+Dealers=2
 LogSale=true

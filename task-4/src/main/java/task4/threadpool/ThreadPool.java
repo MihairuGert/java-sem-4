@@ -36,7 +36,7 @@ public class ThreadPool {
         }
     }
 
-    public int getTaskQueueSize() {
+    public synchronized int getTaskQueueSize() {
         return taskQueue.size();
     }
 }

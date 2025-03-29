@@ -46,7 +46,7 @@ public class MainWindow extends JFrame implements ActionListener {
         }
         ImageIcon icon = new ImageIcon(iconURL);
         setIconImage(icon.getImage());
-        setBounds(500,250, 800, 450);
+        setBounds(500,250, 900, 550);
 
         setContentPane(new JPanel() {
             @Override
@@ -69,10 +69,29 @@ public class MainWindow extends JFrame implements ActionListener {
         startButton.setOpaque(true);
         add(startButton, gbc);
 
-        bodySlider = new FactorySlider(gbc, this);
-        engineSlider = new FactorySlider(gbc, this);
-        accessorySlider = new FactorySlider(gbc, this);
-        dealersSlider = new FactorySlider(gbc, this);
+        bodySlider = new FactorySlider(gbc, this, "Bodies sup");
+        bodySlider.addChangeListener(e -> {
+            int value = bodySlider.getValue();
+            mainWindowListener.setBodySupplySpeed(value);
+        });
+
+        engineSlider = new FactorySlider(gbc, this, "Engine sup");
+        engineSlider.addChangeListener(e -> {
+            int value = engineSlider.getValue();
+            mainWindowListener.setEngineSupplySpeed(value);
+        });
+
+        accessorySlider = new FactorySlider(gbc, this, "Accessory sup");
+        accessorySlider.addChangeListener(e -> {
+            int value = accessorySlider.getValue();
+            mainWindowListener.setAccessorySupplySpeed(value);
+        });
+
+        dealersSlider = new FactorySlider(gbc, this,"Dealers");
+        dealersSlider.addChangeListener(e -> {
+            int value = accessorySlider.getValue();
+            mainWindowListener.setDealerSpeed(value);
+        });
 
         gbc.gridy = 0;
         gbc.gridx = 2;
@@ -85,13 +104,11 @@ public class MainWindow extends JFrame implements ActionListener {
         carsInQueue = new JLabel("Cars in queue: ");
         carNum.add(carsInQueue);
 
-        carNum.add(new JLabel());
-        carNum.add(new JLabel());
         add(carNum, gbc);
 
         gbc.gridx = 0;
 
-        timer = new Timer(100, this);
+        timer = new Timer(10, this);
         timer.start();
 
         setVisible(true);
@@ -116,7 +133,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
             carsCreated.setText("Cars created: " + factoryStat.carsCreated());
             carsInQueue.setText("Cars in queue: " + factoryStat.carsInQueue());
-            carsInStock.setText("Cars in stock: " + factoryStat.carsCreated());
+            carsInStock.setText("Cars in stock: " + factoryStat.carsInStock());
         }
     }
 
