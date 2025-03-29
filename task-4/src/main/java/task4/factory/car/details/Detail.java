@@ -1,4 +1,4 @@
-package task4.car.details;
+package task4.factory.car.details;
 
 import task4.utilities.Id;
 

@@ -1,11 +1,12 @@
 package task4.factory;
 
-import task4.car.details.Accessory;
-import task4.car.details.Body;
-import task4.car.details.Engine;
+import task4.factory.car.details.Accessory;
+import task4.factory.car.details.Body;
+import task4.factory.car.details.Engine;
 import task4.factory.department.Storage;
 import task4.factory.department.Supplier;
 import task4.factory.department.Worker;
+import task4.threadpool.ThreadPool;
 import task4.utilities.Config;
 
 public class Factory {
@@ -45,6 +46,7 @@ public class Factory {
         new Thread(engineSupplier).start();
 
         new Thread(worker).start();
+
         config.DBGMSG();
     }
 }

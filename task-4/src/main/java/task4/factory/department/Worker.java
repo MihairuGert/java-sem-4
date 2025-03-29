@@ -1,9 +1,9 @@
 package task4.factory.department;
 
-import task4.car.Car;
-import task4.car.details.Accessory;
-import task4.car.details.Body;
-import task4.car.details.Engine;
+import task4.factory.car.Car;
+import task4.factory.car.details.Accessory;
+import task4.factory.car.details.Body;
+import task4.factory.car.details.Engine;
 
 import java.util.LinkedList;
 

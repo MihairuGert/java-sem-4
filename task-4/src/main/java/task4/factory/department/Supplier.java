@@ -1,6 +1,6 @@
 package task4.factory.department;
 
-import task4.car.details.Detail;
+import task4.factory.car.details.Detail;
 
 import static java.lang.Thread.sleep;
 

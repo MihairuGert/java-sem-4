@@ -1,11 +1,9 @@
-package task4.car;
+package task4.factory.car;
 
-import task4.car.details.Accessory;
-import task4.car.details.Body;
-import task4.car.details.Engine;
+import task4.factory.car.details.Accessory;
+import task4.factory.car.details.Body;
+import task4.factory.car.details.Engine;
 import task4.utilities.Id;
-
-import java.util.LinkedList;
 
 public class Car {
     private Id id;
