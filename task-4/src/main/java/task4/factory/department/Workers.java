@@ -4,41 +4,42 @@ import task4.factory.car.Car;
 import task4.factory.car.details.Accessory;
 import task4.factory.car.details.Body;
 import task4.factory.car.details.Engine;
+import task4.threadpool.ThreadPool;
 
-import java.util.LinkedList;
-
-import static java.lang.Thread.sleep;
-
-public class Worker extends Department implements Runnable{
+public class Workers extends Department {
     private Storage<Body> bodyStorage;
     private Storage<Engine> engineStorage;
     private Storage<Accessory> accessoryStorage;
-    // todo add other storages
+    private Storage<Car> carStorage;
 
-    public Worker(Storage<Body> bodyStorage, Storage<Engine> engineStorage, Storage<Accessory> accessoryStorage, int speed) {
+    private ThreadPool workers;
+
+    public Workers(int workersNum, int speed, Storage<Body> bodyStorage, Storage<Engine> engineStorage, Storage<Accessory> accessoryStorage, Storage<Car> carStorage) {
         super(speed);
         this.bodyStorage = bodyStorage;
         this.engineStorage = engineStorage;
         this.accessoryStorage = accessoryStorage;
+        this.carStorage = carStorage;
 
-        cars = new LinkedList<>();
+        workers = new ThreadPool(workersNum, 100);
     }
 
-    LinkedList<Car> cars;
-
-    @Override
-    public void run() {
-        while (isWorking()) {
+    private class CarAssembly implements Runnable {
+        @Override
+        public void run() {
             try {
                 Body body = bodyStorage.get();
                 Engine engine = engineStorage.get();
                 Accessory accessory = accessoryStorage.get();
                 Car car = new Car(body, engine, accessory);
-                cars.add(car);
-                System.out.println("New car " + car.id());
+                carStorage.add(car);
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
         }
+    }
+
+    public void assembleCar() {
+        workers.addTask(new CarAssembly());
     }
 }

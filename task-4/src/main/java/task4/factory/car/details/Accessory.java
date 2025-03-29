@@ -1,4 +1,6 @@
 package task4.factory.car.details;
 
-public class Accessory extends Detail{
+import task4.factory.car.Product;
+
+public class Accessory extends Product {
 }

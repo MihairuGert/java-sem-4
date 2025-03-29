@@ -1,11 +1,11 @@
-package task4.factory.car.details;
+package task4.factory.car;
 
 import task4.utilities.Id;
 
-public class Detail {
+public class Product {
     private Id id;
 
-    public Detail() {
+    public Product() {
         id = new Id(10);
     }
 

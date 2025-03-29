@@ -1,12 +1,13 @@
 package task4.factory;
 
+import task4.factory.car.Car;
+import task4.factory.car.Product;
 import task4.factory.car.details.Accessory;
 import task4.factory.car.details.Body;
 import task4.factory.car.details.Engine;
 import task4.factory.department.Storage;
 import task4.factory.department.Supplier;
-import task4.factory.department.Worker;
-import task4.threadpool.ThreadPool;
+import task4.factory.department.Workers;
 import task4.utilities.Config;
 
 public class Factory {
@@ -15,6 +16,8 @@ public class Factory {
     private Storage<Body> bodyStorage;
     private Storage<Accessory> accessoryStorage;
     private Storage<Engine> engineStorage;
+
+    private Storage<Car> carStorage;
 
     private Supplier<Body> bodySupplier;
     // todo thread pool
@@ -25,6 +28,7 @@ public class Factory {
         bodyStorage = new Storage<>(Integer.parseInt(config.getFieldValue("BodyStorageCapacity")));
         accessoryStorage = new Storage<>(Integer.parseInt(config.getFieldValue("AccessoryStorageCapacity")));
         engineStorage = new Storage<>(Integer.parseInt(config.getFieldValue("EngineStorageCapacity")));
+        carStorage = new Storage<>(Integer.parseInt(config.getFieldValue("CarStorageCapacity")));
     }
 
     private void initSuppliers() {
@@ -38,15 +42,27 @@ public class Factory {
         config = new Config(path);
         initStorages();
         initSuppliers();
+        //config.DBGMSG();
+    }
 
-        Worker worker = new Worker(bodyStorage, engineStorage, accessoryStorage, 2000);
-
+    public void start() {
         new Thread(bodySupplier).start();
         new Thread(accessorySupplier).start();
         new Thread(engineSupplier).start();
 
-        new Thread(worker).start();
+        Workers workers = new Workers(10, 1000, bodyStorage, engineStorage, accessoryStorage, carStorage);
 
-        config.DBGMSG();
+        for (int i = 0; i < 100; i++) {
+            workers.assembleCar();
+        }
+
+        while (true) {
+            try {
+                System.out.println(carStorage.get().id());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
+
 }

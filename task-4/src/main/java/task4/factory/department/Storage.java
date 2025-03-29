@@ -1,11 +1,11 @@
 package task4.factory.department;
 
-import task4.factory.car.details.Detail;
+import task4.factory.car.Product;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Storage <T extends Detail> {
+public class Storage <T extends Product> {
     private final Queue<T> details;
     private final int capacity;
 
@@ -18,12 +18,12 @@ public class Storage <T extends Detail> {
         this.capacity = capacity;
     }
 
-    public synchronized void add(T detail) throws Exception {
+    public synchronized void add(T product) throws Exception {
         while (details.size() > capacity) {
             wait();
         }
-        //System.out.println("Detail with id = " + detail.getId() + " was added.");
-        details.add(detail);
+        //System.out.println("Product with id = " + detail.getId() + " was added.");
+        details.add(product);
         notify();
     }
 
@@ -32,7 +32,7 @@ public class Storage <T extends Detail> {
             wait();
         }
         T detail = details.remove();
-        //System.out.println("Detail with id = " + detail.getId() + " was taken.");
+        //System.out.println("Product with id = " + detail.getId() + " was taken.");
         notify();
         return detail;
     }

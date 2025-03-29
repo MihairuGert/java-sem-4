@@ -1,10 +1,10 @@
 package task4.factory.department;
 
-import task4.factory.car.details.Detail;
+import task4.factory.car.Product;
 
 import static java.lang.Thread.sleep;
 
-public class Supplier <T extends Detail> extends Department implements Runnable {
+public class Supplier <T extends Product> extends Department implements Runnable {
     private final Storage<T> storage;
     private final Creator<T> creator;
 
