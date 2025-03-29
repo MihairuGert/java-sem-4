@@ -7,6 +7,7 @@ import task4.factory.car.details.Engine;
 import task4.factory.department.*;
 import task4.factory.ui.MainWindow;
 import task4.factory.ui.MainWindowListener;
+import task4.threadpool.ThreadPool;
 import task4.utilities.Config;
 
 import javax.swing.*;
@@ -18,13 +19,14 @@ public class Factory implements MainWindowListener {
     private Storage<Body> bodyStorage;
     private Storage<Accessory> accessoryStorage;
     private Storage<Engine> engineStorage;
-
     private Storage<Car> carStorage;
 
     private Supplier<Body> bodySupplier;
     private ArrayList<Supplier<Accessory>> accessorySuppliers;
     private ArrayList<Dealer> dealers;
     private Supplier<Engine> engineSupplier;
+
+    private AssemblyPoint assemblyPoint;
 
     private void initStorages() {
         bodyStorage = new Storage<>(Integer.parseInt(config.getFieldValue("BodyStorageCapacity")));
@@ -75,9 +77,9 @@ public class Factory implements MainWindowListener {
         new Thread(engineSupplier).start();
 
         int workersNum = Integer.parseInt(config.getFieldValue("Workers"));
-        Workers workers = new Workers(workersNum, 1000, bodyStorage, engineStorage, accessoryStorage, carStorage);
+        assemblyPoint = new AssemblyPoint(workersNum, bodyStorage, engineStorage, accessoryStorage, carStorage);
 
-        Controller controller = new Controller(carStorage, workers);
+        Controller controller = new Controller(carStorage, assemblyPoint);
         new Thread(controller).start();
 
         for (Dealer dealer : dealers) {

@@ -5,12 +5,12 @@ import task4.threadpool.ThreadPool;
 
 public class Controller extends Department implements Runnable{
     private final Storage<Car> carStorage;
-    private final Workers workers;
+    private final AssemblyPoint assemblyPoint;
 
-    public Controller(Storage<Car> carStorage, Workers workers) {
+    public Controller(Storage<Car> carStorage, AssemblyPoint assemblyPoint) {
         super(1);
         this.carStorage = carStorage;
-        this.workers = workers;
+        this.assemblyPoint = assemblyPoint;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Controller extends Department implements Runnable{
                     System.err.println(e.getMessage());
                 }
                 if (carStorage.getProdNum() < 1) {
-                    workers.assembleCar();
+                    assemblyPoint.assembleCar();
                 }
             }
         }
