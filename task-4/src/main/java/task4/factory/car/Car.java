@@ -16,10 +16,6 @@ public class Car extends Product {
         this.accessory = accessory;
     }
 
-    public String id() {
-        return getId();
-    }
-
     public String bodyId() {
         return body.getId();
     }

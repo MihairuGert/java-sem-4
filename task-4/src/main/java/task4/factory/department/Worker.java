@@ -6,10 +6,10 @@ import task4.factory.car.details.Body;
 import task4.factory.car.details.Engine;
 
 public class Worker implements Runnable {
-    private Storage<Body> bodyStorage;
-    private Storage<Engine> engineStorage;
-    private Storage<Accessory> accessoryStorage;
-    private Storage<Car> carStorage;
+    private final Storage<Body> bodyStorage;
+    private final Storage<Engine> engineStorage;
+    private final Storage<Accessory> accessoryStorage;
+    private final Storage<Car> carStorage;
 
     public Worker(Storage<Body> bodyStorage, Storage<Engine> engineStorage, Storage<Accessory> accessoryStorage, Storage<Car> carStorage) {
         this.bodyStorage = bodyStorage;

@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class Factory implements MainWindowListener {
     private final Config config;
 
+    private boolean isDebug = false;
+
     private Storage<Body> bodyStorage;
     private Storage<Accessory> accessoryStorage;
     private Storage<Engine> engineStorage;
@@ -52,7 +54,7 @@ public class Factory implements MainWindowListener {
             dealersSize = 10;
         }
         for (int i = 0; i < dealersSize; i++) {
-            dealers.add(new Dealer(carStorage, Integer.parseInt(config.getFieldValue("DealerSpeed")), i, isWorking));
+            dealers.add(new Dealer(carStorage, Integer.parseInt(config.getFieldValue("DealerSpeed")), i, isWorking, isDebug));
         }
 
         engineSupplier = new Supplier<>(engineStorage, Integer.parseInt(config.getFieldValue("EngineSupplierSpeed")), isWorking, Engine.class);
@@ -60,6 +62,7 @@ public class Factory implements MainWindowListener {
 
     public Factory(String path) {
         config = new Config(path);
+        isDebug = Boolean.parseBoolean(config.getFieldValue("Debug"));
         isWorking = true;
         initStorages();
         initSuppliers();

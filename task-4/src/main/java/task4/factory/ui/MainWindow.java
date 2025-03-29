@@ -25,9 +25,9 @@ public class MainWindow extends JFrame implements ActionListener {
     private final JLabel carsCreated;
     private final JLabel carsInQueue;
 
-    private JPanel carNum;
+    private final JPanel carNum;
 
-    private Timer timer;
+    private final Timer timer;
 
     public MainWindow(MainWindowListener mainWindowListener) {
         this.mainWindowListener = mainWindowListener;
