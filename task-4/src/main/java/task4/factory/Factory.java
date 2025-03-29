@@ -7,9 +7,13 @@ import task4.factory.car.details.Engine;
 import task4.factory.department.Storage;
 import task4.factory.department.Suppliers;
 import task4.factory.department.Workers;
+import task4.factory.ui.MainWindow;
+import task4.factory.ui.MainWindowListener;
 import task4.utilities.Config;
 
-public class Factory {
+import javax.swing.*;
+
+public class Factory implements MainWindowListener {
     private Config config;
 
     private Storage<Body> bodyStorage;
@@ -41,6 +45,9 @@ public class Factory {
         config = new Config(path);
         initStorages();
         initSuppliers();
+        SwingUtilities.invokeLater( () -> {
+            MainWindow mainWindow = new MainWindow(this);}
+        );
         //config.DBGMSG();
     }
 
