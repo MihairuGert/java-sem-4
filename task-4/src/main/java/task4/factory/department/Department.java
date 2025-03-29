@@ -9,6 +9,10 @@ public class Department {
         return isWorking;
     }
 
+    public void setWorking() {
+        isWorking = false;
+    }
+
     private int speed;
     private boolean isWorking = true;
 

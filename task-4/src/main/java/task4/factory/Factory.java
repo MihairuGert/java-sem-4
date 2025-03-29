@@ -1,12 +1,11 @@
 package task4.factory;
 
 import task4.factory.car.Car;
-import task4.factory.car.Product;
 import task4.factory.car.details.Accessory;
 import task4.factory.car.details.Body;
 import task4.factory.car.details.Engine;
 import task4.factory.department.Storage;
-import task4.factory.department.Supplier;
+import task4.factory.department.Suppliers;
 import task4.factory.department.Workers;
 import task4.utilities.Config;
 
@@ -19,10 +18,10 @@ public class Factory {
 
     private Storage<Car> carStorage;
 
-    private Supplier<Body> bodySupplier;
+    private Suppliers<Body> bodySuppliers;
     // todo thread pool
-    private Supplier<Accessory> accessorySupplier;
-    private Supplier<Engine> engineSupplier;
+    private Suppliers<Accessory> accessorySuppliers;
+    private Suppliers<Engine> engineSuppliers;
 
     private void initStorages() {
         bodyStorage = new Storage<>(Integer.parseInt(config.getFieldValue("BodyStorageCapacity")));
@@ -32,10 +31,10 @@ public class Factory {
     }
 
     private void initSuppliers() {
-        bodySupplier = new Supplier<>(bodyStorage, Integer.parseInt(config.getFieldValue("BodySupplierSpeed")), Body.class);
+        bodySuppliers = new Suppliers<>(bodyStorage, Integer.parseInt(config.getFieldValue("BodySupplierSpeed")), Body.class);
         // todo thread pool
-        accessorySupplier = new Supplier<>(accessoryStorage, Integer.parseInt(config.getFieldValue("AccessorySupplierSpeed")), Accessory.class);
-        engineSupplier = new Supplier<>(engineStorage, Integer.parseInt(config.getFieldValue("EngineSupplierSpeed")), Engine.class);
+        accessorySuppliers = new Suppliers<>(accessoryStorage, Integer.parseInt(config.getFieldValue("AccessorySupplierSpeed")), Accessory.class);
+        engineSuppliers = new Suppliers<>(engineStorage, Integer.parseInt(config.getFieldValue("EngineSupplierSpeed")), Engine.class);
     }
 
     public Factory(String path) {
@@ -46,9 +45,9 @@ public class Factory {
     }
 
     public void start() {
-        new Thread(bodySupplier).start();
-        new Thread(accessorySupplier).start();
-        new Thread(engineSupplier).start();
+        new Thread(bodySuppliers).start();
+        new Thread(accessorySuppliers).start();
+        new Thread(engineSuppliers).start();
 
         Workers workers = new Workers(10, 1000, bodyStorage, engineStorage, accessoryStorage, carStorage);
 

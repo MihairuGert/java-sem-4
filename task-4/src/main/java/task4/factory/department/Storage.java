@@ -18,13 +18,17 @@ public class Storage <T extends Product> {
         this.capacity = capacity;
     }
 
+    public synchronized int getProdNum() {
+        return details.size();
+    }
+
     public synchronized void add(T product) throws Exception {
         while (details.size() > capacity) {
             wait();
         }
         //System.out.println("Product with id = " + detail.getId() + " was added.");
         details.add(product);
-        notify();
+        notifyAll();
     }
 
     public synchronized T get() throws Exception {
@@ -33,7 +37,7 @@ public class Storage <T extends Product> {
         }
         T detail = details.remove();
         //System.out.println("Product with id = " + detail.getId() + " was taken.");
-        notify();
+        notifyAll();
         return detail;
     }
 }
