@@ -77,9 +77,14 @@ public class MainWindow extends JFrame implements ActionListener {
         gbc.gridy = 0;
         gbc.gridx = 2;
         carNum = new JPanel(new GridLayout(1, 5, 5, 10));
-        carNum.add(new JLabel("Cars in stock: "));
-        carNum.add(new JLabel("Cars created: "));
-        carNum.add(new JLabel("Cars in queue: "));
+
+        carsInStock = new JLabel("Cars in stock: ");
+        carNum.add(carsInStock);
+        carsCreated = new JLabel("Cars created: ");
+        carNum.add(carsCreated);
+        carsInQueue = new JLabel("Cars in queue: ");
+        carNum.add(carsInQueue);
+
         carNum.add(new JLabel());
         carNum.add(new JLabel());
         add(carNum, gbc);
@@ -108,6 +113,10 @@ public class MainWindow extends JFrame implements ActionListener {
 
             accessorySlider.setCreated(factoryStat.accessoriesCreated());
             accessorySlider.setInStock(factoryStat.accessoriesInStock());
+
+            carsCreated.setText("Cars created: " + factoryStat.carsCreated());
+            carsInQueue.setText("Cars in queue: " + factoryStat.carsInQueue());
+            carsInStock.setText("Cars in stock: " + factoryStat.carsCreated());
         }
     }
 

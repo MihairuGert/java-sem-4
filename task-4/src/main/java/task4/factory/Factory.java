@@ -7,7 +7,6 @@ import task4.factory.car.details.Engine;
 import task4.factory.department.*;
 import task4.factory.ui.MainWindow;
 import task4.factory.ui.MainWindowListener;
-import task4.threadpool.ThreadPool;
 import task4.utilities.Config;
 
 import javax.swing.*;
@@ -92,7 +91,30 @@ public class Factory implements MainWindowListener {
         return new FactoryStat(engineStorage.getProdNum(), engineStorage.getEverCreated(),
                 bodyStorage.getProdNum(), bodyStorage.getEverCreated(),
                 accessoryStorage.getProdNum(), accessoryStorage.getEverCreated(),
-                carStorage.getProdNum(), carStorage.getEverCreated(), 10);
+                carStorage.getProdNum(), carStorage.getEverCreated(), assemblyPoint.getQueueSize());
     }
 
+    @Override
+    public void setDealerSpeed(int speed) {
+        for (Dealer dealer : dealers) {
+            dealer.setSpeed(speed);
+        }
+    }
+
+    @Override
+    public void setBodySupplySpeed(int speed) {
+        bodySupplier.setSpeed(speed);
+    }
+
+    @Override
+    public void setEngineSupplySpeed(int speed) {
+        engineSupplier.setSpeed(speed);
+    }
+
+    @Override
+    public void setAccessorySupplySpeed(int speed) {
+        for (Supplier<Accessory> accessorySupplier : accessorySuppliers) {
+            accessorySupplier.setSpeed(speed);
+        }
+    }
 }

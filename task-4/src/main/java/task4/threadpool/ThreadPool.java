@@ -35,4 +35,8 @@ public class ThreadPool {
             threadPoolThread.stopThread();
         }
     }
+
+    public int getTaskQueueSize() {
+        return taskQueue.size();
+    }
 }
