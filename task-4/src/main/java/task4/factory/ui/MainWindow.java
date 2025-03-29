@@ -20,14 +20,13 @@ public class MainWindow extends JFrame implements ActionListener {
 
     private int curGridy = 1;
 
-    private FactorySlider engineSlider;
-    private FactorySlider bodySlider;
-    private FactorySlider accessorySlider;
-    private FactorySlider dealersSlider;
+    private final FactorySlider engineSlider;
+    private final FactorySlider bodySlider;
+    private final FactorySlider accessorySlider;
 
-    private JLabel carsInStock;
-    private JLabel carsCreated;
-    private JLabel carsInQueue;
+    private final JLabel carsInStock;
+    private final JLabel carsCreated;
+    private final JLabel carsInQueue;
 
     private JPanel carNum;
 
@@ -87,7 +86,7 @@ public class MainWindow extends JFrame implements ActionListener {
             mainWindowListener.setAccessorySupplySpeed(value);
         });
 
-        dealersSlider = new FactorySlider(gbc, this,"Dealers");
+        FactorySlider dealersSlider = new FactorySlider(gbc, this, "Dealers");
         dealersSlider.addChangeListener(e -> {
             int value = accessorySlider.getValue();
             mainWindowListener.setDealerSpeed(value);

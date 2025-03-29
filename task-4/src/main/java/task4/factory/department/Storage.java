@@ -1,5 +1,6 @@
 package task4.factory.department;
 
+import task4.factory.car.Car;
 import task4.factory.car.Product;
 
 import java.util.LinkedList;
@@ -48,4 +49,6 @@ public class Storage <T extends Product> {
         notifyAll();
         return detail;
     }
+
+
 }

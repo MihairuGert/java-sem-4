@@ -12,6 +12,8 @@ import task4.utilities.Config;
 import javax.swing.*;
 import java.util.ArrayList;
 
+//todo correct close swing remove
+
 public class Factory implements MainWindowListener {
     private Config config;
 
@@ -52,7 +54,7 @@ public class Factory implements MainWindowListener {
             dealersSize = 10;
         }
         for (int i = 0; i < dealersSize; i++) {
-            dealers.add(new Dealer(carStorage, Integer.parseInt(config.getFieldValue("DealerSpeed"))));
+            dealers.add(new Dealer(carStorage, Integer.parseInt(config.getFieldValue("DealerSpeed")), i));
         }
 
         engineSupplier = new Supplier<>(engineStorage, Integer.parseInt(config.getFieldValue("EngineSupplierSpeed")), Engine.class);
@@ -65,7 +67,6 @@ public class Factory implements MainWindowListener {
         SwingUtilities.invokeLater( () -> {
             MainWindow mainWindow = new MainWindow(this);}
         );
-        //config.DBGMSG();
     }
 
     public void start() {

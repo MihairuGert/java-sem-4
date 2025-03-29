@@ -5,9 +5,9 @@ import task4.factory.car.details.Body;
 import task4.factory.car.details.Engine;
 
 public class Car extends Product {
-    private Accessory accessory;
-    private Body body;
-    private Engine engine;
+    private final Accessory accessory;
+    private final Body body;
+    private final Engine engine;
 
     public Car(Body body, Engine engine, Accessory accessory) {
         super();
@@ -17,6 +17,18 @@ public class Car extends Product {
     }
 
     public String id() {
-        return body.getId() + " " + engine.getId() + " " + accessory.getId() + " " + this.getId();
+        return getId();
+    }
+
+    public String bodyId() {
+        return body.getId();
+    }
+
+    public String engineId() {
+        return engine.getId();
+    }
+
+    public String accessoryId() {
+        return accessory.getId();
     }
 }
