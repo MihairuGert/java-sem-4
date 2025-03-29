@@ -9,6 +9,12 @@ public class Storage <T extends Product> {
     private final Queue<T> details;
     private final int capacity;
 
+    public long getEverCreated() {
+        return everCreated;
+    }
+
+    private long everCreated = 0;
+
     public Storage(int capacity) {
         details = new LinkedList<>();
         if (capacity == -1) {
@@ -27,6 +33,7 @@ public class Storage <T extends Product> {
             wait();
         }
         //System.out.println("Product with id = " + detail.getId() + " was added.");
+        everCreated++;
         details.add(product);
         notifyAll();
     }

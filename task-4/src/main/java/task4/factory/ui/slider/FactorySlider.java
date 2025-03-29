@@ -28,4 +28,12 @@ public class FactorySlider {
         slider.setPaintLabels(true);
         mainWindow.add(slider, gbc);
     }
+
+    public void setCreated(long num) {
+        created.setText("Created: " + num);
+    }
+
+    public void setInStock(int num) {
+        inStock.setText("In stock: " + num);
+    }
 }

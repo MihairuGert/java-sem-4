@@ -1,5 +1,6 @@
 package task4.factory.ui;
 
+import task4.factory.FactoryStat;
 import task4.factory.ui.buttons.StartButton;
 import task4.factory.ui.slider.FactorySlider;
 
@@ -85,7 +86,7 @@ public class MainWindow extends JFrame implements ActionListener {
 
         gbc.gridx = 0;
 
-        timer = new Timer(1, this);
+        timer = new Timer(100, this);
         timer.start();
 
         setVisible(true);
@@ -97,7 +98,16 @@ public class MainWindow extends JFrame implements ActionListener {
             isWorking = !isWorking;
             startButton.setText(isWorking ? "Stop" : "Start");
         } else if (e.getSource() == timer) {
+            FactoryStat factoryStat = mainWindowListener.getStat();
 
+            bodySlider.setCreated(factoryStat.bodiesCreated());
+            bodySlider.setInStock(factoryStat.bodiesInStock());
+
+            engineSlider.setCreated(factoryStat.enginesCreated());
+            engineSlider.setInStock(factoryStat.enginesInStock());
+
+            accessorySlider.setCreated(factoryStat.accessoriesCreated());
+            accessorySlider.setInStock(factoryStat.accessoriesInStock());
         }
     }
 

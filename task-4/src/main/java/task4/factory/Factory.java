@@ -71,4 +71,12 @@ public class Factory implements MainWindowListener {
         }
     }
 
+    @Override
+    public FactoryStat getStat() {
+        return new FactoryStat(engineStorage.getProdNum(), engineStorage.getEverCreated(),
+                bodyStorage.getProdNum(), bodyStorage.getEverCreated(),
+                accessoryStorage.getProdNum(), accessoryStorage.getEverCreated(),
+                carStorage.getProdNum(), carStorage.getEverCreated(), 10);
+    }
+
 }
