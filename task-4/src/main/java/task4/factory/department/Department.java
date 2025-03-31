@@ -22,7 +22,7 @@ public class Department {
     }
 
     public void setSpeed(int speed) {
-        if (speed < 0) {
+        if (speed <= 0) {
             return;
         }
         this.speed = speed;
