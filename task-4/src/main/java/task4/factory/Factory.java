@@ -78,8 +78,8 @@ public class Factory implements MainWindowListener {
         int workersNum = Integer.parseInt(config.getFieldValue("Workers"));
         assemblyPoint = new AssemblyPoint(workersNum, bodyStorage, engineStorage, accessoryStorage, carStorage);
 
-        Controller controller = new Controller(carStorage, assemblyPoint, isWorking);
-        new Thread(controller).start();
+        Controller controller = new Controller(assemblyPoint, isWorking);
+        carStorage.setStorageObserver(controller);
 
         for (Dealer dealer : dealers) {
             new Thread(dealer).start();

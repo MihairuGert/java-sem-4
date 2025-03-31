@@ -24,6 +24,12 @@ public class Storage <T extends Product> {
         this.capacity = capacity;
     }
 
+    public void setStorageObserver(StorageObserver storageObserver) {
+        this.storageObserver = storageObserver;
+    }
+
+    private StorageObserver storageObserver = null;
+
     public synchronized int getProdNum() {
         return details.size();
     }
@@ -38,7 +44,8 @@ public class Storage <T extends Product> {
     }
 
     public synchronized T get() throws Exception {
-        notifyAll();
+        if (storageObserver != null)
+            storageObserver.productTaken();
         while (details.isEmpty()) {
             wait();
         }
@@ -46,6 +53,4 @@ public class Storage <T extends Product> {
         notifyAll();
         return detail;
     }
-
-
 }
