@@ -3,7 +3,7 @@ package task3.sound;
 import java.net.URL;
 
 public class Sound {
-    private SoundPlayer soundPlayer;
+    private final SoundPlayer soundPlayer;
     private URL soundUrl = null;
     public Sound() {
         soundPlayer = new SoundPlayer();

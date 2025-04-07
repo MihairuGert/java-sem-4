@@ -1,8 +1,8 @@
 package task3.network;
 
-import task3.model.commands.player.ControllerCommand;
+import task3.engine.commands.player.ControllerCommand;
+import task3.engine.Point;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.LinkedList;
 

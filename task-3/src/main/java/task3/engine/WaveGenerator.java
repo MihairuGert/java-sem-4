@@ -1,4 +1,4 @@
-package task3.model;
+package task3.engine;
 
 import task3.entity.FastUndead;
 import task3.entity.Undead;

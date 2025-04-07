@@ -1,45 +1,39 @@
 package task3.entity;
 
-import task3.controller.Controller;
-import task3.model.commands.player.ControllerCommand;
+import task3.engine.Point;
+import task3.engine.commands.player.ControllerCommand;
 import task3.weapon.ZombieClaw;
 
-import java.awt.*;
 import java.util.LinkedList;
 
-public class Undead extends Movable {
+public class Undead extends Attacking {
     private Entity entityToChase;
     private int difficultyClass = 10;
 
     public Undead() {
         super();
-    }
-
-    public Undead(Controller AIController) {
-        super(AIController);
         velocity = 1+(int)(Math.random()*100)%2;
         weapon = new ZombieClaw();
-
-        trace = new LinkedList<>();
     }
 
-    private LinkedList<Point> trace;
-
-    public LinkedList<ControllerCommand> getTrace(Entity entity) {
+    public void getTrace() {
+        if (entityToChase == null) {
+            return;
+        }
         LinkedList<ControllerCommand> trace = new LinkedList<>();
-        if (entity.getX() > x) {
+        if (entityToChase.getX() > x) {
             trace.add(ControllerCommand.RIGHT);
         }
-        else if (entity.getX() < x) {
+        else if (entityToChase.getX() < x) {
             trace.add(ControllerCommand.LEFT);
         }
-        if (entity.getY() < y) {
+        if (entityToChase.getY() < y) {
             trace.add(ControllerCommand.UP);
         }
-        else if (entity.getY() > y) {
+        else if (entityToChase.getY() > y) {
             trace.add(ControllerCommand.DOWN);
         }
-        return trace;
+        setActiveCommands(trace);
     }
 
     public void setEntityToChase(Entity entityToChase) {
@@ -48,11 +42,12 @@ public class Undead extends Movable {
 
     @Override
     public LinkedList<ControllerCommand> getInput() {
+        getTrace();
         if (entityToChase == null) {
             return new LinkedList<>();
         }
 
-        return getTrace(entityToChase);
+        return super.getInput();
     }
 
     @Override

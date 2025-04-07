@@ -28,7 +28,10 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
     private GameMenu gameMenu;
     private MultiplayerMenu multiplayerMenu;
     private GameField gameField;
+
     private PlayerController playerController;
+    private Player player;
+
     GameModel gameModel;
     private Host host = null;
     private Client client = null;
@@ -55,8 +58,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
             System.err.println(e.getMessage());
             return;
         }
-        gameModel = new GameModel(this);
-        Player player = new Player(playerController);
+        gameModel = new GameModel(this, systemConfig.getScreenSize().width, systemConfig.getScreenSize().height);
         gameModel.addPlayer(player);
     }
 
@@ -71,7 +73,8 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
         SwingUtilities.invokeLater(() -> {
                     mainWindow.setScene(gameField);
                 });
-        playerController = new PlayerController(systemConfig.getScreenSize());
+        player = new Player();
+        playerController = new PlayerController(systemConfig.getScreenSize(), player);
         mainWindow.setController(playerController);
         playerController.setFocusable(true);
         playerController.requestFocusInWindow();
@@ -92,12 +95,40 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
             System.err.println(e.getMessage());
             return;
         }
-        GameModel gameModel = new GameModel(this);
-
-        Player player = new Player(playerController);
+        GameModel gameModel = new GameModel(this, systemConfig.getScreenSize().width, systemConfig.getScreenSize().height);
         gameModel.addPlayer(player);
 
         host = new Host(gameModel);
+    }
+
+    private void runConnection() {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                client.sendPlayerData(player);
+            } catch (RuntimeException e) {
+                SwingUtilities.invokeLater(this::endGame);
+                scheduler.shutdown();
+                return;
+            }
+        }, 0, 6, TimeUnit.MILLISECONDS);
+
+        scheduler.scheduleAtFixedRate(() -> {
+            SavedGame savedGame;
+            try {
+                savedGame = client.receiveSavedData();
+            } catch (RuntimeException e) {
+                SwingUtilities.invokeLater(this::endGame);
+                scheduler.shutdown();
+                return;
+            }
+            if (savedGame != null) {
+                ArrayList<Movable> movables = savedGame.getMovables();
+                ArrayList<Obstacle> obstacles = savedGame.getObstacles();
+                ArrayList<String> sounds = savedGame.getSounds();
+                SwingUtilities.invokeLater(() -> update(movables, obstacles, sounds));
+            }
+        }, 0, 6, TimeUnit.MILLISECONDS);
     }
 
     private void joinGame() {
@@ -114,36 +145,7 @@ public class Game implements MainWindowListener,MenuListener, GameModelListener 
             System.err.println(e.getMessage());
             return;
         }
-        Player player = new Player(playerController);
-
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
-        scheduler.scheduleAtFixedRate(() -> {
-            try {
-                client.sendPlayerData(player);
-            } catch (RuntimeException e) {
-                SwingUtilities.invokeLater(this::endGame);
-                scheduler.shutdown();
-                return;
-            }
-            }, 0, 6, TimeUnit.MILLISECONDS);
-
-
-        scheduler.scheduleAtFixedRate(() -> {
-            SavedGame savedGame = null;
-            try {
-                savedGame = client.receiveSavedData();
-            } catch (RuntimeException e) {
-                SwingUtilities.invokeLater(this::endGame);
-                scheduler.shutdown();
-                return;
-            }
-            if (savedGame != null) {
-                ArrayList<Movable> movables = savedGame.getMovables();
-                ArrayList<Obstacle> obstacles = savedGame.getObstacles();
-                ArrayList<String> sounds = savedGame.getSounds();
-                SwingUtilities.invokeLater(() -> update(movables, obstacles, sounds));
-            }
-        }, 0, 6, TimeUnit.MILLISECONDS);
+        runConnection();
     }
 
     @Override

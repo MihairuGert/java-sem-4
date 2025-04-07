@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public class Menu extends Scene implements ActionListener {
 
     protected final MenuListener menuListener;
-    private LinkedList<JButton> buttonsPool;
+    private final LinkedList<JButton> buttonsPool;
 
     protected final int buttonHeight = 150;
     protected final int buttonWidth = 300;
@@ -19,7 +19,7 @@ public class Menu extends Scene implements ActionListener {
     protected final int rangeBetweenButtons = 25;
     protected int buttonsNum = 0;
 
-    protected JLabel background;
+    protected final JLabel background;
 
     protected JButton addButton(String path) {
         buttonsNum++;

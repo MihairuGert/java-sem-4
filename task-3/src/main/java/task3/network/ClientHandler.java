@@ -1,12 +1,12 @@
 package task3.network;
 
-import task3.model.commands.player.ControllerCommand;
-
-import java.awt.*;
-import java.util.LinkedList;
+import task3.engine.commands.player.ControllerCommand;
+import task3.engine.Point;
+import task3.entity.Player;
 
 public class ClientHandler {
-    private String playerId;
+    private final String playerId;
+    private Player player;
 
     private PlayerInputInfo playerInputInfo;
 
@@ -14,23 +14,14 @@ public class ClientHandler {
         this.playerId = playerId;
     }
 
-    public String getPlayerId() {
-        return playerId;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public void setPlayerInputInfo(PlayerInputInfo playerInputInfo) {
         this.playerInputInfo = playerInputInfo;
-    }
-
-    public LinkedList<ControllerCommand> receiveInputCommands() {
-        return playerInputInfo.getCommands();
-    }
-
-    public Point receiveShootPoint() {
-        return playerInputInfo.getShootPoint();
-    }
-
-    public Point receiveLookPoint() {
-        return playerInputInfo.getLookPoint();
+        player.setLookPoint(playerInputInfo.getLookPoint());
+        player.setActiveCommands(playerInputInfo.getCommands());
+        player.setActivePoint(playerInputInfo.getShootPoint());
     }
 }
