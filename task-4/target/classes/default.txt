@@ -1,13 +1,12 @@
-aboba=        i_love_meow
 BodyStorageCapacity = 5
 BodySupplierSpeed = 1000
 EngineStorageCapacity = 10
 EngineSupplierSpeed = 500
+DealerSpeed = 1000
 AccessoryStorageCapacity = 500
 AccessorySupplierSpeed = 500
 CarStorageCapacity = 20
 AccessorySuppliers=5
-DealerSpeed=6000
 Workers=10
-Dealers=10
-Debug=true
+Dealers=2
+LogSale=true
