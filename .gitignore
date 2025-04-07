@@ -1,7 +1,12 @@
-# Idea
 .idea/
 /task-1/target/
 /task-2/target/
 /task-3/target/
 /task-4/target/
 /out/
+lib/
+out/
+/task-2/logs/
+/task-2/task-2.iml
+/logs/
+/lib/
